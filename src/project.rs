@@ -46,8 +46,6 @@ impl Project {
 
     /// Returns scan position with the provided name.
     ///
-    /// If the scan position does not exist in the project, returns `Ok(None)`.
-    ///
     /// # Examples
     ///
     /// ```
@@ -57,6 +55,19 @@ impl Project {
     /// ```
     pub fn scan_position(&self, name: &str) -> Option<&ScanPosition> {
         self.scan_positions.get(name)
+    }
+
+    /// Returns the image of the provided name in the specified scan position.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use riscan_pro::Project;
+    /// # let project = Project::from_path("data/project.RiSCAN").unwrap();
+    /// let image = project.image("SP01", "SP01 - Image001").unwrap();
+    /// ```
+    pub fn image(&self, scan_position: &str, image: &str) -> Option<&Image> {
+        self.scan_position(scan_position).and_then(|scan_position| scan_position.image(image))
     }
 }
 
@@ -90,11 +101,23 @@ impl GetDescendant for Element {
 #[derive(Debug, PartialEq)]
 pub struct ScanPosition {
     name: String,
+    images: HashMap<String, Image>,
 }
 
 impl ScanPosition {
     fn from_element(element: &Element) -> Result<ScanPosition> {
-        Ok(ScanPosition { name: try!(element.get_text("name")).to_string() })
+        let images = try!(element.get_children("scanposimages").and_then(|children| {
+            children.iter()
+                .map(|child| {
+                    let image = try!(Image::from_element(child));
+                    Ok((image.name().to_string(), image))
+                })
+                .collect()
+        }));
+        Ok(ScanPosition {
+            name: try!(element.get_text("name")).to_string(),
+            images: images,
+        })
     }
 
     fn name(&self) -> &str {
@@ -114,13 +137,28 @@ impl ScanPosition {
     fn images(&self) -> &Vec<Image> {
         unimplemented!()
     }
+
+    fn image(&self, name: &str) -> Option<&Image> {
+        self.images.get(name)
+    }
 }
 
-#[derive(Debug)]
-pub struct Image;
+#[derive(Debug, PartialEq)]
+pub struct Image {
+    name: String,
+}
 
 impl Image {
+    fn from_element(element: &Element) -> Result<Image> {
+        Ok(Image { name: try!(element.get_text("name")).to_string() })
+    }
+
+    fn name(&self) -> &str {
+        &self.name
+    }
+
     fn color(&self, x: f64, y: f64, z: f64) -> Option<f64> {
+        let (u, v) = self.project(x, y, z);
         unimplemented!()
     }
 }
@@ -147,6 +185,14 @@ mod tests {
         assert!(project.scan_position("SP01").is_some());
         assert!(project.scan_position("SP02").is_some());
         assert!(project.scan_position("SP03").is_none());
+    }
+
+    #[test]
+    fn image_color() {
+        let project = Project::from_path("data/project.RiSCAN").unwrap();
+        let image = project.image("SP01", "SP01 - Image001").unwrap();
+        assert_eq!(22.49,
+                   image.color(-139.31727, -239.32973, -10.49305).unwrap());
     }
 
     #[test]
