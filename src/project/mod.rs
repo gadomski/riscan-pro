@@ -1,16 +1,17 @@
 mod camera_calibration;
 mod image;
+mod mount_calibration;
 mod scan_position;
 mod traits;
 
 pub use project::camera_calibration::CameraCalibration;
+pub use project::mount_calibration::MountCalibration;
 pub use project::image::Image;
 
 use std::collections::HashMap;
 use std::fs::{self, File};
 use std::path::Path;
 
-use nalgebra::Matrix4;
 use xmltree::Element;
 
 use {Error, Result};
@@ -83,29 +84,6 @@ impl Project {
     /// ```
     pub fn image(&self, scan_position: &str, image: &str) -> Option<&Image> {
         self.scan_position(scan_position).and_then(|scan_position| scan_position.image(image))
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct MountCalibration {
-    matrix: Matrix4<f64>,
-    name: String,
-}
-
-impl MountCalibration {
-    fn from_element(element: &Element) -> Result<MountCalibration> {
-        Ok(MountCalibration {
-            matrix: try!(element.get_matrix4("matrix")),
-            name: try!(element.get_text("name")).to_string(),
-        })
-    }
-
-    fn name(&self) -> &str {
-        &self.name
-    }
-
-    fn matrix(&self) -> Matrix4<f64> {
-        self.matrix
     }
 }
 
