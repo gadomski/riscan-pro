@@ -1,5 +1,6 @@
 use std::io;
 
+use nalgebra::Matrix4;
 use xmltree;
 
 #[derive(Debug)]
@@ -7,6 +8,7 @@ pub enum Error {
     InvalidXml(String),
     Io(io::Error),
     MissingElement(String),
+    MissingInverse(Matrix4<f64>),
     XmltreeParse(xmltree::ParseError),
 }
 
