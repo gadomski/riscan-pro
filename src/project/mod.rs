@@ -1,12 +1,14 @@
 mod camera_calibration;
 mod image;
 mod mount_calibration;
+mod scan;
 mod scan_position;
 mod traits;
 
 pub use project::camera_calibration::CameraCalibration;
 pub use project::mount_calibration::MountCalibration;
 pub use project::image::{Image, ImageData};
+pub use project::scan::Scan;
 
 use std::collections::HashMap;
 use std::fs::{self, File};
@@ -75,6 +77,10 @@ impl Project {
         self.scan_positions.get(name)
     }
 
+    pub fn scan_position_with_scan(&self, name: &str) -> Option<&ScanPosition> {
+        self.scan_positions.values().filter(|&s| s.contains_scan(name)).next()
+    }
+
     /// Returns the image of the provided name in the specified scan position.
     ///
     /// # Examples
@@ -136,5 +142,15 @@ mod tests {
         let project = Project::from_path("data/project.RiSCAN").unwrap();
         let scan_position = project.scan_position("SP01").unwrap();
         assert_eq!(22.49, scan_position.color(point()).unwrap().unwrap());
+    }
+
+    #[test]
+    fn project_scan_position_with_scan() {
+        let project = Project::from_path("data/project.RiSCAN").unwrap();
+        let scan_position = project.scan_position_with_scan("151120_150227").unwrap();
+        assert_eq!(project.scan_position("SP01").unwrap(), scan_position);
+        let scan_position = project.scan_position_with_scan("151120_155528").unwrap();
+        assert_eq!(project.scan_position("SP02").unwrap(), scan_position);
+        assert!(project.scan_position_with_scan("151120_155529").is_none());
     }
 }
