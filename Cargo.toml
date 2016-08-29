@@ -5,7 +5,8 @@ authors = ["Pete Gadomski <pete.gadomski@gmail.com>"]
 
 [dependencies]
 docopt = "*"
-las = "*"
+las = { git = "https://github.com/gadomski/las-rs.git" }
 nalgebra = "*"
+pbr = "*"
 rustc-serialize = "*"
 xmltree = "0.3"

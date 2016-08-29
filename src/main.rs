@@ -1,5 +1,6 @@
 extern crate docopt;
 extern crate las;
+extern crate pbr;
 extern crate riscan_pro;
 extern crate rustc_serialize;
 
@@ -7,6 +8,7 @@ use std::path::Path;
 
 use docopt::Docopt;
 use las::{PointFormat, Reader, Writer};
+use pbr::ProgressBar;
 use riscan_pro::{PRCS, Point, Project};
 
 const USAGE: &'static str = "
@@ -61,7 +63,11 @@ fn main() {
             .point_format(PointFormat(1))
             .open()
             .unwrap();
-        for mut las_point in reader {
+        let mut progress_bar = ProgressBar::new(reader.npoints() as u64);
+        for (i, mut las_point) in reader.into_iter().enumerate() {
+            if (i % 100000) == 0 {
+                progress_bar.add(100000);
+            }
             let point = Point {
                 crs: PRCS,
                 x: las_point.x,
@@ -74,5 +80,6 @@ fn main() {
             }
         }
         writer.close().unwrap();
+        progress_bar.finish();
     }
 }
