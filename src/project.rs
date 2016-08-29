@@ -8,6 +8,7 @@ use xmltree::Element;
 
 use {Error, Result};
 use point::{PRCS, Point};
+use utils;
 
 #[derive(Debug, PartialEq)]
 pub struct Project {
@@ -88,13 +89,12 @@ trait GetDescendant {
         self.get_descendant(name).and_then(|e| {
             e.attributes
                 .get("noderef")
-                .map(|s| s.as_str())
+                .and_then(|s| s.split('/').last())
                 .ok_or(Error::MissingElement(format!("{}.noderef", name)))
         })
     }
-    fn get_matrix4<T>(&self, name: &str) -> Result<Matrix4<T>> {
-        let text = try!(self.get_text(name));
-        unimplemented!()
+    fn get_matrix4(&self, name: &str) -> Result<Matrix4<f64>> {
+        self.get_text(name).and_then(|s| utils::matrix4_from_str(s))
     }
     fn map_children<F, A, B>(&self, name: &str, function: F) -> Result<A>
         where F: Fn(&Element) -> Result<B>,
@@ -218,7 +218,10 @@ pub struct MountCalibration {
 
 impl MountCalibration {
     fn from_element(element: &Element) -> Result<MountCalibration> {
-        unimplemented!()
+        Ok(MountCalibration {
+            matrix: try!(element.get_matrix4("matrix")),
+            name: try!(element.get_text("name")).to_string(),
+        })
     }
 
     fn name(&self) -> &str {

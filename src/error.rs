@@ -1,4 +1,5 @@
 use std::io;
+use std::num;
 
 use nalgebra::Matrix4;
 use xmltree;
@@ -9,6 +10,8 @@ pub enum Error {
     Io(io::Error),
     MissingElement(String),
     MissingInverse(Matrix4<f64>),
+    ParseFloat(num::ParseFloatError),
+    ParseMatrix(String),
     XmltreeParse(xmltree::ParseError),
 }
 
@@ -21,5 +24,11 @@ impl From<io::Error> for Error {
 impl From<xmltree::ParseError> for Error {
     fn from(err: xmltree::ParseError) -> Error {
         Error::XmltreeParse(err)
+    }
+}
+
+impl From<num::ParseFloatError> for Error {
+    fn from(err: num::ParseFloatError) -> Error {
+        Error::ParseFloat(err)
     }
 }
