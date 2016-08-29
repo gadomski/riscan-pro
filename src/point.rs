@@ -33,7 +33,6 @@ mod tests {
             y: 2.,
             z: 3.,
         };
-        let vector = Vector4::from(point);
-        assert_eq!(Vector4::new(1., 2., 3., 1.), vector);
+        assert_eq!(Vector4::new(1., 2., 3., 1.), point.into());
     }
 }

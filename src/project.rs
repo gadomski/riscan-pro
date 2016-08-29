@@ -205,7 +205,7 @@ impl Image {
         let cmcs = self.mount_calibration.matrix() *
                    try!(self.cop.inverse().ok_or(Error::MissingInverse(self.cop))) *
                    try!(self.sop.inverse().ok_or(Error::MissingInverse(self.sop))) *
-                   Vector4::<f64>::from(point);
+                   Vector4::from(point);
         unimplemented!()
     }
 }
