@@ -91,18 +91,19 @@ impl Image {
 }
 
 pub trait ImageData {
+    fn path(&self) -> &Path;
     fn get(&self, u: f64, v: f64) -> Option<f64>;
 }
 
 impl fmt::Debug for ImageData {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        unimplemented!()
+        write!(f, "ImageData {{ path: {} }}", self.path().to_string_lossy())
     }
 }
 
 impl PartialEq for ImageData {
     fn eq(&self, other: &ImageData) -> bool {
-        unimplemented!()
+        self.path() == other.path()
     }
 }
 

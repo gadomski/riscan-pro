@@ -1,12 +1,12 @@
-use std::collections::HashMap;
 use std::fs::File;
 use std::io::{BufRead, BufReader, Cursor, Read};
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use {Error, Result};
 use project::ImageData;
 
 pub struct Image {
+    path: PathBuf,
     header: Header,
     data: Vec<Vec<f64>>,
 }
@@ -14,7 +14,7 @@ pub struct Image {
 impl Image {
     pub fn from_path<P: AsRef<Path>>(path: P) -> Result<Image> {
         let mut buf = Vec::new();
-        try!(File::open(path).and_then(|mut f| f.read_to_end(&mut buf)));
+        try!(File::open(&path).and_then(|mut f| f.read_to_end(&mut buf)));
         // We need to read everything in, then convert w/ utf8 lossy, because the degree sign
         // doesn't seem to be valid utf8.
         let mut reader = BufReader::new(Cursor::new(String::from_utf8_lossy(&buf[..])
@@ -29,8 +29,9 @@ impl Image {
             })
             .collect());
         Ok(Image {
-            header: header,
             data: data,
+            header: header,
+            path: path.as_ref().to_path_buf(),
         })
     }
 
@@ -52,6 +53,10 @@ impl Image {
 }
 
 impl ImageData for Image {
+    fn path(&self) -> &Path {
+        &self.path
+    }
+
     fn get(&self, u: f64, v: f64) -> Option<f64> {
         unimplemented!()
     }
