@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 use std::fs::{self, File};
+use std::iter::FromIterator;
 use std::path::Path;
 
 use xmltree::Element;
@@ -32,15 +33,10 @@ impl Project {
         let xml = try!(File::open(path)
             .map_err(Error::from)
             .and_then(|file| Element::parse(file).map_err(Error::from)));
-        let scan_positions: HashMap<String, ScanPosition> = try!(xml.get_children("scanpositions")
-            .and_then(|children| {
-                children.iter()
-                    .map(|child| {
-                        let scan_position = try!(ScanPosition::from_element(child));
-                        Ok((scan_position.name().to_string(), scan_position))
-                    })
-                    .collect()
-            }));
+        let scan_positions = try!(xml.map_children("scanpositions", |child| {
+            let scan_position = try!(ScanPosition::from_element(child));
+            Ok((scan_position.name().to_string(), scan_position))
+        }));
         Ok(Project { scan_positions: scan_positions })
     }
 
@@ -82,6 +78,16 @@ trait GetDescendant {
                 e.text.as_ref().map(|s| s.as_str()).ok_or(Error::MissingElement(name.to_string()))
             })
     }
+    fn map_children<F, A, B>(&self, name: &str, function: F) -> Result<A>
+        where F: Fn(&Element) -> Result<B>,
+              A: FromIterator<B>
+    {
+        self.get_children(name).and_then(|children| {
+            children.iter()
+                .map(function)
+                .collect()
+        })
+    }
 }
 
 impl GetDescendant for Element {
@@ -106,13 +112,9 @@ pub struct ScanPosition {
 
 impl ScanPosition {
     fn from_element(element: &Element) -> Result<ScanPosition> {
-        let images = try!(element.get_children("scanposimages").and_then(|children| {
-            children.iter()
-                .map(|child| {
-                    let image = try!(Image::from_element(child));
-                    Ok((image.name().to_string(), image))
-                })
-                .collect()
+        let images = try!(element.map_children("scanposimages", |child| {
+            let image = try!(Image::from_element(child));
+            Ok((image.name().to_string(), image))
         }));
         Ok(ScanPosition {
             name: try!(element.get_text("name")).to_string(),
@@ -159,6 +161,10 @@ impl Image {
 
     fn color(&self, x: f64, y: f64, z: f64) -> Option<f64> {
         let (u, v) = self.project(x, y, z);
+        unimplemented!()
+    }
+
+    fn project(&self, x: f64, y: f64, z: f64) -> (f64, f64) {
         unimplemented!()
     }
 }
