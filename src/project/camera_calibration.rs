@@ -1,7 +1,7 @@
 use xmltree::Element;
 
 use {Error, Result};
-use project::GetDescendant;
+use project::traits::GetDescendant;
 
 #[derive(Clone, Debug, PartialEq)]
 pub enum CameraCalibration {
