@@ -10,3 +10,7 @@ nalgebra = "0.9"
 pbr = "0.3"
 rustc-serialize = "0.3"
 xmltree = "0.3"
+
+[[bin]]
+name = "riscan-pro"
+doc = false
