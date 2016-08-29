@@ -132,7 +132,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
     fn scan_position_color() {
         let project = Project::from_path("data/project.RiSCAN").unwrap();
         let scan_position = project.scan_position("SP01").unwrap();

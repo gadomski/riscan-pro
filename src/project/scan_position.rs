@@ -55,17 +55,16 @@ impl ScanPosition {
     }
 
     pub fn color(&self, point: Point<PRCS, f64>) -> Result<Option<f64>> {
-        for image in self.images() {
+        for image in self.images.values() {
+            if !image.has_data() {
+                continue;
+            }
             let color = try!(image.color(point));
             if color.is_some() {
                 return Ok(color);
             }
         }
         Ok(None)
-    }
-
-    pub fn images(&self) -> &Vec<Image> {
-        unimplemented!()
     }
 
     pub fn image(&self, name: &str) -> Option<&Image> {

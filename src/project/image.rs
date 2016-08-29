@@ -94,6 +94,10 @@ impl Image {
             }
         }
     }
+
+    pub fn has_data(&self) -> bool {
+        self.image_data.is_some()
+    }
 }
 
 pub trait ImageData {
