@@ -1,12 +1,29 @@
 use nalgebra::Vector4;
 
+/// A three-dimensional point with a coordinate reference system.
+///
+/// # Examples
+///
+/// ```
+/// use riscan_pro::{Point, PRCS};
+/// let point = Point {
+///     crs: PRCS, // Project's Reference Coordinate System
+///     x: 1f64,
+///     y: 2.,
+///     z: 3.,
+/// };
+/// ```
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Point<T, N>
     where N: Copy
 {
+    /// The coordinate reference system.
     pub crs: T,
+    /// X coordinate.
     pub x: N,
+    /// Y coordinate.
     pub y: N,
+    /// Z coordinate.
     pub z: N,
 }
 
@@ -16,6 +33,7 @@ impl<T> From<Point<T, f64>> for Vector4<f64> {
     }
 }
 
+/// Project's reference coordinate system.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct PRCS;
 

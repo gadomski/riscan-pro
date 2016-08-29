@@ -1,10 +1,8 @@
-use xmltree::Element;
-
-use {Error, Result};
-use project::traits::GetDescendant;
-
+/// Camera calibration to turn points into pixels.
 #[derive(Clone, Debug, PartialEq)]
+#[allow(missing_docs)]
 pub enum CameraCalibration {
+    /// OpenCv camera calibration.
     OpenCv {
         name: String,
         cameramodel: String,
@@ -16,43 +14,7 @@ pub enum CameraCalibration {
 }
 
 impl CameraCalibration {
-    pub fn from_element(element: &Element) -> Result<CameraCalibration> {
-        match element.name.as_str() {
-            "camcalib_opencv" => {
-                Ok(CameraCalibration::OpenCv {
-                    name: try!(element.get_text("name")).to_string(),
-                    cameramodel: try!(element.get_text("cameramodel")).to_string(),
-                    version: try!(element.parse("version")),
-                    angle_extents: opencv::AngleExtents {
-                        tan_max_horz: try!(element.parse("angle_extents/tan_max_horz")),
-                        tan_max_vert: try!(element.parse("angle_extents/tan_max_vert")),
-                        tan_min_horz: try!(element.parse("angle_extents/tan_min_horz")),
-                        tan_min_vert: try!(element.parse("angle_extents/tan_min_vert")),
-                    },
-                    internal_opencv: opencv::Internal {
-                        cx: try!(element.parse("internal_opencv/cx")),
-                        cy: try!(element.parse("internal_opencv/cy")),
-                        fx: try!(element.parse("internal_opencv/fx")),
-                        fy: try!(element.parse("internal_opencv/fy")),
-                        k1: try!(element.parse("internal_opencv/k1")),
-                        k2: try!(element.parse("internal_opencv/k2")),
-                        k3: try!(element.parse("internal_opencv/k3")),
-                        k4: try!(element.parse("internal_opencv/k4")),
-                        p1: try!(element.parse("internal_opencv/p1")),
-                        p2: try!(element.parse("internal_opencv/p2")),
-                    },
-                    intrinsic_opencv: opencv::Intrinsic {
-                        dx: try!(element.parse("intrinsic_opencv/dx")),
-                        dy: try!(element.parse("intrinsic_opencv/dy")),
-                        nx: try!(element.parse("intrinsic_opencv/nx")),
-                        ny: try!(element.parse("intrinsic_opencv/ny")),
-                    },
-                })
-            }
-            _ => Err(Error::UnsupportedCameraCalibration(element.name.to_string())),
-        }
-    }
-
+    /// Returns this camera calibration's name.
     pub fn name(&self) -> &str {
         match *self {
             CameraCalibration::OpenCv { ref name, .. } => name,

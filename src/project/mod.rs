@@ -9,17 +9,19 @@ pub use project::camera_calibration::CameraCalibration;
 pub use project::mount_calibration::MountCalibration;
 pub use project::image::{Image, ImageData};
 pub use project::scan::Scan;
+pub use project::scan_position::ScanPosition;
 
 use std::collections::HashMap;
 use std::fs::{self, File};
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
+use nalgebra::Matrix4;
 use xmltree::Element;
 
 use {Error, Result};
 use project::traits::GetDescendant;
-use project::scan_position::ScanPosition;
 
+/// A RiSCAN Pro project.
 #[derive(Debug, PartialEq)]
 pub struct Project {
     scan_positions: HashMap<String, ScanPosition>,
@@ -77,6 +79,18 @@ impl Project {
         self.scan_positions.get(name)
     }
 
+    /// Finds the scan position that contains the named scan.
+    ///
+    /// Since scans are named by their timestamp, it is practically impossible to have two scans
+    /// with the same name in a project.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use riscan_pro::Project;
+    /// # let project = Project::from_path("data/project.RiSCAN").unwrap();
+    /// let scan_position = project.scan_position_with_scan("151120_150227").unwrap();
+    /// ```
     pub fn scan_position_with_scan(&self, name: &str) -> Option<&ScanPosition> {
         self.scan_positions.values().filter(|&s| s.contains_scan(name)).next()
     }
@@ -92,6 +106,120 @@ impl Project {
     /// ```
     pub fn image(&self, scan_position: &str, image: &str) -> Option<&Image> {
         self.scan_position(scan_position).and_then(|scan_position| scan_position.image(image))
+    }
+}
+
+impl ScanPosition {
+    fn from_element<P>(element: &Element,
+                       project_path: P,
+                       mount_calibrations: &HashMap<String, MountCalibration>,
+                       camera_calibrations: &HashMap<String, CameraCalibration>)
+                       -> Result<ScanPosition>
+        where P: AsRef<Path>
+    {
+        let name = try!(element.get_text("name"));
+        let sop = try!(element.get_matrix4("sop/matrix"));
+        let scans = try!(element.map_children("singlescans", |child| {
+            let scan = try!(Scan::from_element(child));
+            Ok((scan.name().to_string(), scan))
+        }));
+        let images = try!(element.map_children("scanposimages", |child| {
+            let ref mount_calibration = try!(child.get_noderef("mountcalib_ref")
+                .and_then(|name| {
+                    mount_calibrations.get(name)
+                        .ok_or(Error::MissingElement(format!("mount_calibration[name={}]", name)))
+                }));
+            let ref camera_calibration = try!(child.get_noderef("camcalib_ref")
+                .and_then(|name| {
+                    camera_calibrations.get(name)
+                        .ok_or(Error::MissingElement(format!("camera_calibration[name={}]", name)))
+                }));
+            let image = try!(Image::from_element(child,
+                                                 &project_path,
+                                                 (*mount_calibration).clone(),
+                                                 (*camera_calibration).clone(),
+                                                 name,
+                                                 sop));
+            Ok((image.name().to_string(), image))
+        }));
+        Ok(ScanPosition::new(name, images, scans))
+    }
+}
+
+impl Image {
+    fn from_element<P>(element: &Element,
+                       project_path: P,
+                       mount_calibration: MountCalibration,
+                       camera_calibration: CameraCalibration,
+                       scan_position_name: &str,
+                       sop: Matrix4<f64>)
+                       -> Result<Image>
+        where P: AsRef<Path>
+    {
+        let mut path = PathBuf::from(format!("{}/SCANS/{}/SCANPOSIMAGES",
+                                             project_path.as_ref().to_string_lossy(),
+                                             scan_position_name));
+        path.push(try!(element.get_text("file")));
+        let image_data = try!(image::read_image_data(path));
+        Ok(Image::new(scan_position_name,
+                      sop,
+                      try!(element.get_text("name")),
+                      mount_calibration,
+                      camera_calibration,
+                      try!(element.get_matrix4("cop/matrix")),
+                      image_data))
+    }
+}
+
+impl CameraCalibration {
+    fn from_element(element: &Element) -> Result<CameraCalibration> {
+        match element.name.as_str() {
+            "camcalib_opencv" => {
+                Ok(CameraCalibration::OpenCv {
+                    name: try!(element.get_text("name")).to_string(),
+                    cameramodel: try!(element.get_text("cameramodel")).to_string(),
+                    version: try!(element.parse("version")),
+                    angle_extents: camera_calibration::opencv::AngleExtents {
+                        tan_max_horz: try!(element.parse("angle_extents/tan_max_horz")),
+                        tan_max_vert: try!(element.parse("angle_extents/tan_max_vert")),
+                        tan_min_horz: try!(element.parse("angle_extents/tan_min_horz")),
+                        tan_min_vert: try!(element.parse("angle_extents/tan_min_vert")),
+                    },
+                    internal_opencv: camera_calibration::opencv::Internal {
+                        cx: try!(element.parse("internal_opencv/cx")),
+                        cy: try!(element.parse("internal_opencv/cy")),
+                        fx: try!(element.parse("internal_opencv/fx")),
+                        fy: try!(element.parse("internal_opencv/fy")),
+                        k1: try!(element.parse("internal_opencv/k1")),
+                        k2: try!(element.parse("internal_opencv/k2")),
+                        k3: try!(element.parse("internal_opencv/k3")),
+                        k4: try!(element.parse("internal_opencv/k4")),
+                        p1: try!(element.parse("internal_opencv/p1")),
+                        p2: try!(element.parse("internal_opencv/p2")),
+                    },
+                    intrinsic_opencv: camera_calibration::opencv::Intrinsic {
+                        dx: try!(element.parse("intrinsic_opencv/dx")),
+                        dy: try!(element.parse("intrinsic_opencv/dy")),
+                        nx: try!(element.parse("intrinsic_opencv/nx")),
+                        ny: try!(element.parse("intrinsic_opencv/ny")),
+                    },
+                })
+            }
+            _ => Err(Error::UnsupportedCameraCalibration(element.name.to_string())),
+        }
+    }
+}
+
+impl MountCalibration {
+    fn from_element(element: &Element) -> Result<MountCalibration> {
+        Ok(MountCalibration::new(try!(element.get_text("name")),
+                                 try!(element.get_matrix4("matrix"))))
+    }
+}
+
+impl Scan {
+    fn from_element(element: &Element) -> Result<Scan> {
+        Ok(Scan::new(try!(element.get_text("name"))))
     }
 }
 

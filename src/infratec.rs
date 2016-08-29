@@ -1,3 +1,8 @@
+//! Infratec makes thermal cameras, which we use in conjunction with scanners.
+//!
+//! However, the integration of these cameras with the scanners is not complete, so we need to do
+//! some outside-of-RiSCAN-Pro processing.
+
 use std::fs::File;
 use std::io::{BufRead, BufReader, Cursor, Read};
 use std::path::{Path, PathBuf};
@@ -5,6 +10,8 @@ use std::path::{Path, PathBuf};
 use {Error, Result};
 use project::ImageData;
 
+/// Infratec thermal camera image.
+#[derive(Debug)]
 pub struct Image {
     path: PathBuf,
     header: Header,
@@ -12,6 +19,14 @@ pub struct Image {
 }
 
 impl Image {
+    /// Creates a new image from a path to a csv file.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use riscan_pro::infratec::Image;
+    /// let image = Image::from_path("data/project.RiSCAN/SCANS/SP01/SCANPOSIMAGES/SP01 - Image001.csv").unwrap();
+    /// ```
     pub fn from_path<P: AsRef<Path>>(path: P) -> Result<Image> {
         let mut buf = Vec::new();
         try!(File::open(&path).and_then(|mut f| f.read_to_end(&mut buf)));
@@ -35,10 +50,28 @@ impl Image {
         })
     }
 
+    /// Returns this image's width.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use riscan_pro::infratec::Image;
+    /// # let image = Image::from_path("data/project.RiSCAN/SCANS/SP01/SCANPOSIMAGES/SP01 - Image001.csv").unwrap();
+    /// let width = image.width();
+    /// ```
     pub fn width(&self) -> usize {
         self.header.width
     }
 
+    /// Returns this image's height.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use riscan_pro::infratec::Image;
+    /// # let image = Image::from_path("data/project.RiSCAN/SCANS/SP01/SCANPOSIMAGES/SP01 - Image001.csv").unwrap();
+    /// let height = image.height();
+    /// ```
     pub fn height(&self) -> usize {
         self.header.height
     }

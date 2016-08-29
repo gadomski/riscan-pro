@@ -1,16 +1,18 @@
 use std::fmt;
 use std::fs;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 use nalgebra::{Inverse, Matrix3, Matrix4, Vector3, Vector4};
-use xmltree::Element;
 
 use {Error, Result};
 use infratec;
 use point::{PRCS, Point};
 use project::{CameraCalibration, MountCalibration};
-use project::traits::GetDescendant;
 
+/// A project image.
+///
+/// This struct may or may not be associated with actual image data. Image data are loaded into an
+/// `Image` via a magical discovery process.
 #[derive(Debug, PartialEq)]
 pub struct Image {
     cop: Matrix4<f64>,
@@ -23,39 +25,72 @@ pub struct Image {
 }
 
 impl Image {
-    pub fn from_element<P>(element: &Element,
-                           project_path: P,
-                           mount_calibration: MountCalibration,
-                           camera_calibration: CameraCalibration,
-                           scan_position_name: &str,
-                           sop: Matrix4<f64>)
-                           -> Result<Image>
-        where P: AsRef<Path>
-    {
-        let mut path = PathBuf::from(format!("{}/SCANS/{}/SCANPOSIMAGES",
-                                             project_path.as_ref().to_string_lossy(),
-                                             scan_position_name));
-        path.push(try!(element.get_text("file")));
-        let image_data = try!(read_image_data(path));
-        Ok(Image {
+    /// Creates a new image.
+    pub fn new(scan_position_name: &str,
+               sop: Matrix4<f64>,
+               name: &str,
+               mount_calibration: MountCalibration,
+               camera_calibration: CameraCalibration,
+               cop: Matrix4<f64>,
+               image_data: Option<Box<ImageData>>)
+               -> Image {
+        Image {
+            cop: cop,
             camera_calibration: camera_calibration,
-            cop: try!(element.get_matrix4("cop/matrix")),
             image_data: image_data,
             mount_calibration: mount_calibration,
-            name: try!(element.get_text("name")).to_string(),
+            name: name.to_string(),
             scan_position_name: scan_position_name.to_string(),
             sop: sop,
-        })
+        }
     }
 
+    /// Returns this image's name.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use riscan_pro::Project;
+    /// # let project = Project::from_path("data/project.RiSCAN").unwrap();
+    /// # let image = project.image("SP01", "SP01 - Image001").unwrap();
+    /// let name = image.name();
+    /// ```
     pub fn name(&self) -> &str {
         &self.name
     }
 
+    /// Returns the name of the scan position that holds this image.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use riscan_pro::Project;
+    /// # let project = Project::from_path("data/project.RiSCAN").unwrap();
+    /// # let image = project.image("SP01", "SP01 - Image001").unwrap();
+    /// let name = image.scan_position_name();
+    /// ```
     pub fn scan_position_name(&self) -> &str {
         &self.scan_position_name
     }
 
+    /// Computes the color value associated with this image at the given PRCS coordinates.
+    ///
+    /// For now, "color" is just a single pixel value.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use riscan_pro::{Project, Point, PRCS};
+    /// # let project = Project::from_path("data/project.RiSCAN").unwrap();
+    /// let image = project.image("SP01", "SP01 - Image001").unwrap();
+    /// let point = Point {
+    ///     crs: PRCS,
+    ///     x: -139.31727,
+    ///     y: -239.32973,
+    ///     z: -10.49305,
+    /// };
+    /// let color = image.color(point).unwrap().unwrap();
+    /// ```
     pub fn color(&self, point: Point<PRCS, f64>) -> Result<Option<f64>> {
         let data = try!(self.image_data
             .as_ref()
@@ -95,13 +130,58 @@ impl Image {
         }
     }
 
+    /// Returns true if this image has associated data.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use riscan_pro::{Project, Point, PRCS};
+    /// let project = Project::from_path("data/project.RiSCAN").unwrap();
+    /// let image1 = project.image("SP01", "SP01 - Image001").unwrap();
+    /// assert!(image1.has_data());
+    /// let image2 = project.image("SP01", "SP01 - Image002").unwrap();
+    /// assert!(!image2.has_data());
+    /// ```
     pub fn has_data(&self) -> bool {
         self.image_data.is_some()
     }
 }
 
+/// Actual image data, pixels with values.
+///
+/// Image providers should implement this trait to allow projects to convert points in space to
+/// color values.
 pub trait ImageData {
+    /// Returns the file path to this image.
+    ///
+    /// # Examples
+    ///
+    /// Infratec images implement `ImageData`.
+    ///
+    /// ```
+    /// use riscan_pro::infratec::Image;
+    /// use riscan_pro::ImageData;
+    /// let path = "data/project.RiSCAN/SCANS/SP01/SCANPOSIMAGES/SP01 - Image001.csv";
+    /// let image = Image::from_path(path).unwrap();
+    /// assert_eq!(path, &image.path().to_string_lossy());
+    /// ```
     fn path(&self) -> &Path;
+
+    /// Returns the pixel value at the given row and column.
+    ///
+    /// If the row or column are outside of the image bounds, `ImageData::get` returns `None`.
+    ///
+    /// # Examples
+    ///
+    /// Infratec images implement `ImageData`.
+    ///
+    /// ```
+    /// use riscan_pro::infratec::Image;
+    /// use riscan_pro::ImageData;
+    /// let path = "data/project.RiSCAN/SCANS/SP01/SCANPOSIMAGES/SP01 - Image001.csv";
+    /// let image = Image::from_path(path).unwrap();
+    /// let color = image.get(1., 1.).unwrap();
+    /// ```
     fn get(&self, u: f64, v: f64) -> Option<f64>;
 }
 
@@ -117,7 +197,7 @@ impl PartialEq for ImageData {
     }
 }
 
-fn read_image_data<P: AsRef<Path>>(path: P) -> Result<Option<Box<ImageData>>> {
+pub fn read_image_data<P: AsRef<Path>>(path: P) -> Result<Option<Box<ImageData>>> {
     let csvfile = path.as_ref().with_extension("csv");
     if fs::metadata(&csvfile).map(|m| m.is_file()).unwrap_or(false) {
         Ok(Some(Box::new(try!(infratec::Image::from_path(csvfile)))))
