@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::path::Path;
 
 use xmltree::Element;
 
@@ -15,10 +16,13 @@ pub struct ScanPosition {
 }
 
 impl ScanPosition {
-    pub fn from_element(element: &Element,
-                        mount_calibrations: &HashMap<String, MountCalibration>,
-                        camera_calibrations: &HashMap<String, CameraCalibration>)
-                        -> Result<ScanPosition> {
+    pub fn from_element<P>(element: &Element,
+                           project_path: P,
+                           mount_calibrations: &HashMap<String, MountCalibration>,
+                           camera_calibrations: &HashMap<String, CameraCalibration>)
+                           -> Result<ScanPosition>
+        where P: AsRef<Path>
+    {
         let name = try!(element.get_text("name"));
         let sop = try!(element.get_matrix4("sop/matrix"));
         let images = try!(element.map_children("scanposimages", |child| {
@@ -33,6 +37,7 @@ impl ScanPosition {
                         .ok_or(Error::MissingElement(format!("camera_calibration[name={}]", name)))
                 }));
             let image = try!(Image::from_element(child,
+                                                 &project_path,
                                                  (*mount_calibration).clone(),
                                                  (*camera_calibration).clone(),
                                                  name,

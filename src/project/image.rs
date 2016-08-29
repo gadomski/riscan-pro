@@ -1,6 +1,6 @@
 use std::fmt;
 use std::fs;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use nalgebra::{Inverse, Matrix3, Matrix4, Vector3, Vector4};
 use xmltree::Element;
@@ -23,14 +23,20 @@ pub struct Image {
 }
 
 impl Image {
-    pub fn from_element(element: &Element,
-                        mount_calibration: MountCalibration,
-                        camera_calibration: CameraCalibration,
-                        scan_position_name: &str,
-                        sop: Matrix4<f64>)
-                        -> Result<Image> {
-        let file = try!(element.get_text("file"));
-        let image_data = try!(read_image_data(file));
+    pub fn from_element<P>(element: &Element,
+                           project_path: P,
+                           mount_calibration: MountCalibration,
+                           camera_calibration: CameraCalibration,
+                           scan_position_name: &str,
+                           sop: Matrix4<f64>)
+                           -> Result<Image>
+        where P: AsRef<Path>
+    {
+        let mut path = PathBuf::from(format!("{}/SCANS/{}/SCANPOSIMAGES",
+                                             project_path.as_ref().to_string_lossy(),
+                                             scan_position_name));
+        path.push(try!(element.get_text("file")));
+        let image_data = try!(read_image_data(path));
         Ok(Image {
             camera_calibration: camera_calibration,
             cop: try!(element.get_matrix4("cop/matrix")),

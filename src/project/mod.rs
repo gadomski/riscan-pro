@@ -41,7 +41,7 @@ impl Project {
         if try!(fs::metadata(&path)).is_dir() {
             path.push("project.rsp");
         }
-        let xml = try!(File::open(path)
+        let xml = try!(File::open(&path)
             .map_err(Error::from)
             .and_then(|file| Element::parse(file).map_err(Error::from)));
         let mount_calibrations = try!(xml.map_children("calibrations/mountcalibs", |child| {
@@ -53,8 +53,10 @@ impl Project {
             Ok((camera_calibration.name().to_string(), camera_calibration))
         }));
         let scan_positions = try!(xml.map_children("scanpositions", |child| {
-            let scan_position =
-                try!(ScanPosition::from_element(child, &mount_calibrations, &camera_calibrations));
+            let scan_position = try!(ScanPosition::from_element(child,
+                                                                path.parent().unwrap(),
+                                                                &mount_calibrations,
+                                                                &camera_calibrations));
             Ok((scan_position.name().to_string(), scan_position))
         }));
         Ok(Project { scan_positions: scan_positions })
