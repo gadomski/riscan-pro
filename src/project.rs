@@ -122,11 +122,11 @@ impl ScanPosition {
         })
     }
 
-    fn name(&self) -> &str {
+    pub fn name(&self) -> &str {
         &self.name
     }
 
-    fn color(&self, x: f64, y: f64, z: f64) -> Option<f64> {
+    pub fn color(&self, x: f64, y: f64, z: f64) -> Option<f64> {
         for image in self.images() {
             let color = image.color(x, y, z);
             if color.is_some() {
@@ -136,11 +136,11 @@ impl ScanPosition {
         None
     }
 
-    fn images(&self) -> &Vec<Image> {
+    pub fn images(&self) -> &Vec<Image> {
         unimplemented!()
     }
 
-    fn image(&self, name: &str) -> Option<&Image> {
+    pub fn image(&self, name: &str) -> Option<&Image> {
         self.images.get(name)
     }
 }
@@ -155,11 +155,11 @@ impl Image {
         Ok(Image { name: try!(element.get_text("name")).to_string() })
     }
 
-    fn name(&self) -> &str {
+    pub fn name(&self) -> &str {
         &self.name
     }
 
-    fn color(&self, x: f64, y: f64, z: f64) -> Option<f64> {
+    pub fn color(&self, x: f64, y: f64, z: f64) -> Option<f64> {
         let (u, v) = self.project(x, y, z);
         unimplemented!()
     }
