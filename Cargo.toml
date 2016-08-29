@@ -1,0 +1,8 @@
+[package]
+name = "riscan-pro"
+version = "0.1.0"
+authors = ["Pete Gadomski <pete.gadomski@gmail.com>"]
+
+[dependencies]
+nalgebra = "*"
+xmltree = "0.3"
