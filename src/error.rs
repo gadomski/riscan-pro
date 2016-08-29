@@ -11,7 +11,10 @@ pub enum Error {
     MissingElement(String),
     MissingInverse(Matrix4<f64>),
     ParseFloat(num::ParseFloatError),
+    ParseInt(num::ParseIntError),
     ParseMatrix(String),
+    UnsupportedCameraCalibration(String),
+    UnsupportedOpenCvVersion(u8),
     XmltreeParse(xmltree::ParseError),
 }
 
@@ -30,5 +33,11 @@ impl From<xmltree::ParseError> for Error {
 impl From<num::ParseFloatError> for Error {
     fn from(err: num::ParseFloatError) -> Error {
         Error::ParseFloat(err)
+    }
+}
+
+impl From<num::ParseIntError> for Error {
+    fn from(err: num::ParseIntError) -> Error {
+        Error::ParseInt(err)
     }
 }
