@@ -100,6 +100,29 @@ impl ScanPosition {
     fn name(&self) -> &str {
         &self.name
     }
+
+    fn color(&self, x: f64, y: f64, z: f64) -> Option<f64> {
+        for image in self.images() {
+            let color = image.color(x, y, z);
+            if color.is_some() {
+                return color;
+            }
+        }
+        None
+    }
+
+    fn images(&self) -> &Vec<Image> {
+        unimplemented!()
+    }
+}
+
+#[derive(Debug)]
+pub struct Image;
+
+impl Image {
+    fn color(&self, x: f64, y: f64, z: f64) -> Option<f64> {
+        unimplemented!()
+    }
 }
 
 #[cfg(test)]
@@ -124,5 +147,13 @@ mod tests {
         assert!(project.scan_position("SP01").is_some());
         assert!(project.scan_position("SP02").is_some());
         assert!(project.scan_position("SP03").is_none());
+    }
+
+    #[test]
+    fn scan_position_color() {
+        let project = Project::from_path("data/project.RiSCAN").unwrap();
+        let scan_position = project.scan_position("SP01").unwrap();
+        assert_eq!(22.49,
+                   scan_position.color(-139.31727, -239.32973, -10.49305).unwrap());
     }
 }
