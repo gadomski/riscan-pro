@@ -3,7 +3,7 @@ use std::fs::{self, File};
 use std::iter::FromIterator;
 use std::path::Path;
 
-use nalgebra::{Inverse, Matrix4, Vector4};
+use nalgebra::{Inverse, Matrix3, Matrix4, Vector3, Vector4};
 use xmltree::Element;
 
 use {Error, Result};
@@ -40,8 +40,13 @@ impl Project {
             let mount_calibration = try!(MountCalibration::from_element(child));
             Ok((mount_calibration.name().to_string(), mount_calibration))
         }));
+        let camera_calibrations = try!(xml.map_children("calibrations/camcalibs", |child| {
+            let camera_calibration = try!(CameraCalibration::from_element(child));
+            Ok((camera_calibration.name().to_string(), camera_calibration))
+        }));
         let scan_positions = try!(xml.map_children("scanpositions", |child| {
-            let scan_position = try!(ScanPosition::from_element(child, &mount_calibrations));
+            let scan_position =
+                try!(ScanPosition::from_element(child, &mount_calibrations, &camera_calibrations));
             Ok((scan_position.name().to_string(), scan_position))
         }));
         Ok(Project { scan_positions: scan_positions })
@@ -130,7 +135,8 @@ pub struct ScanPosition {
 
 impl ScanPosition {
     fn from_element(element: &Element,
-                    mount_calibrations: &HashMap<String, MountCalibration>)
+                    mount_calibrations: &HashMap<String, MountCalibration>,
+                    camera_calibrations: &HashMap<String, CameraCalibration>)
                     -> Result<ScanPosition> {
         let sop = try!(element.get_matrix4("sop/matrix"));
         let images = try!(element.map_children("scanposimages", |child| {
@@ -139,7 +145,15 @@ impl ScanPosition {
                     mount_calibrations.get(name)
                         .ok_or(Error::MissingElement(format!("mount_calibration[name={}]", name)))
                 }));
-            let image = try!(Image::from_element(child, (*mount_calibration).clone(), sop));
+            let ref camera_calibration = try!(child.get_noderef("camcalib_ref")
+                .and_then(|name| {
+                    camera_calibrations.get(name)
+                        .ok_or(Error::MissingElement(format!("camera_calibration[name={}]", name)))
+                }));
+            let image = try!(Image::from_element(child,
+                                                 (*mount_calibration).clone(),
+                                                 (*camera_calibration).clone(),
+                                                 sop));
             Ok((image.name().to_string(), image))
         }));
         Ok(ScanPosition {
@@ -174,6 +188,7 @@ impl ScanPosition {
 #[derive(Debug, PartialEq)]
 pub struct Image {
     cop: Matrix4<f64>,
+    camera_calibration: CameraCalibration,
     mount_calibration: MountCalibration,
     name: String,
     sop: Matrix4<f64>,
@@ -182,12 +197,14 @@ pub struct Image {
 impl Image {
     fn from_element(element: &Element,
                     mount_calibration: MountCalibration,
+                    camera_calibration: CameraCalibration,
                     sop: Matrix4<f64>)
                     -> Result<Image> {
         Ok(Image {
-            name: try!(element.get_text("name")).to_string(),
-            mount_calibration: mount_calibration,
+            camera_calibration: camera_calibration,
             cop: try!(element.get_matrix4("cop/matrix")),
+            mount_calibration: mount_calibration,
+            name: try!(element.get_text("name")).to_string(),
             sop: sop,
         })
     }
@@ -206,7 +223,29 @@ impl Image {
                    try!(self.cop.inverse().ok_or(Error::MissingInverse(self.cop))) *
                    try!(self.sop.inverse().ok_or(Error::MissingInverse(self.sop))) *
                    Vector4::from(point);
-        unimplemented!()
+        assert!(cmcs.w == 1.);
+        let cmcs = Vector3::new(cmcs.x, cmcs.y, cmcs.z);
+        match self.camera_calibration {
+            CameraCalibration::OpenCv { internal_opencv: cam, version, .. } => {
+                let a = Matrix3::new(cam.fx, 0., cam.cx, 0., cam.fy, cam.cy, 0., 0., 1.);
+                let ud_prime = a * cmcs;
+                let u = ud_prime[0] / ud_prime[2];
+                let v = ud_prime[1] / ud_prime[2];
+                let x = (u - cam.cx) / cam.fx;
+                let y = (v - cam.cy) / cam.fy;
+                let r = match version {
+                    2 => (x * x + y * y).sqrt().atan().powi(2).sqrt(),
+                    _ => return Err(Error::UnsupportedOpenCvVersion(version)),
+                };
+                let expansion = cam.k1 * r.powi(2) + cam.k2 * r.powi(4) + cam.k3 * r.powi(6) +
+                                cam.k4 * r.powi(8);
+                let ud = u + x * cam.fx * expansion + 2. * cam.fx * x * y * cam.p1 +
+                         cam.p2 * cam.fx * (r.powi(2) + 2. * x.powi(2));
+                let vd = v + y * cam.fy * expansion + 2. * cam.fy * x * y * cam.p2 +
+                         cam.p1 * cam.fy * (r.powi(2) + 2. * y.powi(2));
+                Ok((ud, vd))
+            }
+        }
     }
 }
 
@@ -230,6 +269,21 @@ impl MountCalibration {
 
     fn matrix(&self) -> Matrix4<f64> {
         self.matrix
+    }
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub enum CameraCalibration {
+    OpenCv,
+}
+
+impl CameraCalibration {
+    fn from_element(element: &Element) -> Result<CameraCalibration> {
+        unimplemented!()
+    }
+
+    fn name(&self) -> &str {
+        unimplemented!()
     }
 }
 
