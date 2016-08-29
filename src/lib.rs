@@ -2,6 +2,7 @@ extern crate nalgebra;
 extern crate xmltree;
 
 mod error;
+mod infratec;
 mod point;
 mod project;
 mod utils;

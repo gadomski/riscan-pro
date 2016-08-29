@@ -14,6 +14,7 @@ pub enum Error {
     ParseFloat(num::ParseFloatError),
     ParseInt(num::ParseIntError),
     ParseMatrix(String),
+    ReadInfratec(String),
     UnsupportedCameraCalibration(String),
     UnsupportedOpenCvVersion(u8),
     XmltreeParse(xmltree::ParseError),

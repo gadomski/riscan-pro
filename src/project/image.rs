@@ -1,9 +1,12 @@
 use std::fmt;
+use std::fs;
+use std::path::Path;
 
 use nalgebra::{Inverse, Matrix3, Matrix4, Vector3, Vector4};
 use xmltree::Element;
 
 use {Error, Result};
+use infratec;
 use point::{PRCS, Point};
 use project::{CameraCalibration, MountCalibration};
 use project::traits::GetDescendant;
@@ -26,10 +29,12 @@ impl Image {
                         scan_position_name: &str,
                         sop: Matrix4<f64>)
                         -> Result<Image> {
+        let file = try!(element.get_text("file"));
+        let image_data = try!(read_image_data(file));
         Ok(Image {
             camera_calibration: camera_calibration,
             cop: try!(element.get_matrix4("cop/matrix")),
-            image_data: None,
+            image_data: image_data,
             mount_calibration: mount_calibration,
             name: try!(element.get_text("name")).to_string(),
             scan_position_name: scan_position_name.to_string(),
@@ -98,5 +103,14 @@ impl fmt::Debug for ImageData {
 impl PartialEq for ImageData {
     fn eq(&self, other: &ImageData) -> bool {
         unimplemented!()
+    }
+}
+
+fn read_image_data<P: AsRef<Path>>(path: P) -> Result<Option<Box<ImageData>>> {
+    let csvfile = path.as_ref().with_extension("csv");
+    if fs::metadata(&csvfile).map(|m| m.is_file()).unwrap_or(false) {
+        Ok(Some(Box::new(try!(infratec::Image::from_path(csvfile)))))
+    } else {
+        Ok(None)
     }
 }

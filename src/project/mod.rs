@@ -6,7 +6,7 @@ mod traits;
 
 pub use project::camera_calibration::CameraCalibration;
 pub use project::mount_calibration::MountCalibration;
-pub use project::image::Image;
+pub use project::image::{Image, ImageData};
 
 use std::collections::HashMap;
 use std::fs::{self, File};
