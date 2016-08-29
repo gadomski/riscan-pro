@@ -35,20 +35,12 @@ impl Image {
         })
     }
 
-    pub fn version(&self) -> u8 {
-        self.header.version
-    }
-
     pub fn width(&self) -> usize {
         self.header.width
     }
 
     pub fn height(&self) -> usize {
         self.header.height
-    }
-
-    pub fn data(&self) -> &Vec<Vec<f64>> {
-        &self.data
     }
 }
 
@@ -58,7 +50,13 @@ impl ImageData for Image {
     }
 
     fn get(&self, u: f64, v: f64) -> Option<f64> {
-        unimplemented!()
+        // Images are rotated 90 counterclockwise and flipped up-down, which leads to this
+        // wonky checking and fetching.
+        if u > 0. && v > 0. && u < self.width() as f64 && v < self.height() as f64 {
+            Some(self.data[v as usize][u as usize])
+        } else {
+            None
+        }
     }
 }
 
@@ -112,12 +110,12 @@ mod tests {
         let image =
             Image::from_path("data/project.RiSCAN/SCANS/SP01/SCANPOSIMAGES/SP01 - Image001.csv")
                 .unwrap();
-        assert_eq!(3, image.version());
+        assert_eq!(3, image.header.version);
         assert_eq!(768, image.height());
         assert_eq!(1024, image.width());
-        assert_eq!(768, image.data().len());
+        assert_eq!(768, image.data.len());
         assert!(image.data.iter().all(|v| v.len() == 1024));
-        assert_eq!(-38.64, image.data()[0][0]);
-        assert_eq!(23.84, *image.data().last().unwrap().last().unwrap());
+        assert_eq!(-38.64, image.data[0][0]);
+        assert_eq!(23.84, *image.data.last().unwrap().last().unwrap());
     }
 }
