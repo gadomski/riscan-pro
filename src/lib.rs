@@ -1,3 +1,5 @@
+extern crate xmltree;
+
 mod error;
 mod project;
 
