@@ -89,7 +89,9 @@ mod tests {
 
     #[test]
     fn image_from_path() {
-        let image = Image::from_path("data/SP01 - Image001.csv").unwrap();
+        let image =
+            Image::from_path("data/project.RiSCAN/SCANS/SP01/SCANPOSIMAGES/SP01 - Image001.csv")
+                .unwrap();
         assert_eq!(3, image.version);
         assert_eq!(768, image.height);
         assert_eq!(1024, image.width);
