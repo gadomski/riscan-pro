@@ -1,3 +1,5 @@
+use std::fmt;
+
 use nalgebra::{Inverse, Matrix3, Matrix4, Vector3, Vector4};
 use xmltree::Element;
 
@@ -10,8 +12,10 @@ use project::traits::GetDescendant;
 pub struct Image {
     cop: Matrix4<f64>,
     camera_calibration: CameraCalibration,
+    image_data: Option<Box<ImageData>>,
     mount_calibration: MountCalibration,
     name: String,
+    scan_position_name: String,
     sop: Matrix4<f64>,
 }
 
@@ -19,13 +23,16 @@ impl Image {
     pub fn from_element(element: &Element,
                         mount_calibration: MountCalibration,
                         camera_calibration: CameraCalibration,
+                        scan_position_name: &str,
                         sop: Matrix4<f64>)
                         -> Result<Image> {
         Ok(Image {
             camera_calibration: camera_calibration,
             cop: try!(element.get_matrix4("cop/matrix")),
+            image_data: None,
             mount_calibration: mount_calibration,
             name: try!(element.get_text("name")).to_string(),
+            scan_position_name: scan_position_name.to_string(),
             sop: sop,
         })
     }
@@ -34,9 +41,17 @@ impl Image {
         &self.name
     }
 
+    pub fn scan_position_name(&self) -> &str {
+        &self.scan_position_name
+    }
+
     pub fn color(&self, point: Point<PRCS, f64>) -> Result<Option<f64>> {
+        let data = try!(self.image_data
+            .as_ref()
+            .ok_or(Error::MissingImageData(self.scan_position_name().to_string(),
+                                           self.name().to_string())));
         let (u, v) = try!(self.project(point));
-        unimplemented!()
+        Ok(data.get(u, v))
     }
 
     fn project(&self, point: Point<PRCS, f64>) -> Result<(f64, f64)> {
@@ -67,5 +82,21 @@ impl Image {
                 Ok((ud, vd))
             }
         }
+    }
+}
+
+pub trait ImageData {
+    fn get(&self, u: f64, v: f64) -> Option<f64>;
+}
+
+impl fmt::Debug for ImageData {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        unimplemented!()
+    }
+}
+
+impl PartialEq for ImageData {
+    fn eq(&self, other: &ImageData) -> bool {
+        unimplemented!()
     }
 }

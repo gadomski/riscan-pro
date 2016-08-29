@@ -9,6 +9,7 @@ pub enum Error {
     InvalidXml(String),
     Io(io::Error),
     MissingElement(String),
+    MissingImageData(String, String),
     MissingInverse(Matrix4<f64>),
     ParseFloat(num::ParseFloatError),
     ParseInt(num::ParseIntError),

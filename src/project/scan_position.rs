@@ -19,6 +19,7 @@ impl ScanPosition {
                         mount_calibrations: &HashMap<String, MountCalibration>,
                         camera_calibrations: &HashMap<String, CameraCalibration>)
                         -> Result<ScanPosition> {
+        let name = try!(element.get_text("name"));
         let sop = try!(element.get_matrix4("sop/matrix"));
         let images = try!(element.map_children("scanposimages", |child| {
             let ref mount_calibration = try!(child.get_noderef("mountcalib_ref")
@@ -34,11 +35,12 @@ impl ScanPosition {
             let image = try!(Image::from_element(child,
                                                  (*mount_calibration).clone(),
                                                  (*camera_calibration).clone(),
+                                                 name,
                                                  sop));
             Ok((image.name().to_string(), image))
         }));
         Ok(ScanPosition {
-            name: try!(element.get_text("name")).to_string(),
+            name: name.to_string(),
             images: images,
         })
     }
