@@ -1,6 +1,7 @@
 extern crate xmltree;
 
 mod error;
+mod point;
 mod project;
 
 pub use error::Error;

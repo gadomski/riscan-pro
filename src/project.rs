@@ -6,6 +6,7 @@ use std::path::Path;
 use xmltree::Element;
 
 use {Error, Result};
+use point::{PRCS, Point};
 
 #[derive(Debug, PartialEq)]
 pub struct Project {
@@ -126,9 +127,9 @@ impl ScanPosition {
         &self.name
     }
 
-    pub fn color(&self, x: f64, y: f64, z: f64) -> Option<f64> {
+    pub fn color<N: Copy>(&self, point: Point<PRCS, N>) -> Option<f64> {
         for image in self.images() {
-            let color = image.color(x, y, z);
+            let color = image.color(point);
             if color.is_some() {
                 return color;
             }
@@ -159,12 +160,12 @@ impl Image {
         &self.name
     }
 
-    pub fn color(&self, x: f64, y: f64, z: f64) -> Option<f64> {
-        let (u, v) = self.project(x, y, z);
+    pub fn color<N: Copy>(&self, point: Point<PRCS, N>) -> Option<f64> {
+        let (u, v) = self.project(point);
         unimplemented!()
     }
 
-    fn project(&self, x: f64, y: f64, z: f64) -> (f64, f64) {
+    fn project<N: Copy>(&self, point: Point<PRCS, N>) -> (f64, f64) {
         unimplemented!()
     }
 }
@@ -172,6 +173,17 @@ impl Image {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    use point::{PRCS, Point};
+
+    fn point() -> Point<PRCS, f32> {
+        Point {
+            crs: PRCS,
+            x: -139.31727,
+            y: -239.32973,
+            z: -10.49305,
+        }
+    }
 
     #[test]
     fn project_from_path_ok() {
@@ -197,15 +209,13 @@ mod tests {
     fn image_color() {
         let project = Project::from_path("data/project.RiSCAN").unwrap();
         let image = project.image("SP01", "SP01 - Image001").unwrap();
-        assert_eq!(22.49,
-                   image.color(-139.31727, -239.32973, -10.49305).unwrap());
+        assert_eq!(22.49, image.color(point()).unwrap());
     }
 
     #[test]
     fn scan_position_color() {
         let project = Project::from_path("data/project.RiSCAN").unwrap();
         let scan_position = project.scan_position("SP01").unwrap();
-        assert_eq!(22.49,
-                   scan_position.color(-139.31727, -239.32973, -10.49305).unwrap());
+        assert_eq!(22.49, scan_position.color(point()).unwrap());
     }
 }
