@@ -73,5 +73,6 @@ fn main() {
                 writer.write_point(&las_point).unwrap();
             }
         }
+        writer.close().unwrap();
     }
 }
