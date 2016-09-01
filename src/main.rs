@@ -7,7 +7,7 @@ extern crate rustc_serialize;
 use std::path::Path;
 
 use docopt::Docopt;
-use las::{PointFormat, Reader, Writer};
+use las::{Builder, Reader, point};
 use pbr::ProgressBar;
 use riscan_pro::{PRCS, Point, Project};
 
@@ -55,16 +55,16 @@ fn main() {
                        images.into_iter().map(|i| i.name()).collect::<Vec<_>>().join(", "));
             }
         }
-        let reader = Reader::from_path(&args.arg_infile)
+        let mut reader = Reader::from_path(&args.arg_infile)
             .expect(&format!("Could not open infile: {}", &args.arg_infile));
-        let mut writer = Writer::from_path(&args.arg_outfile)
-            .expect(&format!("Could not open outfile: {}", &args.arg_outfile))
-            .header(reader.header().clone())
-            .point_format(PointFormat(1))
-            .open()
-            .unwrap();
-        let mut progress_bar = ProgressBar::new(reader.npoints() as u64);
-        for (i, mut las_point) in reader.into_iter().enumerate() {
+        let mut writer = Builder::from_reader(&reader)
+            .point_format(point::Format::from(1))
+            .writer_from_path(&args.arg_outfile)
+            .expect(&format!("Could not open outfile: {}", &args.arg_outfile));
+        let mut progress_bar = ProgressBar::new(reader.header.point_count as u64);
+        for (i, mut las_point) in reader.iter_mut()
+            .map(|p| p.expect("Error while reading LAS point"))
+            .enumerate() {
             if (i % 100000) == 0 {
                 progress_bar.add(100000);
             }
@@ -76,7 +76,7 @@ fn main() {
             };
             if let Some(color) = scan_position.color(point).unwrap() {
                 las_point.gps_time = Some(color);
-                writer.write_point(&las_point).unwrap();
+                writer.write(las_point).unwrap();
             }
         }
         writer.close().unwrap();
