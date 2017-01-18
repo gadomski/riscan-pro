@@ -1,85 +1,45 @@
 extern crate docopt;
-extern crate las;
-extern crate pbr;
 extern crate riscan_pro;
 extern crate rustc_serialize;
 
-use std::path::Path;
-
 use docopt::Docopt;
-use las::{Builder, Reader, point};
-use pbr::ProgressBar;
-use riscan_pro::{PRCS, Point, Project};
+use riscan_pro::Project;
 
 const USAGE: &'static str = "
 RiSCAN PRO utilities.
 
 Usage:
-    riscan-pro colorize <infile> <project> <outfile> [--scan-position=<name>] [--allow-missing-images]
+    riscan-pro socs-to-glcs <project> <scan-position> [<x> <y> <z>]
+    riscan-pro scan-positions <project>
     riscan-pro (-h | --help)
 
 Options:
     -h --help                       Show this screen.
-    --scan-position=<name>          Specify the scan position name. If not provided, we will try to deduce the scan position from the infile name.
-    --allow-missing-images          Allow colorization even if some images are missing from the scan position.
 ";
 
 #[derive(Debug, RustcDecodable)]
 struct Args {
-    cmd_colorize: bool,
-    arg_infile: String,
+    cmd_socs_to_glcs: bool,
+    cmd_scan_positions: bool,
     arg_project: String,
-    arg_outfile: String,
-    flag_scan_position: Option<String>,
-    flag_allow_missing_images: bool,
+    arg_scan_position: String,
+    arg_x: Option<f64>,
+    arg_y: Option<f64>,
+    arg_z: Option<f64>,
 }
 
 fn main() {
     let args: Args = Docopt::new(USAGE).and_then(|d| d.decode()).unwrap_or_else(|e| e.exit());
-    if args.cmd_colorize {
-        let project = Project::from_path(&args.arg_project)
-            .expect(&format!("Could not open projet file: {}", args.arg_project));
-        let scan_position = if let Some(name) = args.flag_scan_position.as_ref() {
-            project.scan_position(&name).expect(&format!("Cound not find scan position: {}", name))
-        } else {
-            Path::new(&args.arg_infile)
-                .file_stem()
-                .and_then(|name| project.scan_position_with_scan(&name.to_string_lossy()))
-                .expect(&format!("Could not deduce scan position from file: {}",
-                                 &args.arg_infile))
-        };
-        if !args.flag_allow_missing_images {
-            let images = scan_position.missing_images();
-            if !images.is_empty() {
-                panic!("Scan position is missing images: {}",
-                       images.into_iter().map(|i| i.name()).collect::<Vec<_>>().join(", "));
-            }
+    let project = Project::from_path(args.arg_project).unwrap();
+    if args.cmd_socs_to_glcs {
+        let scan_position = project.scan_position(&args.arg_scan_position).unwrap();
+        let glcs = scan_position.socs_to_glcs((args.arg_x.unwrap_or(0.),
+                                               args.arg_y.unwrap_or(0.),
+                                               args.arg_z.unwrap_or(0.)));
+        println!("{:.2}, {:.2}, {:.2}", glcs.0, glcs.1, glcs.2);
+    } else if args.cmd_scan_positions {
+        for scan_position in project.scan_positions() {
+            println!("{}", scan_position.name());
         }
-        let mut reader = Reader::from_path(&args.arg_infile)
-            .expect(&format!("Could not open infile: {}", &args.arg_infile));
-        let mut writer = Builder::from_reader(&reader)
-            .point_format(point::Format::from(1))
-            .writer_from_path(&args.arg_outfile)
-            .expect(&format!("Could not open outfile: {}", &args.arg_outfile));
-        let mut progress_bar = ProgressBar::new(reader.header.point_count as u64);
-        for (i, mut las_point) in reader.iter_mut()
-            .map(|p| p.expect("Error while reading LAS point"))
-            .enumerate() {
-            if (i % 100000) == 0 {
-                progress_bar.add(100000);
-            }
-            let point = Point {
-                crs: PRCS,
-                x: las_point.x,
-                y: las_point.y,
-                z: las_point.z,
-            };
-            if let Some(color) = scan_position.color(point).unwrap() {
-                las_point.gps_time = Some(color);
-                writer.write(las_point).unwrap();
-            }
-        }
-        writer.close().unwrap();
-        progress_bar.finish();
     }
 }

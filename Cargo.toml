@@ -4,12 +4,10 @@ version = "0.1.0"
 authors = ["Pete Gadomski <pete.gadomski@gmail.com>"]
 
 [dependencies]
-docopt = "0.6"
-las = { git = "https://github.com/gadomski/las-rs.git" }
-nalgebra = "0.9"
-pbr = "0.3"
+docopt = "0.7"
+nalgebra = "0.10"
 rustc-serialize = "0.3"
-xmltree = "0.3"
+xml-rs = "0.3"
 
 [[bin]]
 name = "riscan-pro"
