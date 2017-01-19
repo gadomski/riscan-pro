@@ -6,6 +6,7 @@ description = "Query RiSCAN Pro projects"
 repository = "https://github.com/gadomski/riscan-pro"
 readme = "README.md"
 keywords = ["lidar", "riegl", "riscan"]
+license = "MIT"
 
 [dependencies]
 docopt = "0.7"
