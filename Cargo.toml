@@ -2,6 +2,10 @@
 name = "riscan-pro"
 version = "0.1.0"
 authors = ["Pete Gadomski <pete.gadomski@gmail.com>"]
+description = "Query RiSCAN Pro projects"
+repository = "https://github.com/gadomski/riscan-pro"
+readme = "README.md"
+keywords = ["lidar", "riegl", "riscan"]
 
 [dependencies]
 docopt = "0.7"
