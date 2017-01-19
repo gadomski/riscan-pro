@@ -6,6 +6,7 @@ use std::io::{BufReader, Read};
 use std::path::Path;
 use xml::reader::{EventReader, XmlEvent};
 
+/// A RiSCAN Pro project.
 #[derive(Clone, Debug)]
 pub struct Project {
     scan_positions: HashMap<String, ScanPosition>,

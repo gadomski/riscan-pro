@@ -1,6 +1,7 @@
 use {Matrix, Vector};
 use nalgebra::Eye;
 
+/// A scan position.
 #[derive(Clone, Debug)]
 pub struct ScanPosition {
     name: String,
