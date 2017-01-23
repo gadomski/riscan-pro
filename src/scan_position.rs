@@ -1,5 +1,6 @@
-use {Matrix, Vector};
+use {Error, Matrix, Project, Result, Vector};
 use nalgebra::Eye;
+use std::path::Path;
 
 /// A scan position.
 #[derive(Clone, Debug)]
@@ -10,6 +11,38 @@ pub struct ScanPosition {
 }
 
 impl ScanPosition {
+    /// Creates a new scan position from the provided path.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use riscan_pro::ScanPosition;
+    /// let path = "data/project.RiSCAN/SCANS/SP01";
+    /// let scan_position = ScanPosition::from_path(path).unwrap();
+    /// ```
+    pub fn from_path<P: AsRef<Path>>(path: P) -> Result<ScanPosition> {
+        let fullpath = path.as_ref().canonicalize()?;
+        let mut path_buf = fullpath.clone();
+        loop {
+            if let Ok(project) = Project::from_path(&path_buf) {
+                let scans_path = project.path().unwrap().join("SCANS");
+                let subpath = fullpath.strip_prefix(&scans_path)
+                    .map_err(|_| Error::NotAScanPosition(path.as_ref().to_path_buf()))?;
+                if let Some(scan_position) = subpath.iter().next() {
+                    return project.scan_position(&scan_position.to_string_lossy())
+                        .map(|scan_position| scan_position.clone())
+                        .ok_or(Error::NotAScanPosition(path.as_ref().to_path_buf()));
+                } else {
+                    return Err(Error::NotAScanPosition(path.as_ref().to_path_buf()));
+                }
+            }
+            if !path_buf.pop() {
+                break;
+            }
+        }
+        Err(Error::NotAProject(path.as_ref().to_path_buf()))
+    }
+
     /// Creates a new scan position.
     ///
     /// # Examples

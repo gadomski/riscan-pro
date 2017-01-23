@@ -1,5 +1,6 @@
 use std::io;
 use std::num;
+use std::path::PathBuf;
 use xml;
 
 /// Our custom error enum.
@@ -9,6 +10,10 @@ pub enum Error {
     Io(io::Error),
     /// The provided vector cannot be converted into a matrix.
     Matrix(Vec<f64>),
+    /// Not a RiSCAN Pro project.
+    NotAProject(PathBuf),
+    /// Not a scan position.
+    NotAScanPosition(PathBuf),
     /// Wrapper around `std::num::ParseFloatError`.
     ParseFloat(num::ParseFloatError),
     /// An error occured while reading the xml file.

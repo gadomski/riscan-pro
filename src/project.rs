@@ -3,13 +3,14 @@ use nalgebra::Eye;
 use std::collections::HashMap;
 use std::fs::{self, File};
 use std::io::{BufReader, Read};
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use xml::reader::{EventReader, XmlEvent};
 
 /// A RiSCAN Pro project.
 #[derive(Clone, Debug)]
 pub struct Project {
     scan_positions: HashMap<String, ScanPosition>,
+    path: Option<PathBuf>,
     pop: Matrix,
 }
 
@@ -30,8 +31,10 @@ impl Project {
         if fs::metadata(&path)?.is_dir() {
             path.push("project.rsp");
         }
-        let ref mut reader = EventReader::new(BufReader::new(File::open(path)?));
+        let ref mut reader = EventReader::new(BufReader::new(File::open(&path)?));
         let mut project = Project::new();
+        path.pop();
+        project.path = Some(path);
 
         if let Some(name) = next_element_name(reader)? {
             if name != "project" {
@@ -69,6 +72,7 @@ impl Project {
     pub fn new() -> Project {
         Project {
             scan_positions: HashMap::new(),
+            path: None,
             pop: Matrix::new_identity(4),
         }
     }
@@ -146,6 +150,21 @@ impl Project {
     pub fn add_scan_position(&mut self, mut scan_position: ScanPosition) {
         scan_position.set_pop(self.pop);
         self.scan_positions.insert(scan_position.name().to_string(), scan_position);
+    }
+
+    /// Returns this project's (optional) path as a reference.
+    ///
+    /// The project path is the `.RiSCAN` directory, not the XML file.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use riscan_pro::Project;
+    /// let project = Project::from_path("data/project.RiSCAN/project.rsp").unwrap();
+    /// assert_eq!("data/project.RiSCAN", project.path().unwrap().to_string_lossy());
+    /// ```
+    pub fn path(&self) -> Option<&Path> {
+        self.path.as_ref().map(|path_buf| path_buf.as_path())
     }
 }
 
