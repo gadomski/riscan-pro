@@ -1,5 +1,6 @@
-use {Error, Matrix, Project, Result, Vector};
+use {Error, Matrix, Project, Result, Scan, Vector};
 use nalgebra::Eye;
+use std::collections::HashMap;
 use std::path::Path;
 
 /// A scan position.
@@ -7,6 +8,7 @@ use std::path::Path;
 pub struct ScanPosition {
     name: String,
     pop: Matrix,
+    scans: HashMap<String, Scan>,
     sop: Matrix,
 }
 
@@ -55,6 +57,7 @@ impl ScanPosition {
         ScanPosition {
             name: String::new(),
             pop: Matrix::new_identity(4),
+            scans: HashMap::new(),
             sop: Matrix::new_identity(4),
         }
     }
@@ -158,6 +161,32 @@ impl ScanPosition {
     pub fn socs_to_glcs(&self, (x, y, z): (f64, f64, f64)) -> (f64, f64, f64) {
         let glcs = self.pop * self.sop * Vector::new(x, y, z, 1.);
         (glcs.x, glcs.y, glcs.z)
+    }
+
+    /// Returns a reference to the scan with the given name.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use riscan_pro::ScanPosition;
+    /// let scan_position = ScanPosition::from_path("data/project.RiSCAN/SCANS/SP01").unwrap();
+    /// let scan = scan_position.scan("151120_150404").unwrap();
+    /// ```
+    pub fn scan(&self, name: &str) -> Option<&Scan> {
+        self.scans.get(name)
+    }
+
+    /// Adds a scan.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use riscan_pro::{ScanPosition, Scan};
+    /// let mut scan_position = ScanPosition::new();
+    /// scan_position.add_scan(Scan::new());
+    /// ```
+    pub fn add_scan(&mut self, scan: Scan) {
+        self.scans.insert(scan.name().to_string(), scan);
     }
 }
 

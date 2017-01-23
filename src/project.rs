@@ -1,4 +1,4 @@
-use {Error, Matrix, Result, ScanPosition};
+use {Error, Matrix, Result, Scan, ScanPosition};
 use nalgebra::Eye;
 use std::collections::HashMap;
 use std::fs::{self, File};
@@ -111,17 +111,26 @@ impl Project {
 
     /// Returns a scan position with the given name or scan.
     ///
-    /// FIXME add scan search ability
-    ///
     /// # Examples
     ///
     /// ```
     /// # use riscan_pro::Project;
     /// let project = Project::from_path("data/project.RiSCAN").unwrap();
     /// let scan_position = project.scan_position("SP01").unwrap();
+    /// let scan_position = project.scan_position("151120_150404").unwrap();
+    /// let scan_position = project.scan_position("SCANS/SP01/SINGLESCANS/151120_150404.rxp").unwrap();
     /// ```
     pub fn scan_position(&self, name: &str) -> Option<&ScanPosition> {
-        self.scan_positions.get(name)
+        self.scan_positions.get(name).or_else(|| {
+            if let Some(file_name) = Path::new(name).file_name() {
+                if let Some(name) = Path::new(file_name).file_stem() {
+                    return self.scan_positions
+                        .values()
+                        .find(|scan_position| scan_position.scan(&name.to_string_lossy()).is_some());
+                }
+            }
+            None
+        })
     }
 
     /// Returns a vector of all the scan positions in this scan.
@@ -237,6 +246,11 @@ fn read_scan_position<R: Read>(reader: &mut EventReader<R>) -> Result<Option<Sca
                     "name" => {
                         scan_position.set_name(&read_characters(reader)?);
                     }
+                    "singlescans" => {
+                        while let Some(scan) = read_scan(reader)? {
+                            scan_position.add_scan(scan);
+                        }
+                    }
                     "sop" => scan_position.set_sop(read_matrix(reader)?),
                     _ => consume_branch(reader)?,
                 }
@@ -246,6 +260,37 @@ fn read_scan_position<R: Read>(reader: &mut EventReader<R>) -> Result<Option<Sca
         }
     }
     Ok(Some(scan_position))
+}
+
+fn read_scan<R: Read>(reader: &mut EventReader<R>) -> Result<Option<Scan>> {
+    loop {
+        match reader.next()? {
+            XmlEvent::StartElement { name, .. } => {
+                if name.local_name != "scan" {
+                    return Err(Error::XmlRead(format!("unexpected element name: {}", name)));
+                }
+                break;
+            }
+            XmlEvent::EndElement { .. } => return Ok(None),
+            _ => {}
+        }
+    }
+    let mut scan = Scan::new();
+    loop {
+        match reader.next()? {
+            XmlEvent::StartElement { name, .. } => {
+                match name.local_name.as_str() {
+                    "name" => {
+                        scan.set_name(&read_characters(reader)?);
+                    }
+                    _ => consume_branch(reader)?,
+                }
+            }
+            XmlEvent::EndElement { .. } => break,
+            _ => {}
+        }
+    }
+    Ok(Some(scan))
 }
 
 fn read_characters<R: Read>(reader: &mut EventReader<R>) -> Result<String> {

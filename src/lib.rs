@@ -32,10 +32,12 @@ extern crate xml;
 
 mod error;
 mod project;
+mod scan;
 mod scan_position;
 
 pub use error::Error;
 pub use project::Project;
+pub use scan::Scan;
 pub use scan_position::ScanPosition;
 
 /// Our custom result type.
