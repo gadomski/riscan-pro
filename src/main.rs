@@ -1,14 +1,19 @@
 extern crate docopt;
+extern crate nalgebra;
 extern crate riscan_pro;
 extern crate rustc_serialize;
 
 use docopt::Docopt;
-use riscan_pro::Project;
+use nalgebra::{Iterable, Transpose};
+use riscan_pro::{Matrix, Project};
+use rustc_serialize::json::{Json, ToJson};
+use std::collections::HashMap;
 
 const USAGE: &'static str = "
 RiSCAN PRO utilities.
 
 Usage:
+    riscan-pro export-filters <project> <scan-position>
     riscan-pro socs-to-glcs <project> <scan-position> [<x> <y> <z>]
     riscan-pro scan-positions <project>
     riscan-pro (-h | --help)
@@ -19,6 +24,7 @@ Options:
 
 #[derive(Debug, RustcDecodable)]
 struct Args {
+    cmd_export_filters: bool,
     cmd_socs_to_glcs: bool,
     cmd_scan_positions: bool,
     arg_project: String,
@@ -41,5 +47,24 @@ fn main() {
         for scan_position in project.scan_positions() {
             println!("{}", scan_position.name());
         }
+    } else if args.cmd_export_filters {
+        let scan_position = project.scan_position(&args.arg_scan_position).unwrap();
+        let mut filters = Vec::new();
+        filters.push(filters_transformation(scan_position.sop()));
+        filters.push(filters_transformation(scan_position.pop()));
+        println!("{}", filters.to_json());
     }
+}
+
+fn filters_transformation(matrix: Matrix) -> Json {
+    let mut filter = HashMap::new();
+    filter.insert("type".to_string(), "filters.transformation".to_json());
+    filter.insert("matrix".to_string(),
+                  matrix.transpose()
+                      .iter()
+                      .map(|n| format!("{}", n))
+                      .collect::<Vec<_>>()
+                      .join(" ")
+                      .to_json());
+    filter.to_json()
 }
