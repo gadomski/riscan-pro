@@ -5,7 +5,7 @@ extern crate rustc_serialize;
 
 use docopt::Docopt;
 use nalgebra::{Iterable, Transpose};
-use riscan_pro::{Matrix, Project};
+use riscan_pro::{Matrix, Project, ScanPosition};
 use rustc_serialize::json::{Json, ToJson};
 use std::collections::HashMap;
 
@@ -13,8 +13,8 @@ const USAGE: &'static str = "
 RiSCAN PRO utilities.
 
 Usage:
-    riscan-pro export-filters <project> <scan-position>
-    riscan-pro socs-to-glcs <project> <scan-position> [<x> <y> <z>]
+    riscan-pro export-filters <project> [<scan-position>]
+    riscan-pro socs-to-glcs <project> [<scan-position>] [<x> <y> <z>]
     riscan-pro scan-positions <project>
     riscan-pro (-h | --help)
 
@@ -28,7 +28,7 @@ struct Args {
     cmd_socs_to_glcs: bool,
     cmd_scan_positions: bool,
     arg_project: String,
-    arg_scan_position: String,
+    arg_scan_position: Option<String>,
     arg_x: Option<f64>,
     arg_y: Option<f64>,
     arg_z: Option<f64>,
@@ -36,19 +36,29 @@ struct Args {
 
 fn main() {
     let args: Args = Docopt::new(USAGE).and_then(|d| d.decode()).unwrap_or_else(|e| e.exit());
-    let project = Project::from_path(args.arg_project).unwrap();
     if args.cmd_socs_to_glcs {
-        let scan_position = project.scan_position(&args.arg_scan_position).unwrap();
+        let scan_position = if let Some(scan_position) = args.arg_scan_position {
+            let project = Project::from_path(args.arg_project).unwrap();
+            project.scan_position(&scan_position).unwrap().clone()
+        } else {
+            ScanPosition::from_path(args.arg_project).unwrap()
+        };
         let glcs = scan_position.socs_to_glcs((args.arg_x.unwrap_or(0.),
                                                args.arg_y.unwrap_or(0.),
                                                args.arg_z.unwrap_or(0.)));
         println!("{:.2}, {:.2}, {:.2}", glcs.0, glcs.1, glcs.2);
     } else if args.cmd_scan_positions {
+        let project = Project::from_path(args.arg_project).unwrap();
         for scan_position in project.scan_positions() {
             println!("{}", scan_position.name());
         }
     } else if args.cmd_export_filters {
-        let scan_position = project.scan_position(&args.arg_scan_position).unwrap();
+        let scan_position = if let Some(scan_position) = args.arg_scan_position {
+            let project = Project::from_path(args.arg_project).unwrap();
+            project.scan_position(&scan_position).unwrap().clone()
+        } else {
+            ScanPosition::from_path(args.arg_project).unwrap()
+        };
         let mut filters = Vec::new();
         filters.push(filters_transformation(scan_position.sop()));
         filters.push(filters_transformation(scan_position.pop()));
