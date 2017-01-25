@@ -116,17 +116,18 @@ impl Project {
     /// ```
     /// # use riscan_pro::Project;
     /// let project = Project::from_path("data/project.RiSCAN").unwrap();
-    /// let scan_position = project.scan_position("SP01").unwrap();
-    /// let scan_position = project.scan_position("151120_150404").unwrap();
-    /// let scan_position = project.scan_position("SCANS/SP01/SINGLESCANS/151120_150404.rxp").unwrap();
+    /// assert!(project.scan_position("SP01").is_some());
+    /// assert!(project.scan_position("151120_150404").is_some());
+    /// assert!(project.scan_position("SCANS/SP01/SINGLESCANS/151120_150404.rxp").is_some());
+    /// assert!(project.scan_position("151120_150404.mta.rxp").is_some());
     /// ```
     pub fn scan_position(&self, name: &str) -> Option<&ScanPosition> {
         self.scan_positions.get(name).or_else(|| {
             if let Some(file_name) = Path::new(name).file_name() {
-                if let Some(name) = Path::new(file_name).file_stem() {
+                if let Some(name) = file_name.to_string_lossy().split('.').next() {
                     return self.scan_positions
                         .values()
-                        .find(|scan_position| scan_position.scan(&name.to_string_lossy()).is_some());
+                        .find(|scan_position| scan_position.scan(name).is_some());
                 }
             }
             None
