@@ -50,7 +50,8 @@ fn main() {
     } else if args.cmd_scan_positions {
         let project = Project::from_path(args.arg_project).unwrap();
         for scan_position in project.scan_positions() {
-            println!("{}", scan_position.name());
+            let glcs = scan_position.socs_to_glcs((0., 0., 0.));
+            println!("{},{:.2},{:.2},{:.2}", scan_position.name(), glcs.0, glcs.1, glcs.2);
         }
     } else if args.cmd_export_filters {
         let scan_position = if let Some(scan_position) = args.arg_scan_position {
