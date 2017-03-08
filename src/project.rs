@@ -1,4 +1,4 @@
-use {Error, Matrix, Result, Scan, ScanPosition};
+use {Error, Matrix, Result, Scan, ScanPosition, Tiepoint};
 use nalgebra::Eye;
 use std::collections::HashMap;
 use std::fs::{self, File};
@@ -9,9 +9,10 @@ use xml::reader::{EventReader, XmlEvent};
 /// A RiSCAN Pro project.
 #[derive(Clone, Debug)]
 pub struct Project {
-    scan_positions: HashMap<String, ScanPosition>,
     path: Option<PathBuf>,
     pop: Matrix,
+    scan_positions: HashMap<String, ScanPosition>,
+    tpl_glcs: Vec<Tiepoint>,
 }
 
 impl Project {
@@ -54,6 +55,11 @@ impl Project {
                         project.add_scan_position(scan_position);
                     }
                 }
+                "tpl_glcs" => {
+                    while let Some(tiepoint) = read_tp_glcs(reader)? {
+                        project.add_tp_glcs(tiepoint);
+                    }
+                }
                 _ => consume_branch(reader)?,
             }
         }
@@ -74,6 +80,7 @@ impl Project {
             scan_positions: HashMap::new(),
             path: None,
             pop: Matrix::new_identity(4),
+            tpl_glcs: Vec::new(),
         }
     }
 
@@ -176,6 +183,33 @@ impl Project {
     pub fn path(&self) -> Option<&Path> {
         self.path.as_ref().map(|path_buf| path_buf.as_path())
     }
+
+    /// Adds a GLCS tiepoint.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use riscan_pro::{Project, Tiepoint};
+    /// let tiepoint: Tiepoint = Default::default();
+    /// let mut project = Project::new();
+    /// project.add_tp_glcs(tiepoint);
+    /// ```
+    pub fn add_tp_glcs(&mut self, tiepoint: Tiepoint) {
+        self.tpl_glcs.push(tiepoint);
+    }
+
+    /// Returns this project's global tiepoints.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use riscan_pro::Project;
+    /// let project = Project::from_path("data/project.RiSCAN/project.rsp").unwrap();
+    /// let tiepoints = project.tpl_glcs();
+    /// ```
+    pub fn tpl_glcs(&self) -> &Vec<Tiepoint> {
+        &self.tpl_glcs
+    }
 }
 
 fn next_element_name<R: Read>(reader: &mut EventReader<R>) -> Result<Option<String>> {
@@ -261,6 +295,44 @@ fn read_scan_position<R: Read>(reader: &mut EventReader<R>) -> Result<Option<Sca
         }
     }
     Ok(Some(scan_position))
+}
+
+fn read_tp_glcs<R: Read>(reader: &mut EventReader<R>) -> Result<Option<Tiepoint>> {
+    loop {
+        match reader.next()? {
+            XmlEvent::StartElement { name, .. } => {
+                match name.local_name.as_str() {
+                    "tp_glcs" => break,
+                    "active" => consume_branch(reader)?,
+                    _ => return Err(Error::XmlRead(format!("unexpected element name: {}", name))),
+                }
+            }
+            XmlEvent::EndElement { .. } => return Ok(None),
+            _ => {}
+        }
+    }
+    let mut tiepoint: Tiepoint = Default::default();
+    loop {
+        match reader.next()? {
+            XmlEvent::StartElement { name, .. } => {
+                match name.local_name.as_str() {
+                    "name" => tiepoint.name = read_characters(reader)?,
+                    "height" => tiepoint.height = read_characters(reader)?.parse()?,
+                    "vector" => {
+                        let string = read_characters(reader)?;
+                        let words = string.split_whitespace().collect::<Vec<_>>();
+                        tiepoint.x = words[0].parse()?;
+                        tiepoint.y = words[1].parse()?;
+                        tiepoint.z = words[2].parse()?;
+                    }
+                    _ => consume_branch(reader)?,
+                }
+            }
+            XmlEvent::EndElement { .. } => break,
+            _ => {}
+        }
+    }
+    Ok(Some(tiepoint))
 }
 
 fn read_scan<R: Read>(reader: &mut EventReader<R>) -> Result<Option<Scan>> {

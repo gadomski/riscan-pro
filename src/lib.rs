@@ -34,11 +34,13 @@ mod error;
 mod project;
 mod scan;
 mod scan_position;
+mod tiepoint;
 
 pub use error::Error;
 pub use project::Project;
 pub use scan::Scan;
 pub use scan_position::ScanPosition;
+pub use tiepoint::Tiepoint;
 
 /// Our custom result type.
 pub type Result<T> = std::result::Result<T, Error>;
