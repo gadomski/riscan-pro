@@ -84,12 +84,16 @@ impl Camera {
     ///
     /// Returns an Ok(None) if no calibration exists.
     pub fn from_document(document: &Document) -> Result<Option<Camera>> {
+        use Error;
         use sxd_xpath::{self, Value};
+
         match sxd_xpath::evaluate_xpath(document,
                                         "/project/calibrations/camcalibs/camcalib_opencv")? {
             Value::Nodeset(nodeset) => {
                 if nodeset.size() == 0 {
                     return Ok(None);
+                } else if nodeset.size() > 1 {
+                    return Err(Error::MultipleCameras);
                 }
             }
             _ => {}

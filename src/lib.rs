@@ -56,6 +56,8 @@ pub enum Error {
     Io(std::io::Error),
     /// A camera setting is missing.
     MissingCameraSetting(String),
+    /// There are multiple cameras, which is not supported by this library.
+    MultipleCameras,
     /// Wrapper around `std::num::ParseFloatError`.
     ParseFloat(std::num::ParseFloatError),
     /// Invalid project path.

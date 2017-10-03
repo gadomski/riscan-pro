@@ -185,4 +185,9 @@ mod tests {
     fn notaproject_rsp() {
         assert!(Project::from_path("data/notaproject.rsp").is_err());
     }
+
+    #[test]
+    fn two_cameras() {
+        assert!(Project::from_path("data/two-cameras.rsp").is_err());
+    }
 }
