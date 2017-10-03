@@ -6,6 +6,7 @@ use alga::general::SubsetOf;
 pub struct Image {
     cop: Projective3,
     mounting_matrix: Projective3,
+    sop: Projective3,
 }
 
 impl Image {
@@ -23,6 +24,13 @@ impl Image {
         self.cop = cop.to_superset();
     }
 
+    /// Sets this image's scanner's own position matrix.
+    pub fn set_sop<T>(&mut self, sop: T)
+        where T: SubsetOf<Projective3>
+    {
+        self.sop = sop.to_superset();
+    }
+
     /// Converts a point in the project's coordinate system to the camera's coordinate system.
     ///
     /// # Examples
@@ -37,7 +45,7 @@ impl Image {
     pub fn prcs_to_cmcs(&self, point: Point3) -> Point3 {
         use alga::linear::Transformation;
 
-        (self.mounting_matrix * self.cop.inverse()).transform_point(&point)
+        (self.mounting_matrix * self.cop.inverse() * self.sop.inverse()).transform_point(&point)
     }
 }
 
@@ -46,6 +54,7 @@ impl Default for Image {
         Image {
             cop: Projective3::identity(),
             mounting_matrix: Projective3::identity(),
+            sop: Projective3::identity(),
         }
     }
 }
@@ -77,6 +86,15 @@ mod tests {
     fn prcs_to_cmcs_cop() {
         let mut image = Image::default();
         image.set_cop(Rotation3::from_euler_angles(0., 0., PI / 2.));
+        let input = Point3::new(1., 2., 3.);
+        let output = image.prcs_to_cmcs(input);
+        assert_relative_eq!(Point3::new(2., -1., 3.), output);
+    }
+
+    #[test]
+    fn prcs_to_cmcs_sop() {
+        let mut image = Image::default();
+        image.set_sop(Rotation3::from_euler_angles(0., 0., PI / 2.));
         let input = Point3::new(1., 2., 3.);
         let output = image.prcs_to_cmcs(input);
         assert_relative_eq!(Point3::new(2., -1., 3.), output);
