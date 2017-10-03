@@ -13,14 +13,14 @@
 //! Projects can be opened by providing the project's directory to `Project::from_path`:
 //!
 //! ```
-//! # use riscan_pro::Project;
+//! use riscan_pro::Project;
 //! let project = Project::from_path("data/project.RiSCAN").unwrap();
 //! ```
 //!
 //! or the `project.rsp` file:
 //!
 //! ```
-//! # use riscan_pro::Project;
+//! use riscan_pro::Project;
 //! let project = Project::from_path("data/project.RiSCAN/project.rsp").unwrap();
 //! ```
 
@@ -30,23 +30,40 @@
 extern crate nalgebra;
 extern crate xml;
 
-mod error;
 mod project;
-mod scan;
-mod scan_position;
-mod tiepoint;
 
-pub use error::Error;
-pub use project::Project;
-pub use scan::Scan;
-pub use scan_position::ScanPosition;
-pub use tiepoint::Tiepoint;
+pub use project::{Project, rsp_path};
+
+/// Our custom error enum.
+#[derive(Debug)]
+pub enum Error {
+    /// Wrapper around `std::io::Error`.
+    Io(std::io::Error),
+    /// Wrapper around `std::num::ParseFloatError`.
+    ParseFloat(std::num::ParseFloatError),
+    /// Invalid project path.
+    ProjectPath(std::path::PathBuf),
+    /// Wrapper around `xml::reader::Error`.
+    XmlReader(xml::reader::Error),
+}
 
 /// Our custom result type.
 pub type Result<T> = std::result::Result<T, Error>;
 
-/// Type alias for a 4x4 f64 matrix.
-pub type Matrix = nalgebra::Matrix4<f64>;
+impl From<std::io::Error> for Error {
+    fn from(err: std::io::Error) -> Error {
+        Error::Io(err)
+    }
+}
 
-/// Type alias for a 4-element f64 vector.
-pub type Vector = nalgebra::Vector4<f64>;
+impl From<std::num::ParseFloatError> for Error {
+    fn from(err: std::num::ParseFloatError) -> Error {
+        Error::ParseFloat(err)
+    }
+}
+
+impl From<xml::reader::Error> for Error {
+    fn from(err: xml::reader::Error) -> Error {
+        Error::XmlReader(err)
+    }
+}
