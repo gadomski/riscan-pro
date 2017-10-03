@@ -38,10 +38,12 @@ extern crate sxd_xpath;
 #[macro_use]
 mod macros;
 
+mod camera;
 mod image;
 mod project;
 mod utils;
 
+pub use camera::Camera;
 pub use image::Image;
 pub use project::{Project, rsp_path};
 
@@ -52,6 +54,8 @@ pub enum Error {
     Inverse(nalgebra::Matrix4<f64>),
     /// Wrapper around `std::io::Error`.
     Io(std::io::Error),
+    /// A camera setting is missing.
+    MissingCameraSetting(String),
     /// Wrapper around `std::num::ParseFloatError`.
     ParseFloat(std::num::ParseFloatError),
     /// Invalid project path.
