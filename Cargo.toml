@@ -9,6 +9,7 @@ keywords = ["lidar", "riegl", "riscan"]
 license = "MIT"
 
 [dependencies]
+alga = "0.5"
 nalgebra = "0.13"
 sxd-xpath = "0.4"
 sxd-document = "0.2"

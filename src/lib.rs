@@ -27,6 +27,7 @@
 #![deny(missing_docs, missing_debug_implementations, missing_copy_implementations, trivial_casts,
         trivial_numeric_casts, unsafe_code, unstable_features, unused_qualifications)]
 
+extern crate alga;
 #[cfg(test)]
 #[macro_use]
 extern crate approx;
@@ -64,11 +65,11 @@ pub enum Error {
 /// Our custom result type.
 pub type Result<T> = std::result::Result<T, Error>;
 
-/// Our type of Matrix4.
-pub type Matrix4 = nalgebra::Matrix4<f64>;
+/// Our type of Transform3.
+pub type Transform3 = nalgebra::Transform3<f64>;
 
-/// Our type of Vector3.
-pub type Vector3 = nalgebra::Vector3<f64>;
+/// Our type of Point3.
+pub type Point3 = nalgebra::Point3<f64>;
 
 impl From<std::io::Error> for Error {
     fn from(err: std::io::Error) -> Error {

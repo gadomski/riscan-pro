@@ -1,4 +1,4 @@
-use {Error, Matrix4, Result};
+use {Error, Result, Transform3};
 use std::path::{Path, PathBuf};
 use std::str::FromStr;
 
@@ -40,7 +40,7 @@ pub fn rsp_path<P: AsRef<Path>>(path: P) -> Result<PathBuf> {
 /// A RiSCAN Pro project.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Project {
-    pop: Matrix4,
+    pop: Transform3,
 }
 
 impl Project {
@@ -76,7 +76,7 @@ impl Project {
     /// let mut project = Project::from_path("data/project.RiSCAN").unwrap();
     /// let pop = project.pop();
     /// ```
-    pub fn pop(&self) -> Matrix4 {
+    pub fn pop(&self) -> Transform3 {
         self.pop
     }
 }
@@ -93,7 +93,7 @@ impl FromStr for Project {
         let package = parser::parse(&s)?;
         let document = package.as_document();
 
-        let pop = utils::matrix_from_str(&xpath!(&document, "/project/pop/matrix").string())?;
+        let pop = utils::transform_from_str(&xpath!(&document, "/project/pop/matrix").string())?;
         Ok(Project { pop: pop })
     }
 }
@@ -127,24 +127,26 @@ mod tests {
 
     #[test]
     fn project() {
+        use nalgebra::Matrix4;
         let project = Project::from_path("data/project.RiSCAN").unwrap();
-        let expected = Matrix4::new(0.99566497679815923,
-                                    0.046111730526226816,
-                                    -0.080777238659154112,
-                                    -515632.66332186362,
-                                    -0.093012117369304602,
-                                    0.49361133154539053,
-                                    -0.86469451217899213,
-                                    -5519682.7927730317,
-                                    0.,
-                                    0.86845930340912512,
-                                    0.49576046466225683,
-                                    3143447.4201939853,
-                                    0.,
-                                    0.,
-                                    0.,
-                                    1.);
-        assert_relative_eq!(expected, project.pop());
+        let expected = Transform3::from_matrix_unchecked(Matrix4::new(0.99566497679815923,
+                                                                      0.046111730526226816,
+                                                                      -0.080777238659154112,
+                                                                      -515632.66332186362,
+                                                                      -0.093012117369304602,
+                                                                      0.49361133154539053,
+                                                                      -0.86469451217899213,
+                                                                      -5519682.7927730317,
+                                                                      0.,
+                                                                      0.86845930340912512,
+                                                                      0.49576046466225683,
+                                                                      3143447.4201939853,
+                                                                      0.,
+                                                                      0.,
+                                                                      0.,
+                                                                      1.));
+        let actual = project.pop();
+        assert_relative_eq!(expected.matrix(), actual.matrix());
     }
 
     #[test]
