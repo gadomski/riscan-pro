@@ -27,10 +27,17 @@
 #![deny(missing_docs, missing_debug_implementations, missing_copy_implementations, trivial_casts,
         trivial_numeric_casts, unsafe_code, unstable_features, unused_qualifications)]
 
+#[cfg(test)]
+#[macro_use]
+extern crate approx;
 extern crate nalgebra;
-extern crate xml;
+extern crate sxd_document;
+extern crate sxd_xpath;
 
+#[macro_use]
+mod macros;
 mod project;
+mod utils;
 
 pub use project::{Project, rsp_path};
 
@@ -43,8 +50,12 @@ pub enum Error {
     ParseFloat(std::num::ParseFloatError),
     /// Invalid project path.
     ProjectPath(std::path::PathBuf),
-    /// Wrapper around `xml::reader::Error`.
-    XmlReader(xml::reader::Error),
+    /// An error that occurs while parsing an xml file.
+    XmlParse(usize, Vec<sxd_document::parser::Error>),
+    /// Wrapper around `sxd_xpath::Error`.
+    Xpath(sxd_xpath::Error),
+    /// The provided xpath was not found.
+    XpathNotFound(String),
 }
 
 /// Our custom result type.
@@ -62,8 +73,14 @@ impl From<std::num::ParseFloatError> for Error {
     }
 }
 
-impl From<xml::reader::Error> for Error {
-    fn from(err: xml::reader::Error) -> Error {
-        Error::XmlReader(err)
+impl From<(usize, Vec<sxd_document::parser::Error>)> for Error {
+    fn from((n, v): (usize, Vec<sxd_document::parser::Error>)) -> Error {
+        Error::XmlParse(n, v)
+    }
+}
+
+impl From<sxd_xpath::Error> for Error {
+    fn from(err: sxd_xpath::Error) -> Error {
+        Error::Xpath(err)
     }
 }

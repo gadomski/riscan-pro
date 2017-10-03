@@ -10,4 +10,8 @@ license = "MIT"
 
 [dependencies]
 nalgebra = "0.13"
-xml-rs = "0.6"
+sxd-xpath = "0.4"
+sxd-document = "0.2"
+
+[dev-dependencies]
+approx = "0.1"
