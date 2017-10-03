@@ -88,7 +88,23 @@ impl Camera {
         use nalgebra::Matrix3;
 
         let a = Matrix3::new(self.fx, 0., self.cx, 0., self.fy, self.cy, 0., 0., 1.);
-        unimplemented!()
+        let ud_prime = a * point;
+        let u = ud_prime[0] / ud_prime[2];
+        let v = ud_prime[1] / ud_prime[2];
+        let x = (u - self.cx) / self.fx;
+        let y = (v - self.cy) / self.fy;
+        let r = (x.powi(2) + y.powi(2))
+            .sqrt()
+            .atan()
+            .powi(2)
+            .sqrt();
+        let r_term = self.k1 * r.powi(2) + self.k2 * r.powi(4) + self.k3 * r.powi(6) +
+                     self.k4 * r.powi(8);
+        let u = u + x * self.fx * r_term + 2. * self.fx * x * y * self.p1 +
+                self.p2 * self.fx * (r.powi(2) + 2. * x.powi(2));
+        let v = v + y * self.fy * r_term + 2. * self.fy * x * y * self.p2 +
+                self.p1 * self.fy * (r.powi(2) + 2. * y.powi(2));
+        (u, v)
     }
 }
 
@@ -121,7 +137,7 @@ mod tests {
         let point = Point3::new(1., 2., 3.);
         let camera = Camera::from_path("data/camera.cam").unwrap();
         let (u, v) = camera.cmcs_to_ics(point);
-        assert_relative_eq!(777.5760, u);
-        assert_relative_eq!(896.7450, v);
+        assert_relative_eq!(777.5760, u, epsilon = 1e-4);
+        assert_relative_eq!(896.7450, v, epsilon = 1e-4);
     }
 }
