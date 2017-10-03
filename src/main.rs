@@ -1,13 +1,11 @@
 extern crate docopt;
 extern crate nalgebra;
 extern crate riscan_pro;
-extern crate rustc_serialize;
+#[macro_use]
+extern crate serde_derive;
 
 use docopt::Docopt;
-use nalgebra::{Iterable, Transpose};
-use riscan_pro::{Matrix, Project, ScanPosition};
-use rustc_serialize::json::{Json, ToJson};
-use std::collections::HashMap;
+use riscan_pro::{Project, ScanPosition};
 
 const USAGE: &'static str = "
 RiSCAN PRO utilities.
@@ -23,7 +21,7 @@ Options:
     -h --help                       Show this screen.
 ";
 
-#[derive(Debug, RustcDecodable)]
+#[derive(Debug, Deserialize)]
 struct Args {
     cmd_export_filters: bool,
     cmd_socs_to_glcs: bool,
@@ -37,7 +35,7 @@ struct Args {
 }
 
 fn main() {
-    let args: Args = Docopt::new(USAGE).and_then(|d| d.decode()).unwrap_or_else(|e| e.exit());
+    let args: Args = Docopt::new(USAGE).and_then(|d| d.deserialize()).unwrap_or_else(|e| e.exit());
     if args.cmd_socs_to_glcs {
         let scan_position = if let Some(scan_position) = args.arg_scan_position {
             let project = Project::from_path(args.arg_project).unwrap();
@@ -61,28 +59,6 @@ fn main() {
             println!("{},{:.2},{:.2}", tiepoint.name, tiepoint.x, tiepoint.y);
         }
     } else if args.cmd_export_filters {
-        let scan_position = if let Some(scan_position) = args.arg_scan_position {
-            let project = Project::from_path(args.arg_project).unwrap();
-            project.scan_position(&scan_position).unwrap().clone()
-        } else {
-            ScanPosition::from_path(args.arg_project).unwrap()
-        };
-        let mut filters = Vec::new();
-        filters.push(filters_transformation(scan_position.sop()));
-        filters.push(filters_transformation(scan_position.pop()));
-        println!("{}", filters.to_json());
+        unimplemented!()
     }
-}
-
-fn filters_transformation(matrix: Matrix) -> Json {
-    let mut filter = HashMap::new();
-    filter.insert("type".to_string(), "filters.transformation".to_json());
-    filter.insert("matrix".to_string(),
-                  matrix.transpose()
-                      .iter()
-                      .map(|n| format!("{}", n))
-                      .collect::<Vec<_>>()
-                      .join(" ")
-                      .to_json());
-    filter.to_json()
 }

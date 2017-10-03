@@ -1,5 +1,5 @@
 use {Error, Matrix, Project, Result, Scan, Vector};
-use nalgebra::Eye;
+use nalgebra::Matrix4;
 use std::collections::HashMap;
 use std::path::Path;
 
@@ -28,12 +28,13 @@ impl ScanPosition {
         loop {
             if let Ok(project) = Project::from_path(&path_buf) {
                 let scans_path = project.path().unwrap().join("SCANS");
-                let subpath = fullpath.strip_prefix(&scans_path)
-                    .map_err(|_| Error::NotAScanPosition(path.as_ref().to_path_buf()))?;
+                let subpath =
+                    fullpath.strip_prefix(&scans_path)
+                        .map_err(|_| Error::NotAScanPosition(path.as_ref().to_path_buf()))?;
                 if let Some(scan_position) = subpath.iter().next() {
                     return project.scan_position(&scan_position.to_string_lossy())
-                        .map(|scan_position| scan_position.clone())
-                        .ok_or(Error::NotAScanPosition(path.as_ref().to_path_buf()));
+                               .map(|scan_position| scan_position.clone())
+                               .ok_or(Error::NotAScanPosition(path.as_ref().to_path_buf()));
                 } else {
                     return Err(Error::NotAScanPosition(path.as_ref().to_path_buf()));
                 }
@@ -56,9 +57,9 @@ impl ScanPosition {
     pub fn new() -> ScanPosition {
         ScanPosition {
             name: String::new(),
-            pop: Matrix::new_identity(4),
+            pop: Matrix4::identity(),
             scans: HashMap::new(),
-            sop: Matrix::new_identity(4),
+            sop: Matrix4::identity(),
         }
     }
 

@@ -1,5 +1,5 @@
 use {Error, Matrix, Result, Scan, ScanPosition, Tiepoint};
-use nalgebra::Eye;
+use nalgebra::Matrix4;
 use std::collections::HashMap;
 use std::fs::{self, File};
 use std::io::{BufReader, Read};
@@ -10,7 +10,7 @@ use xml::reader::{EventReader, XmlEvent};
 #[derive(Clone, Debug)]
 pub struct Project {
     path: Option<PathBuf>,
-    pop: Matrix,
+    pop: Matrix4<f64>,
     scan_positions: HashMap<String, ScanPosition>,
     tpl_glcs: Vec<Tiepoint>,
 }
@@ -79,7 +79,7 @@ impl Project {
         Project {
             scan_positions: HashMap::new(),
             path: None,
-            pop: Matrix::new_identity(4),
+            pop: Matrix4::identity(),
             tpl_glcs: Vec::new(),
         }
     }
@@ -132,9 +132,9 @@ impl Project {
         self.scan_positions.get(name).or_else(|| {
             if let Some(file_name) = Path::new(name).file_name() {
                 if let Some(name) = file_name.to_string_lossy().split('.').next() {
-                    return self.scan_positions
-                        .values()
-                        .find(|scan_position| scan_position.scan(name).is_some());
+                    return self.scan_positions.values().find(|scan_position| {
+                                                                 scan_position.scan(name).is_some()
+                                                             });
                 }
             }
             None
@@ -402,9 +402,8 @@ fn matrix_from_str(s: &str) -> Result<Matrix> {
 
 #[cfg(test)]
 mod tests {
-    use {Matrix, ScanPosition};
-    use nalgebra::Eye;
     use super::*;
+    use ScanPosition;
 
     #[test]
     fn project_read_from() {
@@ -418,7 +417,7 @@ mod tests {
 
     #[test]
     fn project_add_scan_position() {
-        let mut pop = Matrix::new_identity(4);
+        let mut pop = Matrix4::identity();
         pop[(0, 3)] = 1.;
         let mut project = Project::new();
         project.set_pop(pop);
@@ -434,7 +433,7 @@ mod tests {
         let mut scan_position = ScanPosition::new();
         scan_position.set_name("ScanPos001");
         project.add_scan_position(scan_position);
-        let mut pop = Matrix::new_identity(4);
+        let mut pop = Matrix4::identity();
         pop[(0, 3)] = 1.;
         project.set_pop(pop);
         assert_eq!(pop, project.scan_position("ScanPos001").unwrap().pop());
