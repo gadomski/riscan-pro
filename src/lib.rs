@@ -36,9 +36,12 @@ extern crate sxd_xpath;
 
 #[macro_use]
 mod macros;
+
+mod image;
 mod project;
 mod utils;
 
+pub use image::Image;
 pub use project::{Project, rsp_path};
 
 /// Our custom error enum.
@@ -60,6 +63,12 @@ pub enum Error {
 
 /// Our custom result type.
 pub type Result<T> = std::result::Result<T, Error>;
+
+/// Our type of Matrix4.
+pub type Matrix4 = nalgebra::Matrix4<f64>;
+
+/// Our type of Vector3.
+pub type Vector3 = nalgebra::Vector3<f64>;
 
 impl From<std::io::Error> for Error {
     fn from(err: std::io::Error) -> Error {

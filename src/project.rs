@@ -1,5 +1,4 @@
-use {Error, Result};
-use nalgebra::Matrix4;
+use {Error, Matrix4, Result};
 use std::path::{Path, PathBuf};
 use std::str::FromStr;
 
@@ -41,7 +40,7 @@ pub fn rsp_path<P: AsRef<Path>>(path: P) -> Result<PathBuf> {
 /// A RiSCAN Pro project.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Project {
-    pop: Matrix4<f64>,
+    pop: Matrix4,
 }
 
 impl Project {
@@ -77,7 +76,7 @@ impl Project {
     /// let mut project = Project::from_path("data/project.RiSCAN").unwrap();
     /// let pop = project.pop();
     /// ```
-    pub fn pop(&self) -> Matrix4<f64> {
+    pub fn pop(&self) -> Matrix4 {
         self.pop
     }
 }
