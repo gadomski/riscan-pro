@@ -1,4 +1,4 @@
-use {Error, Projective3, Result};
+use {Camera, Error, Projective3, Result};
 use std::path::{Path, PathBuf};
 use std::str::FromStr;
 
@@ -38,8 +38,14 @@ pub fn rsp_path<P: AsRef<Path>>(path: P) -> Result<PathBuf> {
 }
 
 /// A RiSCAN Pro project.
+///
+/// This project isn't a one-to-one mapping to Riegl's XML structure. We've chosen to cut cornerns
+/// in order to easily support *our* use case. Specifically:
+///
+/// - Only one or zero camera calibrations are supported, not more than one.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Project {
+    camera: Option<Camera>,
     pop: Projective3,
 }
 
@@ -73,11 +79,24 @@ impl Project {
     ///
     /// ```
     /// use riscan_pro::Project;
-    /// let mut project = Project::from_path("data/project.RiSCAN").unwrap();
+    /// let project = Project::from_path("data/project.RiSCAN").unwrap();
     /// let pop = project.pop();
     /// ```
     pub fn pop(&self) -> Projective3 {
         self.pop
+    }
+
+    /// Returns this project's camera calibration, if it exists.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use riscan_pro::Project;
+    /// let project = Project::from_path("data/project.RiSCAN").unwrap();
+    /// let camera = project.camera().unwrap();
+    /// ```
+    pub fn camera(&self) -> Option<Camera> {
+        self.camera
     }
 }
 
@@ -94,7 +113,11 @@ impl FromStr for Project {
         let document = package.as_document();
 
         let pop = utils::projective_from_str(&xpath!(&document, "/project/pop/matrix").string())?;
-        Ok(Project { pop: pop })
+        let camera = Camera::from_document(&document)?;
+        Ok(Project {
+               camera: camera,
+               pop: pop,
+           })
     }
 }
 
@@ -127,7 +150,9 @@ mod tests {
 
     #[test]
     fn project() {
+        use Camera;
         use nalgebra::Matrix4;
+
         let project = Project::from_path("data/project.RiSCAN").unwrap();
         let expected = Projective3::from_matrix_unchecked(Matrix4::new(0.99566497679815923,
                                                                        0.046111730526226816,
@@ -147,6 +172,8 @@ mod tests {
                                                                        1.));
         let actual = project.pop();
         assert_relative_eq!(expected.matrix(), actual.matrix());
+        let camera = Camera::from_path("data/camera.cam").unwrap();
+        assert_eq!(camera, project.camera().unwrap());
     }
 
     #[test]

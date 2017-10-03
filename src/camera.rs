@@ -1,5 +1,6 @@
 use {Point3, Result};
 use std::path::Path;
+use sxd_document::dom::Document;
 
 macro_rules! setting {
     ($settings:expr, $name:expr) => {{
@@ -8,8 +9,15 @@ macro_rules! setting {
     }}
 }
 
+macro_rules! camera_xpath {
+    ($document:expr, $xpath:expr) => {{
+        use sxd_xpath;
+        sxd_xpath::evaluate_xpath($document, &format!("/project/calibrations/camcalibs/camcalib_opencv/{}", $xpath))?.number()
+    }}
+}
+
 /// A camera calibration.
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Camera {
     fx: f64,
     fy: f64,
@@ -70,6 +78,38 @@ impl Camera {
                dx: setting!(settings, "dx"),
                dy: setting!(settings, "dy"),
            })
+    }
+
+    /// Creates a camera calibration from a xml document.
+    ///
+    /// Returns an Ok(None) if no calibration exists.
+    pub fn from_document(document: &Document) -> Result<Option<Camera>> {
+        use sxd_xpath::{self, Value};
+        match sxd_xpath::evaluate_xpath(document,
+                                        "/project/calibrations/camcalibs/camcalib_opencv")? {
+            Value::Nodeset(nodeset) => {
+                if nodeset.size() == 0 {
+                    return Ok(None);
+                }
+            }
+            _ => {}
+        }
+        Ok(Some(Camera {
+                    fx: camera_xpath!(document, "internal_opencv/fx"),
+                    fy: camera_xpath!(document, "internal_opencv/fy"),
+                    cx: camera_xpath!(document, "internal_opencv/cx"),
+                    cy: camera_xpath!(document, "internal_opencv/cy"),
+                    k1: camera_xpath!(document, "internal_opencv/k1"),
+                    k2: camera_xpath!(document, "internal_opencv/k2"),
+                    k3: camera_xpath!(document, "internal_opencv/k3"),
+                    k4: camera_xpath!(document, "internal_opencv/k4"),
+                    p1: camera_xpath!(document, "internal_opencv/p1"),
+                    p2: camera_xpath!(document, "internal_opencv/p2"),
+                    nx: camera_xpath!(document, "intrinsic_opencv/nx") as usize,
+                    ny: camera_xpath!(document, "intrinsic_opencv/ny") as usize,
+                    dx: camera_xpath!(document, "intrinsic_opencv/dx"),
+                    dy: camera_xpath!(document, "intrinsic_opencv/dy"),
+                }))
     }
 
     /// Convert camera's coordinates to image coordinate space.
