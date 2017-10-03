@@ -48,6 +48,8 @@ pub use project::{Project, rsp_path};
 /// Our custom error enum.
 #[derive(Debug)]
 pub enum Error {
+    /// The matrix does not have an inverse.
+    Inverse(nalgebra::Matrix4<f64>),
     /// Wrapper around `std::io::Error`.
     Io(std::io::Error),
     /// Wrapper around `std::num::ParseFloatError`.
@@ -65,8 +67,8 @@ pub enum Error {
 /// Our custom result type.
 pub type Result<T> = std::result::Result<T, Error>;
 
-/// Our type of Transform3.
-pub type Transform3 = nalgebra::Transform3<f64>;
+/// Our type of Projective3.
+pub type Projective3 = nalgebra::Projective3<f64>;
 
 /// Our type of Point3.
 pub type Point3 = nalgebra::Point3<f64>;

@@ -1,18 +1,26 @@
-use {Point3, Transform3};
+use {Point3, Projective3};
 use alga::general::SubsetOf;
 
 /// A scan position image.
 #[derive(Clone, Copy, Debug)]
 pub struct Image {
-    mounting_matrix: Transform3,
+    cop: Projective3,
+    mounting_matrix: Projective3,
 }
 
 impl Image {
     /// Sets this image's mounting matrix.
     pub fn set_mounting_matrix<T>(&mut self, mounting_matrix: T)
-        where T: SubsetOf<Transform3>
+        where T: SubsetOf<Projective3>
     {
         self.mounting_matrix = mounting_matrix.to_superset();
+    }
+
+    /// Sets this image's camera's own position matrix.
+    pub fn set_cop<T>(&mut self, cop: T)
+        where T: SubsetOf<Projective3>
+    {
+        self.cop = cop.to_superset();
     }
 
     /// Converts a point in the project's coordinate system to the camera's coordinate system.
@@ -28,13 +36,17 @@ impl Image {
     /// ```
     pub fn prcs_to_cmcs(&self, point: Point3) -> Point3 {
         use alga::linear::Transformation;
-        self.mounting_matrix.transform_point(&point)
+
+        (self.mounting_matrix * self.cop.inverse()).transform_point(&point)
     }
 }
 
 impl Default for Image {
     fn default() -> Image {
-        Image { mounting_matrix: Transform3::identity() }
+        Image {
+            cop: Projective3::identity(),
+            mounting_matrix: Projective3::identity(),
+        }
     }
 }
 
@@ -59,5 +71,14 @@ mod tests {
         let input = Point3::new(1., 2., 3.);
         let output = image.prcs_to_cmcs(input);
         assert_relative_eq!(Point3::new(-2., 1., 3.), output);
+    }
+
+    #[test]
+    fn prcs_to_cmcs_cop() {
+        let mut image = Image::default();
+        image.set_cop(Rotation3::from_euler_angles(0., 0., PI / 2.));
+        let input = Point3::new(1., 2., 3.);
+        let output = image.prcs_to_cmcs(input);
+        assert_relative_eq!(Point3::new(2., -1., 3.), output);
     }
 }
