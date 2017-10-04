@@ -36,17 +36,15 @@ extern crate regex;
 extern crate sxd_document;
 extern crate sxd_xpath;
 
-#[macro_use]
-mod macros;
-
 mod camera;
 mod image;
 mod project;
+mod rsp;
 mod utils;
 
 pub use camera::Camera;
 pub use image::Image;
-pub use project::{Project, rsp_path};
+pub use project::Project;
 
 /// Our custom error enum.
 #[derive(Debug)]

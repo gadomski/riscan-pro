@@ -12,24 +12,21 @@ pub struct Image {
 impl Image {
     /// Sets this image's mounting matrix.
     pub fn set_mounting_matrix<T>(&mut self, mounting_matrix: T)
-    where
-        T: SubsetOf<Projective3>,
+        where T: SubsetOf<Projective3>
     {
         self.mounting_matrix = mounting_matrix.to_superset();
     }
 
     /// Sets this image's camera's own position matrix.
     pub fn set_cop<T>(&mut self, cop: T)
-    where
-        T: SubsetOf<Projective3>,
+        where T: SubsetOf<Projective3>
     {
         self.cop = cop.to_superset();
     }
 
     /// Sets this image's scanner's own position matrix.
     pub fn set_sop<T>(&mut self, sop: T)
-    where
-        T: SubsetOf<Projective3>,
+        where T: SubsetOf<Projective3>
     {
         self.sop = sop.to_superset();
     }
