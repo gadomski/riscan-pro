@@ -8,11 +8,18 @@ readme = "README.md"
 keywords = ["lidar", "riegl", "riscan"]
 license = "MIT"
 
+[features]
+default = []
+colorize = ["irb", "las", "scanifc"]
+
 [dependencies]
 alga = "0.5"
 docopt = "0.8"
+las = { git = "https://github.com/gadomski/las-rs", optional = true }
+irb = { git = "https://github.com/gadomski/irb-rs", optional = true }
 nalgebra = "0.13"
-regex = "*"
+regex = "0.2"
+scanifc = { git = "https://github.com/gadomski/rivlib-rs", optional = true }
 serde = "1.0"
 serde_derive = "1.0"
 sxd-xpath = "0.4"
@@ -20,3 +27,9 @@ sxd-document = "0.2"
 
 [dev-dependencies]
 approx = "0.1"
+
+[[bin]]
+name = "riscan-pro"
+doc = false
+test = false
+required-features = ["colorize"]
