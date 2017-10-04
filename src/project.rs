@@ -22,8 +22,9 @@ pub fn rsp_path<P: AsRef<Path>>(path: P) -> Result<PathBuf> {
 
     let mut path = fs::canonicalize(path)?;
     if let Some(extension) = path.extension().map(|extension| {
-                                                      extension.to_string_lossy().into_owned()
-                                                  }) {
+        extension.to_string_lossy().into_owned()
+    })
+    {
         match extension.as_str() {
             "RiSCAN" => {
                 path.push(PROJECT_RSP);
@@ -105,19 +106,25 @@ impl FromStr for Project {
 
     fn from_str(s: &str) -> Result<Project> {
         use sxd_document::parser;
+        use regex::Regex;
         use utils;
 
         // Riegl uses ./project.dtd, which may not be xml legal.
         let s = s.replace("./project.dtd", "project.dtd");
+        // And they put comments in the doctype. Why? Just why?
+        let re = Regex::new(
+            r"(?m)\[\s*<!-- PUT INTERNAL DOCUMENT TYPE DEFINITION SUBSET HERE -->\s*\]",
+        ).unwrap();
+        let s = re.replace(&s, "");
         let package = parser::parse(&s)?;
         let document = package.as_document();
 
         let pop = utils::projective_from_str(&xpath!(&document, "/project/pop/matrix").string())?;
         let camera = Camera::from_document(&document)?;
         Ok(Project {
-               camera: camera,
-               pop: pop,
-           })
+            camera: camera,
+            pop: pop,
+        })
     }
 }
 
@@ -154,22 +161,24 @@ mod tests {
         use nalgebra::Matrix4;
 
         let project = Project::from_path("data/project.RiSCAN").unwrap();
-        let expected = Projective3::from_matrix_unchecked(Matrix4::new(0.99566497679815923,
-                                                                       0.046111730526226816,
-                                                                       -0.080777238659154112,
-                                                                       -515632.66332186362,
-                                                                       -0.093012117369304602,
-                                                                       0.49361133154539053,
-                                                                       -0.86469451217899213,
-                                                                       -5519682.7927730317,
-                                                                       0.,
-                                                                       0.86845930340912512,
-                                                                       0.49576046466225683,
-                                                                       3143447.4201939853,
-                                                                       0.,
-                                                                       0.,
-                                                                       0.,
-                                                                       1.));
+        let expected = Projective3::from_matrix_unchecked(Matrix4::new(
+            0.99566497679815923,
+            0.046111730526226816,
+            -0.080777238659154112,
+            -515632.66332186362,
+            -0.093012117369304602,
+            0.49361133154539053,
+            -0.86469451217899213,
+            -5519682.7927730317,
+            0.,
+            0.86845930340912512,
+            0.49576046466225683,
+            3143447.4201939853,
+            0.,
+            0.,
+            0.,
+            1.,
+        ));
         let actual = project.pop();
         assert_relative_eq!(expected.matrix(), actual.matrix());
         let camera = Camera::from_path("data/camera.cam").unwrap();
@@ -189,5 +198,10 @@ mod tests {
     #[test]
     fn two_cameras() {
         assert!(Project::from_path("data/two-cameras.rsp").is_err());
+    }
+
+    #[test]
+    fn extra_crap_in_doctype() {
+        Project::from_path("data/extra-crap-in-doctype.rsp").unwrap();
     }
 }

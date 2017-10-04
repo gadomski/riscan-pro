@@ -32,6 +32,7 @@ extern crate alga;
 #[macro_use]
 extern crate approx;
 extern crate nalgebra;
+extern crate regex;
 extern crate sxd_document;
 extern crate sxd_xpath;
 
