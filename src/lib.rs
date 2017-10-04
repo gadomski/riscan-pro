@@ -59,6 +59,8 @@ pub enum Error {
     MultipleCameras,
     /// Wrapper around `std::num::ParseFloatError`.
     ParseFloat(std::num::ParseFloatError),
+    /// Error when parsing a Matrix4 from a string.
+    ParseMatrix4(String),
     /// Invalid project path.
     ProjectPath(std::path::PathBuf),
     /// An error that occurs while parsing an xml file.

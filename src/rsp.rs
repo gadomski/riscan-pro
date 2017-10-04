@@ -1,4 +1,4 @@
-use {Error, Result};
+use {Camera, Error, Projective3, Result};
 use std::path::{Path, PathBuf};
 use std::str::FromStr;
 use sxd_document::Package;
@@ -41,6 +41,18 @@ impl Rsp {
         let mut xml = String::new();
         file.read_to_string(&mut xml)?;
         xml.parse()
+    }
+
+    pub fn projective3(&self, xpath: &str) -> Result<Projective3> {
+        use sxd_xpath;
+        use utils;
+        let document = self.package.as_document();
+        let value = sxd_xpath::evaluate_xpath(&document, xpath)?;
+        utils::projective_from_str(&value.string())
+    }
+
+    pub fn camera(&self, xpath: &str) -> Result<Option<Camera>> {
+        unimplemented!()
     }
 }
 
@@ -88,5 +100,33 @@ mod tests {
     fn rsp_path_err() {
         assert!(rsp_path("data").is_err());
         assert!(rsp_path("Cargo.toml").is_err());
+    }
+
+    #[test]
+    fn pop() {
+        use nalgebra::Matrix4;
+        let rsp = Rsp::from_path("data/project.RiSCAN").unwrap();
+        let expected = Projective3::from_matrix_unchecked(Matrix4::new(0.99566497679815923,
+                                                                       0.046111730526226816,
+                                                                       -0.080777238659154112,
+                                                                       -515632.66332186362,
+                                                                       -0.093012117369304602,
+                                                                       0.49361133154539053,
+                                                                       -0.86469451217899213,
+                                                                       -5519682.7927730317,
+                                                                       0.,
+                                                                       0.86845930340912512,
+                                                                       0.49576046466225683,
+                                                                       3143447.4201939853,
+                                                                       0.,
+                                                                       0.,
+                                                                       0.,
+                                                                       1.));
+        assert_eq!(expected, rsp.projective3("/project/pop/matrix").unwrap());
+    }
+
+    #[test]
+    fn not_a_matrix() {
+        assert!(Rsp::from_path("data/project.RiSCAN").unwrap().projective3("/project").is_err());
     }
 }

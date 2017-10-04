@@ -59,7 +59,10 @@ impl Project {
     }
 
     fn new(rsp: &Rsp) -> Result<Project> {
-        unimplemented!()
+        Ok(Project {
+               pop: rsp.projective3("/project/pop/matrix")?,
+               camera: rsp.camera("/project/camcalibs/camcalib_opencv")?,
+           })
     }
 }
 
