@@ -1,6 +1,5 @@
 use {Point3, Result};
 use std::path::Path;
-use sxd_document::dom::Document;
 
 macro_rules! setting {
     ($settings:expr, $name:expr) => {{
@@ -9,30 +8,24 @@ macro_rules! setting {
     }}
 }
 
-macro_rules! camera_xpath {
-    ($document:expr, $xpath:expr) => {{
-        use sxd_xpath;
-        sxd_xpath::evaluate_xpath($document, &format!("/project/calibrations/camcalibs/camcalib_opencv/{}", $xpath))?.number()
-    }}
-}
-
 /// A camera calibration.
+#[allow(missing_docs)]
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Camera {
-    fx: f64,
-    fy: f64,
-    cx: f64,
-    cy: f64,
-    k1: f64,
-    k2: f64,
-    k3: f64,
-    k4: f64,
-    p1: f64,
-    p2: f64,
-    nx: usize,
-    ny: usize,
-    dx: f64,
-    dy: f64,
+    pub fx: f64,
+    pub fy: f64,
+    pub cx: f64,
+    pub cy: f64,
+    pub k1: f64,
+    pub k2: f64,
+    pub k3: f64,
+    pub k4: f64,
+    pub p1: f64,
+    pub p2: f64,
+    pub nx: usize,
+    pub ny: usize,
+    pub dx: f64,
+    pub dy: f64,
 }
 
 impl Camera {
@@ -55,9 +48,7 @@ impl Camera {
                 line.ok().and_then(|line| {
                     let words = line.split('=').collect::<Vec<_>>();
                     if words.len() == 2 {
-                        words[1].parse().ok().map(|n| {
-                            (words[0].to_string().to_lowercase(), n)
-                        })
+                        words[1].parse().ok().map(|n| (words[0].to_string().to_lowercase(), n))
                     } else {
                         None
                     }
@@ -65,59 +56,21 @@ impl Camera {
             })
             .collect();
         Ok(Camera {
-            fx: setting!(settings, "fx"),
-            fy: setting!(settings, "fy"),
-            cx: setting!(settings, "cx"),
-            cy: setting!(settings, "cy"),
-            k1: setting!(settings, "k1"),
-            k2: setting!(settings, "k2"),
-            k3: setting!(settings, "k3"),
-            k4: setting!(settings, "k4"),
-            p1: setting!(settings, "p1"),
-            p2: setting!(settings, "p2"),
-            nx: setting!(settings, "nx") as usize,
-            ny: setting!(settings, "ny") as usize,
-            dx: setting!(settings, "dx"),
-            dy: setting!(settings, "dy"),
-        })
-    }
-
-    /// Creates a camera calibration from a xml document.
-    ///
-    /// Returns an Ok(None) if no calibration exists.
-    pub fn from_document(document: &Document) -> Result<Option<Camera>> {
-        use Error;
-        use sxd_xpath::{self, Value};
-
-        match sxd_xpath::evaluate_xpath(
-            document,
-            "/project/calibrations/camcalibs/camcalib_opencv",
-        )? {
-            Value::Nodeset(nodeset) => {
-                if nodeset.size() == 0 {
-                    return Ok(None);
-                } else if nodeset.size() > 1 {
-                    return Err(Error::MultipleCameras);
-                }
-            }
-            _ => {}
-        }
-        Ok(Some(Camera {
-            fx: camera_xpath!(document, "internal_opencv/fx"),
-            fy: camera_xpath!(document, "internal_opencv/fy"),
-            cx: camera_xpath!(document, "internal_opencv/cx"),
-            cy: camera_xpath!(document, "internal_opencv/cy"),
-            k1: camera_xpath!(document, "internal_opencv/k1"),
-            k2: camera_xpath!(document, "internal_opencv/k2"),
-            k3: camera_xpath!(document, "internal_opencv/k3"),
-            k4: camera_xpath!(document, "internal_opencv/k4"),
-            p1: camera_xpath!(document, "internal_opencv/p1"),
-            p2: camera_xpath!(document, "internal_opencv/p2"),
-            nx: camera_xpath!(document, "intrinsic_opencv/nx") as usize,
-            ny: camera_xpath!(document, "intrinsic_opencv/ny") as usize,
-            dx: camera_xpath!(document, "intrinsic_opencv/dx"),
-            dy: camera_xpath!(document, "intrinsic_opencv/dy"),
-        }))
+               fx: setting!(settings, "fx"),
+               fy: setting!(settings, "fy"),
+               cx: setting!(settings, "cx"),
+               cy: setting!(settings, "cy"),
+               k1: setting!(settings, "k1"),
+               k2: setting!(settings, "k2"),
+               k3: setting!(settings, "k3"),
+               k4: setting!(settings, "k4"),
+               p1: setting!(settings, "p1"),
+               p2: setting!(settings, "p2"),
+               nx: setting!(settings, "nx") as usize,
+               ny: setting!(settings, "ny") as usize,
+               dx: setting!(settings, "dx"),
+               dy: setting!(settings, "dy"),
+           })
     }
 
     /// Convert camera's coordinates to image coordinate space.
@@ -141,13 +94,17 @@ impl Camera {
         let v = ud_prime[1] / ud_prime[2];
         let x = (u - self.cx) / self.fx;
         let y = (v - self.cy) / self.fy;
-        let r = (x.powi(2) + y.powi(2)).sqrt().atan().powi(2).sqrt();
+        let r = (x.powi(2) + y.powi(2))
+            .sqrt()
+            .atan()
+            .powi(2)
+            .sqrt();
         let r_term = self.k1 * r.powi(2) + self.k2 * r.powi(4) + self.k3 * r.powi(6) +
-            self.k4 * r.powi(8);
+                     self.k4 * r.powi(8);
         let u = u + x * self.fx * r_term + 2. * self.fx * x * y * self.p1 +
-            self.p2 * self.fx * (r.powi(2) + 2. * x.powi(2));
+                self.p2 * self.fx * (r.powi(2) + 2. * x.powi(2));
         let v = v + y * self.fy * r_term + 2. * self.fy * x * y * self.p2 +
-            self.p1 * self.fy * (r.powi(2) + 2. * y.powi(2));
+                self.p1 * self.fy * (r.powi(2) + 2. * y.powi(2));
         (u, v)
     }
 }
