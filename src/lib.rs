@@ -33,14 +33,12 @@ extern crate alga;
 extern crate approx;
 extern crate nalgebra;
 extern crate regex;
-extern crate sxd_document;
-extern crate sxd_xpath;
+extern crate xmltree;
 
 mod camera;
 mod image;
 mod project;
 mod scan_position;
-mod rsp;
 mod utils;
 
 pub use camera::Camera;
@@ -51,26 +49,30 @@ pub use scan_position::ScanPosition;
 /// Our custom error enum.
 #[derive(Debug)]
 pub enum Error {
+    /// The rsp root element is invalid.
+    InvalidRspRoot(String),
     /// The matrix does not have an inverse.
     Inverse(nalgebra::Matrix4<f64>),
     /// Wrapper around `std::io::Error`.
     Io(std::io::Error),
     /// A camera setting is missing.
     MissingCameraSetting(String),
+    /// The child is missing from the root element.
+    MissingChild(String),
     /// There are multiple cameras, which is not supported by this library.
     MultipleCameras,
+    /// There is no text in the element.
+    NoText(xmltree::Element),
     /// Wrapper around `std::num::ParseFloatError`.
     ParseFloat(std::num::ParseFloatError),
+    /// Wrapper around `std::num::ParseIntError`.
+    ParseInt(std::num::ParseIntError),
     /// Error when parsing a Matrix4 from a string.
     ParseMatrix4(String),
     /// Invalid project path.
     ProjectPath(std::path::PathBuf),
-    /// An error that occurs while parsing an xml file.
-    XmlParse(usize, Vec<sxd_document::parser::Error>),
-    /// Wrapper around `sxd_xpath::Error`.
-    Xpath(sxd_xpath::Error),
-    /// The provided xpath was not found.
-    XpathNotFound(String),
+    /// Wrapper around xmltree::ParseError.
+    XmltreeParse(xmltree::ParseError),
 }
 
 /// Our custom result type.
@@ -94,14 +96,14 @@ impl From<std::num::ParseFloatError> for Error {
     }
 }
 
-impl From<(usize, Vec<sxd_document::parser::Error>)> for Error {
-    fn from((n, v): (usize, Vec<sxd_document::parser::Error>)) -> Error {
-        Error::XmlParse(n, v)
+impl From<std::num::ParseIntError> for Error {
+    fn from(err: std::num::ParseIntError) -> Error {
+        Error::ParseInt(err)
     }
 }
 
-impl From<sxd_xpath::Error> for Error {
-    fn from(err: sxd_xpath::Error) -> Error {
-        Error::Xpath(err)
+impl From<xmltree::ParseError> for Error {
+    fn from(err: xmltree::ParseError) -> Error {
+        Error::XmltreeParse(err)
     }
 }

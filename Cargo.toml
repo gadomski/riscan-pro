@@ -22,8 +22,7 @@ regex = "0.2"
 scanifc = { git = "https://github.com/gadomski/rivlib-rs", optional = true }
 serde = "1.0"
 serde_derive = "1.0"
-sxd-xpath = "0.4"
-sxd-document = "0.2"
+xmltree = "0.6"
 
 [dev-dependencies]
 approx = "0.1"
