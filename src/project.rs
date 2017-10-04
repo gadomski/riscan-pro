@@ -52,7 +52,7 @@ impl Project {
     /// let pop = project.pop();
     /// ```
     pub fn pop(&self) -> Result<Projective3> {
-        self.get_projective3("pop/matrix")
+        projective3_from_xpath(&self.root, "pop/matrix")
     }
 
     /// Returns this project's camera calibration, if it exists.
@@ -65,7 +65,7 @@ impl Project {
     /// let camera = project.camera().unwrap();
     /// ```
     pub fn camera(&self) -> Result<Option<Camera>> {
-        let camcalibs = self.get_element("calibrations/camcalibs")?;
+        let camcalibs = xpath(&self.root, "calibrations/camcalibs")?;
         if camcalibs.children.is_empty() {
             Ok(None)
         } else if camcalibs.children.len() > 1 {
@@ -73,20 +73,20 @@ impl Project {
         } else {
             let ref camera = camcalibs.children[0];
             Ok(Some(Camera {
-                        fx: get_and_parse(camera, "internal_opencv/fx")?,
-                        fy: get_and_parse(camera, "internal_opencv/fy")?,
-                        cx: get_and_parse(camera, "internal_opencv/cx")?,
-                        cy: get_and_parse(camera, "internal_opencv/cy")?,
-                        k1: get_and_parse(camera, "internal_opencv/k1")?,
-                        k2: get_and_parse(camera, "internal_opencv/k2")?,
-                        k3: get_and_parse(camera, "internal_opencv/k3")?,
-                        k4: get_and_parse(camera, "internal_opencv/k4")?,
-                        p1: get_and_parse(camera, "internal_opencv/p1")?,
-                        p2: get_and_parse(camera, "internal_opencv/p2")?,
-                        nx: get_and_parse(camera, "intrinsic_opencv/nx")?,
-                        ny: get_and_parse(camera, "intrinsic_opencv/ny")?,
-                        dx: get_and_parse(camera, "intrinsic_opencv/dx")?,
-                        dy: get_and_parse(camera, "intrinsic_opencv/dy")?,
+                        fx: parse_from_xpath(camera, "internal_opencv/fx")?,
+                        fy: parse_from_xpath(camera, "internal_opencv/fy")?,
+                        cx: parse_from_xpath(camera, "internal_opencv/cx")?,
+                        cy: parse_from_xpath(camera, "internal_opencv/cy")?,
+                        k1: parse_from_xpath(camera, "internal_opencv/k1")?,
+                        k2: parse_from_xpath(camera, "internal_opencv/k2")?,
+                        k3: parse_from_xpath(camera, "internal_opencv/k3")?,
+                        k4: parse_from_xpath(camera, "internal_opencv/k4")?,
+                        p1: parse_from_xpath(camera, "internal_opencv/p1")?,
+                        p2: parse_from_xpath(camera, "internal_opencv/p2")?,
+                        nx: parse_from_xpath(camera, "intrinsic_opencv/nx")?,
+                        ny: parse_from_xpath(camera, "intrinsic_opencv/ny")?,
+                        dx: parse_from_xpath(camera, "intrinsic_opencv/dx")?,
+                        dy: parse_from_xpath(camera, "intrinsic_opencv/dy")?,
                     }))
         }
     }
@@ -102,25 +102,11 @@ impl Project {
     /// assert!(project.scan_position("SP03").unwrap().is_none());
     /// ```
     pub fn scan_position(&self, name: &str) -> Result<Option<ScanPosition>> {
-        let scanpositions = self.get_element("scanpositions")?;
+        let scanpositions = xpath(&self.root, "scanpositions")?;
         Ok(scanpositions.children
                .iter()
-               .find(|child| get_str(child, "name").map(|s| s == name).unwrap_or(false))
+               .find(|child| str_from_xpath(child, "name").map(|s| s == name).unwrap_or(false))
                .map(|_| ScanPosition {}))
-    }
-
-    fn get_projective3(&self, xpath: &str) -> Result<Projective3> {
-        use utils;
-        let s = self.get_str(xpath)?;
-        utils::projective_from_str(s)
-    }
-
-    fn get_str(&self, xpath: &str) -> Result<&str> {
-        get_str(&self.root, xpath)
-    }
-
-    fn get_element(&self, xpath: &str) -> Result<&Element> {
-        get_element(&self.root, xpath)
     }
 }
 
@@ -144,15 +130,21 @@ fn rsp_path<P: AsRef<Path>>(path: P) -> Result<PathBuf> {
     }
 }
 
-fn get_and_parse<T>(element: &Element, xpath: &str) -> Result<T>
+fn parse_from_xpath<T>(element: &Element, xpath: &str) -> Result<T>
     where T: FromStr,
           Error: From<<T as FromStr>::Err>
 {
-    get_str(element, xpath).and_then(|s| s.parse().map_err(Error::from))
+    str_from_xpath(element, xpath).and_then(|s| s.parse().map_err(Error::from))
 }
 
-fn get_str<'a>(element: &'a Element, xpath: &str) -> Result<&'a str> {
-    let element = get_element(element, xpath)?;
+fn projective3_from_xpath(element: &Element, xpath: &str) -> Result<Projective3> {
+    use utils;
+    let s = str_from_xpath(element, xpath)?;
+    utils::projective_from_str(s)
+}
+
+fn str_from_xpath<'a>(element: &'a Element, s: &str) -> Result<&'a str> {
+    let element = xpath(element, s)?;
     if let Some(s) = element.text.as_ref() {
         Ok(s)
     } else {
@@ -160,7 +152,7 @@ fn get_str<'a>(element: &'a Element, xpath: &str) -> Result<&'a str> {
     }
 }
 
-fn get_element<'a>(mut element: &'a Element, xpath: &str) -> Result<&'a Element> {
+fn xpath<'a>(mut element: &'a Element, xpath: &str) -> Result<&'a Element> {
     for name in xpath.split('/') {
         if let Some(child) = element.get_child(name) {
             element = child;
