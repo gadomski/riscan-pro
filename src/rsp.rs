@@ -52,7 +52,38 @@ impl Rsp {
     }
 
     pub fn camera(&self, xpath: &str) -> Result<Option<Camera>> {
-        unimplemented!()
+        use sxd_xpath::{self, Value};
+
+        let document = self.package.as_document();
+        match sxd_xpath::evaluate_xpath(&document, xpath)? {
+            Value::Nodeset(nodeset) => {
+                if nodeset.size() == 0 {
+                    return Ok(None);
+                } else if nodeset.size() > 1 {
+                    return Err(Error::MultipleCameras);
+                }
+            }
+            _ => return Ok(None),
+        }
+        let camera_xpath = |s| {
+            sxd_xpath::evaluate_xpath(&document, &format!("{}/{}", xpath, s)).map(|v| v.number())
+        };
+        Ok(Some(Camera {
+                    fx: camera_xpath("internal_opencv/fx")?,
+                    fy: camera_xpath("internal_opencv/fy")?,
+                    cx: camera_xpath("internal_opencv/cx")?,
+                    cy: camera_xpath("internal_opencv/cy")?,
+                    k1: camera_xpath("internal_opencv/k1")?,
+                    k2: camera_xpath("internal_opencv/k2")?,
+                    k3: camera_xpath("internal_opencv/k3")?,
+                    k4: camera_xpath("internal_opencv/k4")?,
+                    p1: camera_xpath("internal_opencv/p1")?,
+                    p2: camera_xpath("internal_opencv/p2")?,
+                    nx: camera_xpath("intrinsic_opencv/nx")? as usize,
+                    ny: camera_xpath("intrinsic_opencv/ny")? as usize,
+                    dx: camera_xpath("intrinsic_opencv/dx")?,
+                    dy: camera_xpath("intrinsic_opencv/dy")?,
+                }))
     }
 }
 
@@ -128,5 +159,21 @@ mod tests {
     #[test]
     fn not_a_matrix() {
         assert!(Rsp::from_path("data/project.RiSCAN").unwrap().projective3("/project").is_err());
+    }
+
+    #[test]
+    fn empty_rsp() {
+        assert!(Rsp::from_path("data/empty.rsp").is_err());
+    }
+
+    #[test]
+    fn two_cameras() {
+        let rsp = Rsp::from_path("data/two-cameras.rsp").unwrap();
+        assert!(rsp.camera("/project/calibrations/camcalibs/camcalib_opencv").is_err());
+    }
+
+    #[test]
+    fn extra_crap_in_doctype() {
+        Rsp::from_path("data/extra-crap-in-doctype.rsp").unwrap();
     }
 }

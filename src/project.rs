@@ -61,7 +61,7 @@ impl Project {
     fn new(rsp: &Rsp) -> Result<Project> {
         Ok(Project {
                pop: rsp.projective3("/project/pop/matrix")?,
-               camera: rsp.camera("/project/camcalibs/camcalib_opencv")?,
+               camera: rsp.camera("/project/calibrations/camcalibs/camcalib_opencv")?,
            })
     }
 }
@@ -99,22 +99,7 @@ mod tests {
     }
 
     #[test]
-    fn empty_rsp() {
-        assert!(Project::from_path("data/empty.rsp").is_err());
-    }
-
-    #[test]
     fn notaproject_rsp() {
         assert!(Project::from_path("data/notaproject.rsp").is_err());
-    }
-
-    #[test]
-    fn two_cameras() {
-        assert!(Project::from_path("data/two-cameras.rsp").is_err());
-    }
-
-    #[test]
-    fn extra_crap_in_doctype() {
-        Project::from_path("data/extra-crap-in-doctype.rsp").unwrap();
     }
 }
