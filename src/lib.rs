@@ -39,12 +39,14 @@ extern crate sxd_xpath;
 mod camera;
 mod image;
 mod project;
+mod scan_position;
 mod rsp;
 mod utils;
 
 pub use camera::Camera;
 pub use image::Image;
 pub use project::Project;
+pub use scan_position::ScanPosition;
 
 /// Our custom error enum.
 #[derive(Debug)]

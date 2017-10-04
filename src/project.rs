@@ -1,5 +1,6 @@
-use {Camera, Projective3, Result};
+use {Camera, Projective3, Result, ScanPosition};
 use rsp::Rsp;
+use std::collections::HashMap;
 use std::path::Path;
 
 /// A RiSCAN Pro project.
@@ -8,10 +9,11 @@ use std::path::Path;
 /// in order to easily support *our* use case. Specifically:
 ///
 /// - Only one or zero camera calibrations are supported, not more than one.
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Debug, PartialEq)]
 pub struct Project {
     camera: Option<Camera>,
     pop: Projective3,
+    scan_positions: HashMap<String, ScanPosition>,
 }
 
 impl Project {
@@ -58,10 +60,25 @@ impl Project {
         self.camera
     }
 
+    /// Returns the scan position with the given name, or None.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use riscan_pro::Project;
+    /// let project = Project::from_path("data/project.RiSCAN").unwrap();
+    /// assert!(project.scan_position("SP01").is_some());
+    /// assert!(project.scan_position("SP03").is_none());
+    /// ```
+    pub fn scan_position(&self, name: &str) -> Option<ScanPosition> {
+        unimplemented!()
+    }
+
     fn new(rsp: &Rsp) -> Result<Project> {
         Ok(Project {
                pop: rsp.projective3("/project/pop/matrix")?,
                camera: rsp.camera("/project/calibrations/camcalibs/camcalib_opencv")?,
+               scan_positions: rsp.scan_positions("/project/scanpositions/scanposition")?,
            })
     }
 }
@@ -96,6 +113,9 @@ mod tests {
         assert_relative_eq!(expected.matrix(), actual.matrix());
         let camera = Camera::from_path("data/camera.cam").unwrap();
         assert_eq!(camera, project.camera().unwrap());
+        project.scan_position("SP01").unwrap();
+        project.scan_position("SP02").unwrap();
+        assert!(project.scan_position("SP03").is_none());
     }
 
     #[test]

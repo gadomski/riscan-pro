@@ -1,4 +1,5 @@
-use {Camera, Error, Projective3, Result};
+use {Camera, Error, Projective3, Result, ScanPosition};
+use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 use std::str::FromStr;
 use sxd_document::Package;
@@ -84,6 +85,10 @@ impl Rsp {
                     dx: camera_xpath("intrinsic_opencv/dx")?,
                     dy: camera_xpath("intrinsic_opencv/dy")?,
                 }))
+    }
+
+    pub fn scan_positions(&self, xpath: &str) -> Result<HashMap<String, ScanPosition>> {
+        unimplemented!()
     }
 }
 
