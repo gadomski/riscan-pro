@@ -36,6 +36,7 @@ extern crate regex;
 extern crate xmltree;
 
 mod camera;
+mod element;
 mod image;
 mod project;
 mod scan_position;
@@ -105,5 +106,12 @@ impl From<std::num::ParseIntError> for Error {
 impl From<xmltree::ParseError> for Error {
     fn from(err: xmltree::ParseError) -> Error {
         Error::XmltreeParse(err)
+    }
+}
+
+impl element::FromElement for Projective3 {
+    fn from_element(element: &xmltree::Element) -> Result<Projective3> {
+        use element::Extension;
+        element.as_str().and_then(|s| utils::projective_from_str(s))
     }
 }

@@ -1,6 +1,6 @@
 use {Camera, Error, Projective3, Result, ScanPosition};
+use element::Extension;
 use std::path::{Path, PathBuf};
-use std::str::FromStr;
 use xmltree::Element;
 
 const PROJECT_RSP: &'static str = "project.rsp";
@@ -52,7 +52,7 @@ impl Project {
     /// let pop = project.pop();
     /// ```
     pub fn pop(&self) -> Result<Projective3> {
-        projective3_from_xpath(&self.root, "pop/matrix")
+        self.root.xpath("pop/matrix").and_then(|e| e.convert())
     }
 
     /// Returns this project's camera calibration, if it exists.
@@ -65,29 +65,13 @@ impl Project {
     /// let camera = project.camera().unwrap();
     /// ```
     pub fn camera(&self) -> Result<Option<Camera>> {
-        let camcalibs = xpath(&self.root, "calibrations/camcalibs")?;
+        let camcalibs = self.root.xpath("calibrations/camcalibs")?;
         if camcalibs.children.is_empty() {
             Ok(None)
         } else if camcalibs.children.len() > 1 {
             Err(Error::MultipleCameras)
         } else {
-            let ref camera = camcalibs.children[0];
-            Ok(Some(Camera {
-                        fx: parse_from_xpath(camera, "internal_opencv/fx")?,
-                        fy: parse_from_xpath(camera, "internal_opencv/fy")?,
-                        cx: parse_from_xpath(camera, "internal_opencv/cx")?,
-                        cy: parse_from_xpath(camera, "internal_opencv/cy")?,
-                        k1: parse_from_xpath(camera, "internal_opencv/k1")?,
-                        k2: parse_from_xpath(camera, "internal_opencv/k2")?,
-                        k3: parse_from_xpath(camera, "internal_opencv/k3")?,
-                        k4: parse_from_xpath(camera, "internal_opencv/k4")?,
-                        p1: parse_from_xpath(camera, "internal_opencv/p1")?,
-                        p2: parse_from_xpath(camera, "internal_opencv/p2")?,
-                        nx: parse_from_xpath(camera, "intrinsic_opencv/nx")?,
-                        ny: parse_from_xpath(camera, "intrinsic_opencv/ny")?,
-                        dx: parse_from_xpath(camera, "intrinsic_opencv/dx")?,
-                        dy: parse_from_xpath(camera, "intrinsic_opencv/dy")?,
-                    }))
+            camcalibs.children[0].convert().map(|camera| Some(camera))
         }
     }
 
@@ -102,10 +86,15 @@ impl Project {
     /// assert!(project.scan_position("SP03").unwrap().is_none());
     /// ```
     pub fn scan_position(&self, name: &str) -> Result<Option<ScanPosition>> {
-        let scanpositions = xpath(&self.root, "scanpositions")?;
+        let scanpositions = self.root.xpath("scanpositions")?;
         Ok(scanpositions.children
                .iter()
-               .find(|child| str_from_xpath(child, "name").map(|s| s == name).unwrap_or(false))
+               .find(|child| {
+                         child.xpath("name")
+                             .and_then(|e| e.as_str())
+                             .map(|s| s == name)
+                             .unwrap_or(false)
+                     })
                .map(|_| ScanPosition {}))
     }
 }
@@ -128,39 +117,6 @@ fn rsp_path<P: AsRef<Path>>(path: P) -> Result<PathBuf> {
     } else {
         Err(Error::ProjectPath(path))
     }
-}
-
-fn parse_from_xpath<T>(element: &Element, xpath: &str) -> Result<T>
-    where T: FromStr,
-          Error: From<<T as FromStr>::Err>
-{
-    str_from_xpath(element, xpath).and_then(|s| s.parse().map_err(Error::from))
-}
-
-fn projective3_from_xpath(element: &Element, xpath: &str) -> Result<Projective3> {
-    use utils;
-    let s = str_from_xpath(element, xpath)?;
-    utils::projective_from_str(s)
-}
-
-fn str_from_xpath<'a>(element: &'a Element, s: &str) -> Result<&'a str> {
-    let element = xpath(element, s)?;
-    if let Some(s) = element.text.as_ref() {
-        Ok(s)
-    } else {
-        Err(Error::NoText(element.clone()))
-    }
-}
-
-fn xpath<'a>(mut element: &'a Element, xpath: &str) -> Result<&'a Element> {
-    for name in xpath.split('/') {
-        if let Some(child) = element.get_child(name) {
-            element = child;
-        } else {
-            return Err(Error::MissingChild(xpath.to_string()));
-        }
-    }
-    Ok(element)
 }
 
 #[cfg(test)]

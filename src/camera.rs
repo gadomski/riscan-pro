@@ -1,5 +1,7 @@
 use {Point3, Result};
+use element::{Extension, FromElement};
 use std::path::Path;
+use xmltree::Element;
 
 macro_rules! setting {
     ($settings:expr, $name:expr) => {{
@@ -106,6 +108,27 @@ impl Camera {
         let v = v + y * self.fy * r_term + 2. * self.fy * x * y * self.p2 +
                 self.p1 * self.fy * (r.powi(2) + 2. * y.powi(2));
         (u, v)
+    }
+}
+
+impl FromElement for Camera {
+    fn from_element(element: &Element) -> Result<Camera> {
+        Ok(Camera {
+               fx: element.xpath_then_parse("internal_opencv/fx")?,
+               fy: element.xpath_then_parse("internal_opencv/fy")?,
+               cx: element.xpath_then_parse("internal_opencv/cx")?,
+               cy: element.xpath_then_parse("internal_opencv/cy")?,
+               k1: element.xpath_then_parse("internal_opencv/k1")?,
+               k2: element.xpath_then_parse("internal_opencv/k2")?,
+               k3: element.xpath_then_parse("internal_opencv/k3")?,
+               k4: element.xpath_then_parse("internal_opencv/k4")?,
+               p1: element.xpath_then_parse("internal_opencv/p1")?,
+               p2: element.xpath_then_parse("internal_opencv/p2")?,
+               nx: element.xpath_then_parse("intrinsic_opencv/nx")?,
+               ny: element.xpath_then_parse("intrinsic_opencv/ny")?,
+               dx: element.xpath_then_parse("intrinsic_opencv/dx")?,
+               dy: element.xpath_then_parse("intrinsic_opencv/dy")?,
+           })
     }
 }
 
