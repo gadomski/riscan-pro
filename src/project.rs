@@ -1,9 +1,7 @@
 use {Camera, Error, Projective3, Result, ScanPosition};
 use element::Extension;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use xmltree::Element;
-
-const PROJECT_RSP: &'static str = "project.rsp";
 
 /// A RiSCAN Pro project.
 ///
@@ -31,8 +29,9 @@ impl Project {
     /// ```
     pub fn from_path<P: AsRef<Path>>(path: P) -> Result<Project> {
         use std::fs::File;
+        use utils;
 
-        let path = rsp_path(path)?;
+        let path = utils::rsp_path(path)?;
         let mut file = File::open(path)?;
         let element = Element::parse(&mut file)?;
         if element.name != "project" {
@@ -99,52 +98,9 @@ impl Project {
     }
 }
 
-fn rsp_path<P: AsRef<Path>>(path: P) -> Result<PathBuf> {
-    use std::fs;
-
-    let mut path = fs::canonicalize(path)?;
-    if let Some(extension) = path.extension().map(|extension| {
-                                                      extension.to_string_lossy().into_owned()
-                                                  }) {
-        match extension.as_str() {
-            "RiSCAN" => {
-                path.push(PROJECT_RSP);
-                Ok(path)
-            }
-            "rsp" => Ok(path),
-            _ => Err(Error::ProjectPath(path)),
-        }
-    } else {
-        Err(Error::ProjectPath(path))
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    fn xml_path() -> PathBuf {
-        use std::fs;
-        fs::canonicalize("data/project.RiSCAN/project.rsp").unwrap()
-    }
-
-    #[test]
-    fn rsp_path_from_rsp_path() {
-        let path = rsp_path("data/project.RiSCAN/project.rsp").unwrap();
-        assert_eq!(xml_path(), path);
-    }
-
-    #[test]
-    fn rsp_path_from_riscan_path() {
-        let path = rsp_path("data/project.RiSCAN").unwrap();
-        assert_eq!(xml_path(), path);
-    }
-
-    #[test]
-    fn rsp_path_err() {
-        assert!(rsp_path("data").is_err());
-        assert!(rsp_path("Cargo.toml").is_err());
-    }
 
     #[test]
     fn project() {
