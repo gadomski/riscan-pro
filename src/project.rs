@@ -41,14 +41,26 @@ impl Project {
         }
     }
 
-    /// Returns this project's POP.
+    /// Returns this project's POP matrix.
+    ///
+    /// This is the project's own position. When combined with the scanner's own position, can take
+    /// a point in the scanner's own coordinate system and convert it to a global coordinate
+    /// system.
     ///
     /// # Examples
     ///
     /// ```
-    /// use riscan_pro::Project;
+    /// #[macro_use]
+    /// extern crate approx;
+    /// # extern crate riscan_pro;
+    /// # fn main() {
+    /// use riscan_pro::{Project, Point3};
     /// let project = Project::from_path("data/project.RiSCAN").unwrap();
-    /// let pop = project.pop();
+    /// let pop = project.pop().unwrap();
+    /// let prcs = Point3::new(1., 2., 3.);
+    /// let glcs = pop * prcs;
+    /// assert_relative_eq!(prcs, pop.inverse() * glcs, epsilon = 1e-7);
+    /// # }
     /// ```
     pub fn pop(&self) -> Result<Projective3> {
         self.root.xpath("pop/matrix").and_then(|e| e.convert())
@@ -86,15 +98,16 @@ impl Project {
     /// ```
     pub fn scan_position(&self, name: &str) -> Result<Option<ScanPosition>> {
         let scanpositions = self.root.xpath("scanpositions")?;
-        Ok(scanpositions.children
-               .iter()
-               .find(|child| {
-                         child.xpath("name")
-                             .and_then(|e| e.as_str())
-                             .map(|s| s == name)
-                             .unwrap_or(false)
-                     })
-               .map(|_| ScanPosition {}))
+        scanpositions.children
+            .iter()
+            .find(|child| {
+                      child.xpath("name")
+                          .and_then(|e| e.as_str())
+                          .map(|s| s == name)
+                          .unwrap_or(false)
+                  })
+            .map(|e| e.convert().map(|s| Some(s)))
+            .unwrap_or(Ok(None))
     }
 }
 
