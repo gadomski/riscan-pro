@@ -10,24 +10,25 @@ macro_rules! setting {
     }}
 }
 
-/// A camera calibration.
-#[allow(missing_docs)]
+/// An opencv camera calibration.
+///
+/// These can be stored in a project rsp file or in a seperate calibration file.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Camera {
-    pub fx: f64,
-    pub fy: f64,
-    pub cx: f64,
-    pub cy: f64,
-    pub k1: f64,
-    pub k2: f64,
-    pub k3: f64,
-    pub k4: f64,
-    pub p1: f64,
-    pub p2: f64,
-    pub nx: usize,
-    pub ny: usize,
-    pub dx: f64,
-    pub dy: f64,
+    fx: f64,
+    fy: f64,
+    cx: f64,
+    cy: f64,
+    k1: f64,
+    k2: f64,
+    k3: f64,
+    k4: f64,
+    p1: f64,
+    p2: f64,
+    nx: usize,
+    ny: usize,
+    dx: f64,
+    dy: f64,
 }
 
 impl Camera {
