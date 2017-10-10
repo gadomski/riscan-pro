@@ -55,13 +55,13 @@ impl Project {
     /// extern crate approx;
     /// # extern crate riscan_pro;
     /// # fn main() {
-    /// use riscan_pro::{Project, point};
+    /// use riscan_pro::{Project, Prcs};
     /// let project = Project::from_path("data/project.RiSCAN").unwrap();
     /// let pop = project.pop().unwrap();
-    /// let prcs = point::prcs(1., 2., 3.);
+    /// let prcs = Prcs::new(1., 2., 3.);
     /// let glcs = prcs.to_glcs(pop);
     /// let prcs2 = glcs.to_prcs(pop);
-    /// assert_relative_eq!(prcs.as_point3(), prcs2.as_point3(), epsilon = 1e-7);
+    /// assert_relative_eq!(*prcs, *prcs2, epsilon = 1e-7);
     /// # }
     /// ```
     pub fn pop(&self) -> Result<Projective3<f64>> {

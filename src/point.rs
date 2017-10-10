@@ -6,34 +6,17 @@ use Camera;
 use alga::general::SubsetOf;
 use nalgebra::{Point3, Projective3};
 use std::marker::PhantomData;
+use std::ops::Deref;
 
-macro_rules! coordinate_system  {
-    ($name:ident) => {
-        #[allow(missing_docs)]
-        #[derive(Clone, Copy, Debug)]
-        pub struct $name {}
-
-        impl From<Point3<f64>> for Point<$name> {
-            fn from(point: Point3<f64>) -> Point<$name> {
-                Point {
-                    point: point,
-                    crs: PhantomData,
-                }
-            }
-        }
-
-        impl PartialEq<Point3<f64>> for Point<$name> {
-            fn eq(&self, other: &Point3<f64>) -> bool {
-                self.point.eq(other)
-            }
-        }
-
-        impl PartialEq<Point<$name>> for Point<$name> {
-            fn eq(&self, other: &Point<$name>) -> bool {
-                self.point.eq(&other.point)
-            }
-        }
-    }
+mod crs {
+    #[derive(Clone, Copy, Debug)]
+    pub struct Glcs {}
+    #[derive(Clone, Copy, Debug)]
+    pub struct Prcs {}
+    #[derive(Clone, Copy, Debug)]
+    pub struct Socs {}
+    #[derive(Clone, Copy, Debug)]
+    pub struct Cmcs {}
 }
 
 /// A point in a coordinate reference system.
@@ -44,31 +27,27 @@ pub struct Point<C> {
 }
 
 /// The GLobal Coordinate System.
-pub fn glcs<T: Into<f64>>(x: T, y: T, z: T) -> Point<Glcs> {
-    Point::new(x, y, z)
-}
-coordinate_system!(Glcs);
+pub type Glcs = Point<crs::Glcs>;
 
 /// The PRoject's Coordinate System.
-pub fn prcs<T: Into<f64>>(x: T, y: T, z: T) -> Point<Prcs> {
-    Point::new(x, y, z)
-}
-coordinate_system!(Prcs);
+pub type Prcs = Point<crs::Prcs>;
 
 /// The Scanner's Own Coordinate System.
-pub fn socs<T: Into<f64>>(x: T, y: T, z: T) -> Point<Socs> {
-    Point::new(x, y, z)
-}
-coordinate_system!(Socs);
+pub type Socs = Point<crs::Socs>;
 
 /// The CaMera's Coordinate System.
-pub fn cmcs<T: Into<f64>>(x: T, y: T, z: T) -> Point<Cmcs> {
-    Point::new(x, y, z)
-}
-coordinate_system!(Cmcs);
+pub type Cmcs = Point<crs::Cmcs>;
 
 impl<C> Point<C> {
-    fn new<T>(x: T, y: T, z: T) -> Point<C>
+    /// Creates a new point.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use riscan_pro::Glcs;
+    /// let point = Glcs::new(1., 2., 3.);
+    /// ```
+    pub fn new<T>(x: T, y: T, z: T) -> Point<C>
         where T: Into<f64>
     {
         Point {
@@ -76,25 +55,25 @@ impl<C> Point<C> {
             crs: PhantomData,
         }
     }
+}
 
-    /// Returns a reference to this point as a bare `Point3`.
-    ///
-    /// Use this to compare raw values without coordinate systems.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use riscan_pro::point;
-    /// let socs = point::socs(1., 2., 3.);
-    /// let glcs = point::glcs(1., 2., 3.);
-    /// assert_eq!(socs.as_point3(), glcs.as_point3());
-    /// ```
-    pub fn as_point3(&self) -> &Point3<f64> {
+impl<T> From<Point3<f64>> for Point<T> {
+    fn from(point: Point3<f64>) -> Point<T> {
+        Point {
+            point: point,
+            crs: PhantomData,
+        }
+    }
+}
+
+impl<T> Deref for Point<T> {
+    type Target = Point3<f64>;
+    fn deref(&self) -> &Point3<f64> {
         &self.point
     }
 }
 
-impl Point<Glcs> {
+impl Point<crs::Glcs> {
     /// Converts a point from the global coordinate system into the project's coordinate system.
     ///
     /// # Examples
@@ -103,22 +82,22 @@ impl Point<Glcs> {
     /// extern crate nalgebra;
     /// # extern crate riscan_pro;
     /// # fn main() {
-    /// use riscan_pro::point;
+    /// use riscan_pro::Glcs;
     /// use nalgebra::Projective3;
-    /// let glcs = point::glcs(1., 2., 3.);
+    /// let glcs = Glcs::new(1., 2., 3.);
     /// let eye = Projective3::<f64>::identity();
     /// let prcs = glcs.to_prcs(eye);
-    /// assert_eq!(glcs.as_point3(), prcs.as_point3());
+    /// assert_eq!(*glcs, *prcs);
     /// # }
     /// ```
-    pub fn to_prcs<T>(&self, pop: T) -> Point<Glcs>
+    pub fn to_prcs<T>(&self, pop: T) -> Point<crs::Glcs>
         where T: SubsetOf<Projective3<f64>>
     {
         (pop.to_superset().inverse() * self.point).into()
     }
 }
 
-impl Point<Prcs> {
+impl Point<crs::Prcs> {
     /// Converts a point from the project's coordinate system into the global coordinate system.
     ///
     /// # Examples
@@ -127,15 +106,15 @@ impl Point<Prcs> {
     /// extern crate nalgebra;
     /// # extern crate riscan_pro;
     /// # fn main() {
-    /// use riscan_pro::point;
+    /// use riscan_pro::Prcs;
     /// use nalgebra::Projective3;
-    /// let prcs = point::prcs(1., 2., 3.);
+    /// let prcs = Prcs::new(1., 2., 3.);
     /// let eye = Projective3::<f64>::identity();
     /// let glcs = prcs.to_glcs(eye);
-    /// assert_eq!(glcs.as_point3(), prcs.as_point3());
+    /// assert_eq!(*glcs, *prcs);
     /// # }
     /// ```
-    pub fn to_glcs<T>(&self, pop: T) -> Point<Glcs>
+    pub fn to_glcs<T>(&self, pop: T) -> Point<crs::Glcs>
         where T: SubsetOf<Projective3<f64>>
     {
         (pop.to_superset() * self.point).into()
@@ -149,16 +128,16 @@ impl Point<Prcs> {
     /// extern crate nalgebra;
     /// # extern crate riscan_pro;
     /// # fn main() {
-    /// use riscan_pro::point;
+    /// use riscan_pro::Prcs;
     /// use nalgebra::Projective3;
-    /// let prcs = point::prcs(1., 2., 3.);
+    /// let prcs = Prcs::new(1., 2., 3.);
     /// let eye = Projective3::<f64>::identity();
     /// let cmcs = prcs.to_cmcs(eye, eye, eye);
     /// // assert_eq!(prcs, cmcs); <-- compile error
-    /// assert_eq!(prcs.as_point3(), cmcs.as_point3());
+    /// assert_eq!(*prcs, *cmcs);
     /// }
     /// ```
-    pub fn to_cmcs<A, B, C>(&self, sop: A, mounting_matrix: B, cop: C) -> Point<Cmcs>
+    pub fn to_cmcs<A, B, C>(&self, sop: A, mounting_matrix: B, cop: C) -> Point<crs::Cmcs>
         where A: SubsetOf<Projective3<f64>>,
               B: SubsetOf<Projective3<f64>>,
               C: SubsetOf<Projective3<f64>>
@@ -170,7 +149,7 @@ impl Point<Prcs> {
     }
 }
 
-impl Point<Cmcs> {
+impl Point<crs::Cmcs> {
     /// Convert camera's coordinates to image coordinate space.
     ///
     /// Returns the distorted coordinates.
@@ -178,10 +157,10 @@ impl Point<Cmcs> {
     /// # Examples
     ///
     /// ```
-    /// use riscan_pro::{Camera, point};
+    /// use riscan_pro::{Camera, Cmcs};
     /// let camera = Camera::from_path("data/camera.cam").unwrap();
-    /// let point = point::cmcs(1., 2., 3.);
-    /// let (u, v) = point.to_ics(&camera);
+    /// let cmcs = Cmcs::new(1., 2., 3.);
+    /// let (u, v) = cmcs.to_ics(&camera);
     /// ```
     pub fn to_ics(&self, camera: &Camera) -> (f64, f64) {
         use nalgebra::Matrix3;
@@ -223,43 +202,43 @@ mod tests {
 
     #[test]
     fn prcs_to_cmcs_identity() {
-        let prcs: Point<Prcs> = Point::new(1., 2., 3.);
+        let prcs = Prcs::new(1., 2., 3.);
         let cmcs = prcs.to_cmcs(Projective3::<f64>::identity(),
                                 Projective3::<f64>::identity(),
                                 Projective3::<f64>::identity());
-        assert_eq!(cmcs, *prcs.as_point3());
+        assert_eq!(*cmcs, *prcs);
     }
 
     #[test]
     fn prcs_to_cmcs_mounting_matrix() {
-        let prcs: Point<Prcs> = Point::new(1., 2., 3.);
+        let prcs = Prcs::new(1., 2., 3.);
         let cmcs = prcs.to_cmcs(Projective3::<f64>::identity(),
                                 Rotation3::<f64>::from_euler_angles(0., 0., PI / 2.),
                                 Projective3::<f64>::identity());
-        assert_relative_eq!(Point3::new(-2., 1., 3.), cmcs.as_point3());
+        assert_relative_eq!(Point3::new(-2., 1., 3.), *cmcs);
     }
 
     #[test]
     fn prcs_to_cmcs_cop() {
-        let prcs: Point<Prcs> = Point::new(1., 2., 3.);
+        let prcs = Prcs::new(1., 2., 3.);
         let cmcs = prcs.to_cmcs(Projective3::<f64>::identity(),
                                 Projective3::<f64>::identity(),
                                 Rotation3::<f64>::from_euler_angles(0., 0., PI / 2.));
-        assert_relative_eq!(Point3::new(2., -1., 3.), cmcs.as_point3());
+        assert_relative_eq!(Point3::new(2., -1., 3.), *cmcs);
     }
 
     #[test]
     fn prcs_to_cmcs_sop() {
-        let prcs: Point<Prcs> = Point::new(1., 2., 3.);
+        let prcs = Prcs::new(1., 2., 3.);
         let cmcs = prcs.to_cmcs(Rotation3::<f64>::from_euler_angles(0., 0., PI / 2.),
                                 Projective3::<f64>::identity(),
                                 Projective3::<f64>::identity());
-        assert_relative_eq!(Point3::new(2., -1., 3.), cmcs.as_point3());
+        assert_relative_eq!(Point3::new(2., -1., 3.), *cmcs);
     }
 
     #[test]
     fn cmcs_to_ics() {
-        let cmcs: Point<Cmcs> = Point::new(1., 2., 3.);
+        let cmcs = Cmcs::new(1., 2., 3.);
         let camera = Camera::from_path("data/camera.cam").unwrap();
         let (u, v) = cmcs.to_ics(&camera);
         assert_relative_eq!(777.5760, u, epsilon = 1e-4);

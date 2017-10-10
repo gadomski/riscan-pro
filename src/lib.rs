@@ -37,13 +37,13 @@ extern crate xmltree;
 
 mod camera;
 mod element;
-pub mod point;
+mod point;
 mod project;
 mod scan_position;
 mod utils;
 
 pub use camera::Camera;
-pub use point::Point;
+pub use point::{Cmcs, Glcs, Prcs, Socs};
 pub use project::Project;
 pub use scan_position::ScanPosition;
 
