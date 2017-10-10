@@ -37,13 +37,13 @@ extern crate xmltree;
 
 mod camera;
 mod element;
-mod image;
+pub mod point;
 mod project;
 mod scan_position;
 mod utils;
 
 pub use camera::Camera;
-pub use image::Image;
+pub use point::Point;
 pub use project::Project;
 pub use scan_position::ScanPosition;
 
@@ -79,12 +79,6 @@ pub enum Error {
 /// Our custom result type.
 pub type Result<T> = std::result::Result<T, Error>;
 
-/// Our type of Projective3.
-pub type Projective3 = nalgebra::Projective3<f64>;
-
-/// Our type of Point3.
-pub type Point3 = nalgebra::Point3<f64>;
-
 impl From<std::io::Error> for Error {
     fn from(err: std::io::Error) -> Error {
         Error::Io(err)
@@ -109,8 +103,8 @@ impl From<xmltree::ParseError> for Error {
     }
 }
 
-impl element::FromElement for Projective3 {
-    fn from_element(element: &xmltree::Element) -> Result<Projective3> {
+impl element::FromElement for nalgebra::Projective3<f64> {
+    fn from_element(element: &xmltree::Element) -> Result<nalgebra::Projective3<f64>> {
         use element::Extension;
         element.as_str().and_then(|s| utils::projective_from_str(s))
     }

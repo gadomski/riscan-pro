@@ -1,4 +1,5 @@
-use {Projective3, Result};
+use Result;
+use nalgebra::Projective3;
 use std::path::{Path, PathBuf};
 
 const PROJECT_RSP: &'static str = "project.rsp";
@@ -24,7 +25,7 @@ pub fn rsp_path<P: AsRef<Path>>(path: P) -> Result<PathBuf> {
     }
 }
 
-pub fn projective_from_str(s: &str) -> Result<Projective3> {
+pub fn projective_from_str(s: &str) -> Result<Projective3<f64>> {
     use Error;
     use nalgebra::{self, Matrix4};
     s.split_whitespace()

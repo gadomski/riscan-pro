@@ -1,5 +1,6 @@
-use {Camera, Error, Projective3, Result, ScanPosition};
+use {Camera, Error, Result, ScanPosition};
 use element::Extension;
+use nalgebra::Projective3;
 use std::path::Path;
 use xmltree::Element;
 
@@ -54,15 +55,16 @@ impl Project {
     /// extern crate approx;
     /// # extern crate riscan_pro;
     /// # fn main() {
-    /// use riscan_pro::{Project, Point3};
+    /// use riscan_pro::{Project, point};
     /// let project = Project::from_path("data/project.RiSCAN").unwrap();
     /// let pop = project.pop().unwrap();
-    /// let prcs = Point3::new(1., 2., 3.);
-    /// let glcs = pop * prcs;
-    /// assert_relative_eq!(prcs, pop.inverse() * glcs, epsilon = 1e-7);
+    /// let prcs = point::prcs(1., 2., 3.);
+    /// let glcs = prcs.to_glcs(pop);
+    /// let prcs2 = glcs.to_prcs(pop);
+    /// assert_relative_eq!(prcs.as_point3(), prcs2.as_point3(), epsilon = 1e-7);
     /// # }
     /// ```
-    pub fn pop(&self) -> Result<Projective3> {
+    pub fn pop(&self) -> Result<Projective3<f64>> {
         self.root.xpath("pop/matrix").and_then(|e| e.convert())
     }
 
