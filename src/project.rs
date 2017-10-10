@@ -42,6 +42,34 @@ impl Project {
         }
     }
 
+    /// Returns a scan position, as determined by a path.
+    ///
+    /// The scan position is found by the following heuristic(s):
+    ///
+    /// - Does the file stem match a scan name?
+    ///
+    /// If there is no match, returns `Ok(None)`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use riscan_pro::Project;
+    /// let project = Project::from_path("data/project.RiSCAN").unwrap();
+    /// assert!(project.scan_position_from_path("151120_150227.rxp").unwrap().is_some());;
+    /// assert!(project.scan_position_from_path("151120_150228.rxp").unwrap().is_none());;
+    /// ```
+    pub fn scan_position_from_path<P: AsRef<Path>>(&self, path: P) -> Result<Option<ScanPosition>> {
+        for scan_position in &self.root
+                                  .xpath("scanpositions")?
+                                  .children {
+            let scan_position: ScanPosition = scan_position.convert()?;
+            if scan_position.has_path(&path) {
+                return Ok(Some(scan_position));
+            }
+        }
+        Ok(None)
+    }
+
     /// Returns this project's POP matrix.
     ///
     /// This is the project's own position. When combined with the scanner's own position, can take
@@ -167,5 +195,12 @@ mod tests {
     #[test]
     fn extra_crap_in_doctype() {
         Project::from_path("data/extra-crap-in-doctype.rsp").unwrap();
+    }
+
+    #[test]
+    fn scan_position_from_path() {
+        let project = Project::from_path("data/project.RiSCAN").unwrap();
+        assert_eq!(project.scan_position("SP01").unwrap().unwrap(),
+                   project.scan_position_from_path("151120_150227.rxp").unwrap().unwrap());
     }
 }
