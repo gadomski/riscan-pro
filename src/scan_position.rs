@@ -1,5 +1,6 @@
 use Result;
 use element::FromElement;
+use nalgebra::Projective3;
 use std::path::Path;
 use xmltree::Element;
 
@@ -7,6 +8,7 @@ use xmltree::Element;
 #[derive(Debug, PartialEq)]
 pub struct ScanPosition {
     singlescans: Vec<Scan>,
+    sop: Projective3<f64>,
 }
 
 #[derive(Debug, PartialEq)]
@@ -24,6 +26,11 @@ impl ScanPosition {
                 .unwrap_or(false)
         })
     }
+
+    /// Returns this scan position's SOP.
+    pub fn sop(&self) -> Projective3<f64> {
+        self.sop
+    }
 }
 
 impl FromElement for ScanPosition {
@@ -34,7 +41,12 @@ impl FromElement for ScanPosition {
             .iter()
             .map(|scan| scan.convert())
             .collect::<Result<Vec<_>>>()?;
-        Ok(ScanPosition { singlescans: singlescans })
+        let sop = element.xpath("sop/matrix")?
+            .convert()?;
+        Ok(ScanPosition {
+               singlescans: singlescans,
+               sop: sop,
+           })
     }
 }
 
