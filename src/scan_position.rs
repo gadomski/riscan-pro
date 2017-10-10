@@ -1,80 +1,26 @@
-use Result;
-use element::FromElement;
+//! Scan positions and their consituant parts.
+
 use nalgebra::Projective3;
-use std::path::Path;
-use xmltree::Element;
+use std::collections::HashMap;
 
-/// A scan position.
-#[derive(Debug, PartialEq)]
+/// A scan position
+#[derive(Clone, Debug, Serialize, PartialEq)]
 pub struct ScanPosition {
-    singlescans: Vec<Scan>,
-    sop: Projective3<f64>,
+    /// The name of the scan position.
+    pub name: String,
+    /// The scan position images.
+    pub images: HashMap<String, Image>,
 }
 
-#[derive(Debug, PartialEq)]
-struct Scan {
-    file: String,
-}
-
-impl ScanPosition {
-    /// Returns true if this scan position includes the provided path.
-    pub fn has_path<P: AsRef<Path>>(&self, path: P) -> bool {
-        self.singlescans.iter().any(|singlescan| {
-            path.as_ref()
-                .file_name()
-                .map(|file_name| file_name.to_string_lossy() == singlescan.file)
-                .unwrap_or(false)
-        })
-    }
-
-    /// Returns this scan position's SOP.
-    pub fn sop(&self) -> Projective3<f64> {
-        self.sop
-    }
-}
-
-impl FromElement for ScanPosition {
-    fn from_element(element: &Element) -> Result<ScanPosition> {
-        use element::Extension;
-        let singlescans = element.xpath("singlescans")?
-            .children
-            .iter()
-            .map(|scan| scan.convert())
-            .collect::<Result<Vec<_>>>()?;
-        let sop = element.xpath("sop/matrix")?
-            .convert()?;
-        Ok(ScanPosition {
-               singlescans: singlescans,
-               sop: sop,
-           })
-    }
-}
-
-impl FromElement for Scan {
-    fn from_element(element: &Element) -> Result<Scan> {
-        use element::Extension;
-        Ok(Scan {
-               file: element.xpath("file")?
-                   .as_str()?
-                   .to_string(),
-           })
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    fn sp01() -> ScanPosition {
-        use Project;
-        let project = Project::from_path("data/project.RiSCAN").unwrap();
-        project.scan_position("SP01").unwrap().unwrap()
-    }
-
-    #[test]
-    fn has_path() {
-        let scan_position = sp01();
-        assert!(scan_position.has_path("151120_150227.rxp"));
-        assert!(!scan_position.has_path("151120_150227.rxz"));
-    }
+/// A scan position image.
+#[derive(Clone, Debug, Serialize, PartialEq)]
+pub struct Image {
+    /// The name of the image.
+    pub name: String,
+    /// The camera's own position when taking the image.
+    pub cop: Projective3<f64>,
+    /// The name of the image's camera calibration.
+    pub camera_calibration_name: String,
+    /// The name of the image's mount calibration.
+    pub mount_calibration_name: String,
 }

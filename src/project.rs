@@ -1,144 +1,195 @@
-use {Camera, Error, Result, ScanPosition};
+use {CameraCalibration, Error, MountCalibration, Result, ScanPosition, utils};
 use element::Extension;
-use nalgebra::Projective3;
-use std::path::Path;
+use scan_position::Image;
+use std::collections::HashMap;
+use std::io::Read;
+use std::path::{Path, PathBuf};
 use xmltree::Element;
 
 /// A RiSCAN Pro project.
 ///
-/// This project isn't a one-to-one mapping to Riegl's XML structure. We've chosen to cut cornerns
-/// in order to easily support *our* use case. Specifically:
+/// These are always created by pointing at a path, either the `.RiSCAN` path or the `project.rsp`
+/// in that directory:
 ///
-/// - Only one or zero camera calibrations are supported, not more than one.
-#[derive(Debug, PartialEq)]
+/// ```
+/// use riscan_pro::Project;
+/// let project1 = Project::from_path("data/project.RiSCAN").unwrap();
+/// let project2 = Project::from_path("data/project.RiSCAN/project.rsp").unwrap();
+/// assert_eq!(project1, project2);
+/// ```
+#[derive(Clone, Debug, Serialize, PartialEq)]
 pub struct Project {
-    root: Element,
+    /// The camera calibrations, by name.
+    pub camera_calibrations: HashMap<String, CameraCalibration>,
+    /// The camera mount calibrations, by name.
+    pub mount_calibrations: HashMap<String, MountCalibration>,
+    /// The scan positions, by name.
+    pub scan_positions: HashMap<String, ScanPosition>,
 }
 
 impl Project {
-    /// Reads a project from a path.
+    /// Creates a project from a filesystem path.
     ///
-    /// This path can either be the `.RiSCAN` directory, or the underlying `project.rsp` file.
+    /// This path can be either the `.RiSCAN` directory or the contained `project.rsp`.
     ///
     /// # Examples
     ///
     /// ```
     /// use riscan_pro::Project;
-    /// let project1 = Project::from_path("data/project.RiSCAN").unwrap();
-    /// let project2 = Project::from_path("data/project.RiSCAN/project.rsp").unwrap();
-    /// assert_eq!(project1, project2);
+    /// let project = Project::from_path("data/project.RiSCAN").unwrap();
     /// ```
     pub fn from_path<P: AsRef<Path>>(path: P) -> Result<Project> {
         use std::fs::File;
-        use utils;
 
-        let path = utils::rsp_path(path)?;
-        let mut file = File::open(path)?;
-        let element = Element::parse(&mut file)?;
-        if element.name != "project" {
-            Err(Error::InvalidRspRoot(element.name))
-        } else {
-            Ok(Project { root: element })
-        }
+        let path = rsp_path(path)?;
+        let file = File::open(path)?;
+        Project::from_read(file)
     }
 
-    /// Returns a scan position, as determined by a path.
-    ///
-    /// The scan position is found by the following heuristic(s):
-    ///
-    /// - Does the file stem match a scan name?
-    ///
-    /// If there is no match, returns `Ok(None)`.
+    /// Returns a scan position image, as determined by the path.
     ///
     /// # Examples
     ///
     /// ```
     /// use riscan_pro::Project;
     /// let project = Project::from_path("data/project.RiSCAN").unwrap();
-    /// assert!(project.scan_position_from_path("151120_150227.rxp").unwrap().is_some());;
-    /// assert!(project.scan_position_from_path("151120_150228.rxp").unwrap().is_none());;
+    /// let image1 = project.scan_positions.get("SP01").unwrap().images.get("SP01 - Image001").unwrap();
+    /// let path = "data/project.RiSCAN/SCANS/SP01/SCANPOSIMAGES/SP01 - Image001.csv";
+    /// let image2 = project.image_from_path(path).unwrap();
+    /// assert_eq!(image1, image2);
     /// ```
-    pub fn scan_position_from_path<P: AsRef<Path>>(&self, path: P) -> Result<Option<ScanPosition>> {
-        for scan_position in &self.root
-                                  .xpath("scanpositions")?
-                                  .children {
-            let scan_position: ScanPosition = scan_position.convert()?;
-            if scan_position.has_path(&path) {
-                return Ok(Some(scan_position));
-            }
-        }
-        Ok(None)
+    pub fn image_from_path<P: AsRef<Path>>(&self, path: P) -> Result<&Image> {
+        path.as_ref()
+            .file_stem()
+            .map(|file_stem| file_stem.to_string_lossy())
+            .and_then(|file_stem| {
+                file_stem
+                    .split(" - ")
+                    .next()
+                    .and_then(|name| self.scan_positions.get(name))
+                    .and_then(|scan_position| scan_position.images.get(file_stem.as_ref()))
+            })
+            .ok_or(Error::ImageFromPath(
+                self.clone(),
+                path.as_ref().to_path_buf(),
+            ))
     }
 
-    /// Returns this project's POP matrix.
-    ///
-    /// This is the project's own position. When combined with the scanner's own position, can take
-    /// a point in the scanner's own coordinate system and convert it to a global coordinate
-    /// system.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// #[macro_use]
-    /// extern crate approx;
-    /// # extern crate riscan_pro;
-    /// # fn main() {
-    /// use riscan_pro::{Project, Prcs};
-    /// let project = Project::from_path("data/project.RiSCAN").unwrap();
-    /// let pop = project.pop().unwrap();
-    /// let prcs = Prcs::new(1., 2., 3.);
-    /// let glcs = prcs.to_glcs(pop);
-    /// let prcs2 = glcs.to_prcs(pop);
-    /// assert_relative_eq!(*prcs, *prcs2, epsilon = 1e-7);
-    /// # }
-    /// ```
-    pub fn pop(&self) -> Result<Projective3<f64>> {
-        self.root.xpath("pop/matrix").and_then(|e| e.convert())
-    }
+    fn from_read<R: Read>(read: R) -> Result<Project> {
+        let xml = Element::parse(read)?;
 
-    /// Returns this project's camera calibration, if it exists.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use riscan_pro::Project;
-    /// let project = Project::from_path("data/project.RiSCAN").unwrap();
-    /// let camera = project.camera().unwrap();
-    /// ```
-    pub fn camera(&self) -> Result<Option<Camera>> {
-        let camcalibs = self.root.xpath("calibrations/camcalibs")?;
-        if camcalibs.children.is_empty() {
-            Ok(None)
-        } else if camcalibs.children.len() > 1 {
-            Err(Error::MultipleCameras)
-        } else {
-            camcalibs.children[0].convert().map(|camera| Some(camera))
-        }
-    }
-
-    /// Returns the scan position with the given name, or None.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use riscan_pro::Project;
-    /// let project = Project::from_path("data/project.RiSCAN").unwrap();
-    /// assert!(project.scan_position("SP01").unwrap().is_some());
-    /// assert!(project.scan_position("SP03").unwrap().is_none());
-    /// ```
-    pub fn scan_position(&self, name: &str) -> Result<Option<ScanPosition>> {
-        let scanpositions = self.root.xpath("scanpositions")?;
-        scanpositions.children
+        let camera_calibrations = xml.children("calibrations/camcalibs/camcalib_opencv")?
             .iter()
-            .find(|child| {
-                      child.xpath("name")
-                          .and_then(|e| e.as_str())
-                          .map(|s| s == name)
-                          .unwrap_or(false)
-                  })
-            .map(|e| e.convert().map(|s| Some(s)))
-            .unwrap_or(Ok(None))
+            .map(|camcalib_opencv| {
+                let camera_calibration = CameraCalibration::from_element(camcalib_opencv)?;
+                Ok((camera_calibration.name.clone(), camera_calibration))
+            })
+            .collect::<Result<HashMap<_, _>>>()?;
+        let mount_calibrations = xml.children("calibrations/mountcalibs/mountcalib")?
+            .iter()
+            .map(|mountcalib| {
+                let mount_calibration = MountCalibration::from_element(mountcalib)?;
+                Ok((mount_calibration.name.clone(), mount_calibration))
+            })
+            .collect::<Result<HashMap<_, _>>>()?;
+        let scan_positions = xml.children("scanpositions/scanposition")?
+            .iter()
+            .map(|scanposition| {
+                let scan_position = ScanPosition::from_element(scanposition)?;
+                Ok((scan_position.name.clone(), scan_position))
+            })
+            .collect::<Result<HashMap<_, _>>>()?;
+
+        Ok(Project {
+            camera_calibrations: camera_calibrations,
+            mount_calibrations: mount_calibrations,
+            scan_positions: scan_positions,
+        })
     }
+}
+
+impl CameraCalibration {
+    fn from_element(element: &Element) -> Result<CameraCalibration> {
+        Ok(CameraCalibration {
+            name: element.child("name")?.as_str()?.to_string(),
+            cx: element.child("internal_opencv/cx")?.parse_text()?,
+            cy: element.child("internal_opencv/cy")?.parse_text()?,
+            fx: element.child("internal_opencv/fx")?.parse_text()?,
+            fy: element.child("internal_opencv/fy")?.parse_text()?,
+            k1: element.child("internal_opencv/k1")?.parse_text()?,
+            k2: element.child("internal_opencv/k2")?.parse_text()?,
+            k3: element.child("internal_opencv/k3")?.parse_text()?,
+            k4: element.child("internal_opencv/k4")?.parse_text()?,
+            p1: element.child("internal_opencv/p1")?.parse_text()?,
+            p2: element.child("internal_opencv/p2")?.parse_text()?,
+            tan_max_horz: element.child("angle_extents/tan_max_horz")?.parse_text()?,
+            tan_max_vert: element.child("angle_extents/tan_max_vert")?.parse_text()?,
+            tan_min_horz: element.child("angle_extents/tan_min_horz")?.parse_text()?,
+            tan_min_vert: element.child("angle_extents/tan_min_vert")?.parse_text()?,
+            width: element.child("intrinsic_opencv/nx")?.parse_text()?,
+            height: element.child("intrinsic_opencv/ny")?.parse_text()?,
+        })
+    }
+}
+
+impl MountCalibration {
+    fn from_element(element: &Element) -> Result<MountCalibration> {
+        Ok(MountCalibration {
+            name: element.child("name")?.as_str()?.to_string(),
+            matrix: utils::parse_projective3(element.child("matrix")?.as_str()?)?,
+        })
+    }
+}
+
+impl ScanPosition {
+    fn from_element(element: &Element) -> Result<ScanPosition> {
+        Ok(ScanPosition {
+            name: element.child("name")?.as_str()?.to_string(),
+            images: element
+                .children("scanposimages/scanposimage")?
+                .iter()
+                .map(|scanposimage| {
+                    let image = Image::from_element(scanposimage)?;
+                    Ok((image.name.clone(), image))
+                })
+                .collect::<Result<HashMap<_, _>>>()?,
+        })
+    }
+}
+
+impl Image {
+    fn from_element(element: &Element) -> Result<Image> {
+        Ok(Image {
+            name: element.child("name")?.as_str()?.to_string(),
+            cop: utils::parse_projective3(element.child("cop/matrix")?.as_str()?)?,
+            camera_calibration_name: element.child("camcalib_ref")?.noderef()?.to_string(),
+            mount_calibration_name: element.child("mountcalib_ref")?.noderef()?.to_string(),
+        })
+    }
+}
+
+fn rsp_path<P: AsRef<Path>>(path: P) -> Result<PathBuf> {
+    if let Some(extension) = path.as_ref().extension() {
+        let mut path_buf = path.as_ref().to_path_buf();
+        if extension == "rsp" {
+            return Ok(path_buf);
+        } else if extension == "RiSCAN" {
+            path_buf.push("project.rsp");
+            return Ok(path_buf);
+        }
+    }
+    let mut path_buf = PathBuf::new();
+    for component in path.as_ref().iter() {
+        path_buf.push(component);
+        if Path::new(component)
+            .extension()
+            .map(|e| e == "RiSCAN")
+            .unwrap_or(false)
+        {
+            return rsp_path(path_buf);
+        }
+    }
+    Err(Error::ProjectPath(path_buf))
 }
 
 #[cfg(test)]
@@ -146,61 +197,41 @@ mod tests {
     use super::*;
 
     #[test]
-    fn project() {
-        use Camera;
-        use nalgebra::Matrix4;
+    fn from_path() {
+        Project::from_path("data/project.RiSCAN").unwrap();
+        Project::from_path("data/project.RiSCAN/project.rsp").unwrap();
+        Project::from_path("data/project.RiSCAN/SCANS").unwrap();
+        assert!(Project::from_path("data").is_err());
+    }
+
+    #[test]
+    fn mount_calibrations() {
+        use utils;
 
         let project = Project::from_path("data/project.RiSCAN").unwrap();
-        let expected = Projective3::from_matrix_unchecked(Matrix4::new(0.99566497679815923,
-                                                                       0.046111730526226816,
-                                                                       -0.080777238659154112,
-                                                                       -515632.66332186362,
-                                                                       -0.093012117369304602,
-                                                                       0.49361133154539053,
-                                                                       -0.86469451217899213,
-                                                                       -5519682.7927730317,
-                                                                       0.,
-                                                                       0.86845930340912512,
-                                                                       0.49576046466225683,
-                                                                       3143447.4201939853,
-                                                                       0.,
-                                                                       0.,
-                                                                       0.,
-                                                                       1.));
-        let actual = project.pop().unwrap();
-        assert_relative_eq!(expected.matrix(), actual.matrix());
-        let camera = Camera::from_path("data/camera.cam").unwrap();
-        assert_eq!(camera, project.camera().unwrap().unwrap());
-        project.scan_position("SP01").unwrap().unwrap();
-        project.scan_position("SP02").unwrap().unwrap();
-        assert!(project.scan_position("SP03").unwrap().is_none());
+        let mount_calibration = project
+            .mount_calibrations
+            .get("Infratec_VarioCAM_HD_15mm_11-16-2015_Preston")
+            .unwrap();
+        let matrix = utils::parse_projective3("-0.010877741999999997 -0.003724941 -0.999933898 0.18508641   0.019274697 0.999806486 -0.0039341460000000013 0.000460517   0.99975505 -0.019316217 -0.01080384 -0.092802787   0 0 0 1").unwrap();
+        assert_eq!(matrix, **mount_calibration);
     }
 
     #[test]
-    fn notaproject_rsp() {
-        assert!(Project::from_path("data/notaproject.rsp").is_err());
-    }
-
-    #[test]
-    fn empty_rsp() {
-        assert!(Project::from_path("data/empty.rsp").is_err());
-    }
-
-    #[test]
-    fn two_cameras() {
-        let project = Project::from_path("data/two-cameras.rsp").unwrap();
-        assert!(project.camera().is_err());
-    }
-
-    #[test]
-    fn extra_crap_in_doctype() {
-        Project::from_path("data/extra-crap-in-doctype.rsp").unwrap();
-    }
-
-    #[test]
-    fn scan_position_from_path() {
+    fn image_from_path() {
         let project = Project::from_path("data/project.RiSCAN").unwrap();
-        assert_eq!(project.scan_position("SP01").unwrap().unwrap(),
-                   project.scan_position_from_path("151120_150227.rxp").unwrap().unwrap());
+        let image1 = project
+            .scan_positions
+            .get("SP01")
+            .unwrap()
+            .images
+            .get("SP01 - Image001")
+            .unwrap();
+        let image2 = project
+            .image_from_path(
+                "data/project.RiSCAN/SCANS/SP01/SCANPOSIMAGES/SP01 - Image001.csv",
+            )
+            .unwrap();
+        assert_eq!(image1, image2);
     }
 }

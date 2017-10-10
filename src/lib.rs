@@ -1,111 +1,126 @@
-//! Inspect and do work with RiSCAN Pro projects.
+//! RiSCAN Pro.
 //!
-//! [RiSCAN PRO](http://www.riegl.com/products/software-packages/riscan-pro/) is [Terrestrial Laser
-//! Scanning (TLS)](https://en.wikipedia.org/wiki/Lidar#Terrestrial_Lidar) software made by
-//! [Riegl](http://riegl.com/). This crate provides a library and an executable for inspecting and
-//! doing work with RiSCAN Pro projects.
-//!
-//! **Riegl did not make this software, and cannot provide any support for it.**
-//! **Please do not contact Riegl with questions about this software.**
-//!
-//! # Examples
-//!
-//! Projects can be opened by providing the project's directory to `Project::from_path`:
-//!
-//! ```
-//! use riscan_pro::Project;
-//! let project = Project::from_path("data/project.RiSCAN").unwrap();
-//! ```
-//!
-//! or the `project.rsp` file:
-//!
-//! ```
-//! use riscan_pro::Project;
-//! let project = Project::from_path("data/project.RiSCAN/project.rsp").unwrap();
-//! ```
+//! [RiSCAN Pro](http://www.riegl.com/products/software-packages/riscan-pro/) is software developed
+//! by [Riegl](http://riegl.com/) for [terrestrial LiDAR
+//! scanning](https://en.wikipedia.org/wiki/Lidar#Terrestrial_lidar). This library can extract and
+//! use the information and data stored in RiSCAN Pro projects (directories with a `.RiSCAN`
+//! extension).
 
 #![deny(missing_docs, missing_debug_implementations, missing_copy_implementations, trivial_casts,
-        trivial_numeric_casts, unsafe_code, unstable_features, unused_qualifications)]
+        trivial_numeric_casts, unsafe_code, unstable_features, unused_import_braces,
+        unused_qualifications)]
+#![recursion_limit="128"]
 
-extern crate alga;
 #[cfg(test)]
 #[macro_use]
 extern crate approx;
+extern crate irb;
 extern crate nalgebra;
-extern crate regex;
+#[macro_use]
+extern crate quick_error;
+#[macro_use]
+extern crate serde_derive;
 extern crate xmltree;
 
-mod camera;
-mod element;
+mod camera_calibration;
+mod colorizer;
+pub mod element;
+mod mount_calibration;
 mod point;
 mod project;
-mod scan_position;
+pub mod scan_position;
 mod utils;
 
-pub use camera::Camera;
-pub use point::{Cmcs, Glcs, Prcs, Socs};
+pub use camera_calibration::CameraCalibration;
+pub use colorizer::Colorizer;
+pub use mount_calibration::MountCalibration;
+pub use point::{Cmcs, Point, Socs};
 pub use project::Project;
 pub use scan_position::ScanPosition;
 
+quick_error! {
 /// Our custom error enum.
-#[derive(Debug)]
-pub enum Error {
-    /// The rsp root element is invalid.
-    InvalidRspRoot(String),
-    /// The matrix does not have an inverse.
-    Inverse(nalgebra::Matrix4<f64>),
-    /// Wrapper around `std::io::Error`.
-    Io(std::io::Error),
-    /// A camera setting is missing.
-    MissingCameraSetting(String),
-    /// The child is missing from the root element.
-    MissingChild(String),
-    /// There are multiple cameras, which is not supported by this library.
-    MultipleCameras,
-    /// There is no text in the element.
-    NoText(xmltree::Element),
-    /// Wrapper around `std::num::ParseFloatError`.
-    ParseFloat(std::num::ParseFloatError),
-    /// Wrapper around `std::num::ParseIntError`.
-    ParseInt(std::num::ParseIntError),
-    /// Error when parsing a Matrix4 from a string.
-    ParseMatrix4(String),
-    /// Invalid project path.
-    ProjectPath(std::path::PathBuf),
-    /// Wrapper around xmltree::ParseError.
-    XmltreeParse(xmltree::ParseError),
+    #[derive(Debug)]
+    pub enum Error {
+        /// Given a path and a project, could not find an image.
+        ImageFromPath(project: Project, path: std::path::PathBuf) {
+            description("could not create image from project and path")
+            display("Could not create image from path: {}", path.display())
+        }
+        /// Wrapper around `std::io::Error`.
+        Io(err: std::io::Error) {
+            description(err.description())
+            display("IO error: {}", err)
+            from()
+            cause(err)
+        }
+        /// Wrapper around `irb::Error`.
+        Irb(err: irb::Error) {
+            description(err.description())
+            display("Irb error: {}", err)
+            from()
+            cause(err)
+        }
+        /// There is no camera calibration with the given name.
+        MissingCameraCalibration(name: String) {
+            description("the camera calibration does not exist")
+            display("The camera calibration does not exist: {}", name)
+        }
+        /// A requested xml element child does not exist.
+        MissingChild(parent: String, child: String) {
+            description("the child element does not exist")
+            display("The element {} is not a child of {}", parent, child)
+        }
+        /// There is no mount calibration with the given name.
+        MissingMountCalibration(name: String) {
+            description("the mount calibration does not exist")
+            display("The mount calibration does not exist: {}", name)
+        }
+        /// There is no noderef attribute on an element.
+        MissingNoderef(element: xmltree::Element) {
+            description("the element does not have a noderef attribute")
+            display("The element named {} does not have a noderef attribute", element.name)
+        }
+        /// The element does not have any text, when it was required.
+        NoElementText(element: xmltree::Element) {
+            description("the element does not have text")
+            display("The element named {} does not have text", element.name)
+        }
+        /// Wrapper around `std::num::ParseFloatError`.
+        ParseFloat(err: std::num::ParseFloatError) {
+            description(err.description())
+            display("Parse float error: {}", err)
+            from()
+            cause(err)
+        }
+        /// Wrapper around `std::num::ParseFloatError`.
+        ParseInt(err: std::num::ParseIntError) {
+            description(err.description())
+            display("Parse int error: {}", err)
+            from()
+            cause(err)
+        }
+        /// Unable to parse text as projective3 matrix.
+        ParseProjective3(text: String) {
+            description("cannot parse text as Projective3")
+            display("Cannot parse text as Projective3: {}", text)
+        }
+        /// The path is not a valid project path.
+        ///
+        /// Valid project paths either end in .rsp or .RiSCAN.
+        ProjectPath(path: std::path::PathBuf) {
+            description("invalid project path")
+            display("Invalid project path: {}", path.display())
+        }
+        /// Wrapper around `xmltree::ParseError`.
+        XmltreeParse(err: xmltree::ParseError) {
+            description(err.description())
+            display("Xmltree parse error: {}", err)
+            from()
+            cause(err)
+        }
+    }
 }
 
 /// Our custom result type.
 pub type Result<T> = std::result::Result<T, Error>;
-
-impl From<std::io::Error> for Error {
-    fn from(err: std::io::Error) -> Error {
-        Error::Io(err)
-    }
-}
-
-impl From<std::num::ParseFloatError> for Error {
-    fn from(err: std::num::ParseFloatError) -> Error {
-        Error::ParseFloat(err)
-    }
-}
-
-impl From<std::num::ParseIntError> for Error {
-    fn from(err: std::num::ParseIntError) -> Error {
-        Error::ParseInt(err)
-    }
-}
-
-impl From<xmltree::ParseError> for Error {
-    fn from(err: xmltree::ParseError) -> Error {
-        Error::XmltreeParse(err)
-    }
-}
-
-impl element::FromElement for nalgebra::Projective3<f64> {
-    fn from_element(element: &xmltree::Element) -> Result<nalgebra::Projective3<f64>> {
-        use element::Extension;
-        element.as_str().and_then(|s| utils::projective_from_str(s))
-    }
-}
