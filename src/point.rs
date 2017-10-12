@@ -12,6 +12,10 @@ pub struct Point<C: CoordinateReferenceSystem> {
 /// A marker trait for coordinate reference systems.
 pub trait CoordinateReferenceSystem {}
 
+/// The GLobal Coordinate System.
+#[derive(Clone, Copy, Debug)]
+pub struct Glcs {}
+
 /// The Scanner's Own Coordiate System.
 #[derive(Clone, Copy, Debug)]
 pub struct Socs {}
@@ -19,6 +23,23 @@ pub struct Socs {}
 /// The CaMera's Coordinate System.
 #[derive(Clone, Copy, Debug)]
 pub struct Cmcs {}
+
+impl Point<Glcs> {
+    /// Returns a point in the scanner's own coordinate system.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use riscan_pro::Point;
+    /// let glcs = Point::glcs(1., 2., 3.);
+    /// ```
+    pub fn glcs<T: Into<f64>>(x: T, y: T, z: T) -> Point<Glcs> {
+        Point {
+            phantom: PhantomData,
+            point: Point3::new(x.into(), y.into(), z.into()),
+        }
+    }
+}
 
 impl Point<Socs> {
     /// Returns a point in the scanner's own coordinate system.
@@ -70,5 +91,6 @@ impl<C: CoordinateReferenceSystem> Deref for Point<C> {
     }
 }
 
+impl CoordinateReferenceSystem for Glcs {}
 impl CoordinateReferenceSystem for Socs {}
 impl CoordinateReferenceSystem for Cmcs {}

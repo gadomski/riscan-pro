@@ -1,5 +1,6 @@
 use {CameraCalibration, Error, MountCalibration, Result, ScanPosition, utils};
 use element::Extension;
+use nalgebra::Projective3;
 use scan_position::Image;
 use std::collections::HashMap;
 use std::io::Read;
@@ -25,6 +26,8 @@ pub struct Project {
     pub mount_calibrations: HashMap<String, MountCalibration>,
     /// The scan positions, by name.
     pub scan_positions: HashMap<String, ScanPosition>,
+    /// The project's own position.
+    pub pop: Projective3<f64>,
 }
 
 impl Project {
@@ -46,33 +49,28 @@ impl Project {
         Project::from_read(file)
     }
 
-    /// Returns a scan position image, as determined by the path.
+    /// Returns a scan position, as determined by the path.
     ///
     /// # Examples
     ///
     /// ```
     /// use riscan_pro::Project;
     /// let project = Project::from_path("data/project.RiSCAN").unwrap();
-    /// let image1 = project.scan_positions.get("SP01").unwrap().images.get("SP01 - Image001").unwrap();
+    /// let scan_position1 = project.scan_positions.get("SP01").unwrap();
     /// let path = "data/project.RiSCAN/SCANS/SP01/SCANPOSIMAGES/SP01 - Image001.csv";
-    /// let image2 = project.image_from_path(path).unwrap();
-    /// assert_eq!(image1, image2);
+    /// let scan_position2 = project.scan_position_from_path(path).unwrap();
+    /// assert_eq!(scan_position1, scan_position2);
     /// ```
-    pub fn image_from_path<P: AsRef<Path>>(&self, path: P) -> Result<&Image> {
+    pub fn scan_position_from_path<P: AsRef<Path>>(&self, path: P) -> Result<&ScanPosition> {
         path.as_ref()
             .file_stem()
             .map(|file_stem| file_stem.to_string_lossy())
             .and_then(|file_stem| {
-                file_stem
-                    .split(" - ")
-                    .next()
-                    .and_then(|name| self.scan_positions.get(name))
-                    .and_then(|scan_position| scan_position.images.get(file_stem.as_ref()))
+                file_stem.split(" - ").next().and_then(|name| {
+                    self.scan_positions.get(name)
+                })
             })
-            .ok_or(Error::ImageFromPath(
-                self.clone(),
-                path.as_ref().to_path_buf(),
-            ))
+            .ok_or(Error::ScanPositionFromPath(path.as_ref().to_path_buf()))
     }
 
     fn from_read<R: Read>(read: R) -> Result<Project> {
@@ -104,6 +102,7 @@ impl Project {
             camera_calibrations: camera_calibrations,
             mount_calibrations: mount_calibrations,
             scan_positions: scan_positions,
+            pop: utils::parse_projective3(xml.child("pop/matrix")?.as_str()?)?,
         })
     }
 }
@@ -153,6 +152,7 @@ impl ScanPosition {
                     Ok((image.name.clone(), image))
                 })
                 .collect::<Result<HashMap<_, _>>>()?,
+            sop: utils::parse_projective3(element.child("sop/matrix")?.as_str()?)?,
         })
     }
 }
@@ -218,20 +218,14 @@ mod tests {
     }
 
     #[test]
-    fn image_from_path() {
+    fn scan_position_from_path() {
         let project = Project::from_path("data/project.RiSCAN").unwrap();
-        let image1 = project
-            .scan_positions
-            .get("SP01")
-            .unwrap()
-            .images
-            .get("SP01 - Image001")
-            .unwrap();
-        let image2 = project
-            .image_from_path(
+        let scan_position1 = project.scan_positions.get("SP01").unwrap();
+        let scan_position2 = project
+            .scan_position_from_path(
                 "data/project.RiSCAN/SCANS/SP01/SCANPOSIMAGES/SP01 - Image001.csv",
             )
             .unwrap();
-        assert_eq!(image1, image2);
+        assert_eq!(scan_position1, scan_position2);
     }
 }

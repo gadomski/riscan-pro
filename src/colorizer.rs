@@ -1,4 +1,5 @@
-use {CameraCalibration, Cmcs, MountCalibration, Point, Result, Socs, scan_position};
+use {CameraCalibration, Cmcs, Glcs, MountCalibration, Point, Project, Result, ScanPosition, Socs,
+     scan_position};
 use irb;
 use std::path::Path;
 
@@ -9,6 +10,8 @@ pub struct Colorizer {
     image: scan_position::Image,
     irb: irb::text::Irb,
     mount_calibration: MountCalibration,
+    scan_position: ScanPosition,
+    project: Project,
 }
 
 impl Colorizer {
@@ -25,11 +28,12 @@ impl Colorizer {
     /// let colorizer = Colorizer::from_path(path).unwrap();
     /// ```
     pub fn from_path<P: AsRef<Path>>(path: P) -> Result<Colorizer> {
-        use {Error, Project};
+        use Error;
         use irb::text::Irb;
 
         let project = Project::from_path(&path)?;
-        let image = project.image_from_path(&path)?;
+        let scan_position = project.scan_position_from_path(&path)?;
+        let image = scan_position.image_from_path(&path)?;
         let camera_calibration = project
             .camera_calibrations
             .get(&image.camera_calibration_name)
@@ -48,6 +52,8 @@ impl Colorizer {
             image: image.clone(),
             irb: irb,
             mount_calibration: mount_calibration.clone(),
+            scan_position: scan_position.clone(),
+            project: project.clone(),
         })
     }
 
@@ -65,6 +71,22 @@ impl Colorizer {
     pub fn socs_to_cmcs(&self, point: &Point<Socs>) -> Point<Cmcs> {
         use std::ops::Deref;
         (*self.mount_calibration * self.image.cop.inverse() * point.deref()).into()
+    }
+
+    /// Converts a socs point to a glcs point.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use riscan_pro::{Colorizer, Point};
+    /// let colorizer = Colorizer::from_path("data/project.RiSCAN/SCANS/SP01/SCANPOSIMAGES/SP01 - Image001.csv")
+    ///     .unwrap();
+    /// let socs = Point::socs(10., -5.0, 2.0);
+    /// let glcs = colorizer.socs_to_glcs(&socs);
+    /// ```
+    pub fn socs_to_glcs(&self, point: &Point<Socs>) -> Point<Glcs> {
+        use std::ops::Deref;
+        (self.project.pop * self.scan_position.sop * point.deref()).into()
     }
 
     /// Return the pixel coordinates for a point in the scanner's own coordinate system.

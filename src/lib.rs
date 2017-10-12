@@ -34,7 +34,7 @@ mod utils;
 pub use camera_calibration::CameraCalibration;
 pub use colorizer::Colorizer;
 pub use mount_calibration::MountCalibration;
-pub use point::{Cmcs, Point, Socs};
+pub use point::{Cmcs, Glcs, Point, Socs};
 pub use project::Project;
 pub use scan_position::ScanPosition;
 
@@ -43,7 +43,7 @@ quick_error! {
     #[derive(Debug)]
     pub enum Error {
         /// Given a path and a project, could not find an image.
-        ImageFromPath(project: Project, path: std::path::PathBuf) {
+        ImageFromPath(path: std::path::PathBuf) {
             description("could not create image from project and path")
             display("Could not create image from path: {}", path.display())
         }
@@ -111,6 +111,11 @@ quick_error! {
         ProjectPath(path: std::path::PathBuf) {
             description("invalid project path")
             display("Invalid project path: {}", path.display())
+        }
+        /// The scan position could not be found from the provided path.
+        ScanPositionFromPath(path: std::path::PathBuf) {
+            description("cound not find scan position in project from path")
+            display("Path {} does not refer to a scan position", path.display())
         }
         /// Wrapper around `xmltree::ParseError`.
         XmltreeParse(err: xmltree::ParseError) {
