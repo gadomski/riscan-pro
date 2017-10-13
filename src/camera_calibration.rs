@@ -2,7 +2,7 @@ use {Cmcs, Point};
 
 /// A camera calibration.
 ///
-/// Thesee are opencv camera definitions, specififed by Riegl.
+/// These are opencv camera definitions, as specififed by Riegl.
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[allow(missing_docs)]
 pub struct CameraCalibration {
@@ -105,5 +105,12 @@ mod tests {
         // Point is behind camera.
         let cmcs = Point::cmcs(1.312, -0.641, -3.019);
         assert_eq!(None, camera_calibration.cmcs_to_ics(&cmcs));
+    }
+
+    #[test]
+    fn only_accept_version_2() {
+        Project::from_path("data/project.RiSCAN").unwrap();
+        assert!(Project::from_path("data/camera-calibration-version-0.rsp").is_err());
+        assert!(Project::from_path("data/camera-calibration-version-1.rsp").is_err());
     }
 }

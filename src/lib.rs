@@ -39,6 +39,11 @@ quick_error! {
 /// Our custom error enum.
     #[derive(Debug)]
     pub enum Error {
+        /// The camera calibration version is unsupported.
+        CameraCalibrationVersion(version: String) {
+            description("invalid camera calibration version")
+            display("This camera calibration version is not supported: {}", version)
+        }
         /// Given a path and a project, could not find an image.
         ImageFromPath(path: std::path::PathBuf) {
             description("could not create image from project and path")

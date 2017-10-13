@@ -109,25 +109,30 @@ impl Project {
 
 impl CameraCalibration {
     fn from_element(element: &Element) -> Result<CameraCalibration> {
-        Ok(CameraCalibration {
-            name: element.child("name")?.as_str()?.to_string(),
-            cx: element.child("internal_opencv/cx")?.parse_text()?,
-            cy: element.child("internal_opencv/cy")?.parse_text()?,
-            fx: element.child("internal_opencv/fx")?.parse_text()?,
-            fy: element.child("internal_opencv/fy")?.parse_text()?,
-            k1: element.child("internal_opencv/k1")?.parse_text()?,
-            k2: element.child("internal_opencv/k2")?.parse_text()?,
-            k3: element.child("internal_opencv/k3")?.parse_text()?,
-            k4: element.child("internal_opencv/k4")?.parse_text()?,
-            p1: element.child("internal_opencv/p1")?.parse_text()?,
-            p2: element.child("internal_opencv/p2")?.parse_text()?,
-            tan_max_horz: element.child("angle_extents/tan_max_horz")?.parse_text()?,
-            tan_max_vert: element.child("angle_extents/tan_max_vert")?.parse_text()?,
-            tan_min_horz: element.child("angle_extents/tan_min_horz")?.parse_text()?,
-            tan_min_vert: element.child("angle_extents/tan_min_vert")?.parse_text()?,
-            width: element.child("intrinsic_opencv/nx")?.parse_text()?,
-            height: element.child("intrinsic_opencv/ny")?.parse_text()?,
-        })
+        let version = element.child("version")?.as_str()?;
+        if version == "2" {
+            Ok(CameraCalibration {
+                name: element.child("name")?.as_str()?.to_string(),
+                cx: element.child("internal_opencv/cx")?.parse_text()?,
+                cy: element.child("internal_opencv/cy")?.parse_text()?,
+                fx: element.child("internal_opencv/fx")?.parse_text()?,
+                fy: element.child("internal_opencv/fy")?.parse_text()?,
+                k1: element.child("internal_opencv/k1")?.parse_text()?,
+                k2: element.child("internal_opencv/k2")?.parse_text()?,
+                k3: element.child("internal_opencv/k3")?.parse_text()?,
+                k4: element.child("internal_opencv/k4")?.parse_text()?,
+                p1: element.child("internal_opencv/p1")?.parse_text()?,
+                p2: element.child("internal_opencv/p2")?.parse_text()?,
+                tan_max_horz: element.child("angle_extents/tan_max_horz")?.parse_text()?,
+                tan_max_vert: element.child("angle_extents/tan_max_vert")?.parse_text()?,
+                tan_min_horz: element.child("angle_extents/tan_min_horz")?.parse_text()?,
+                tan_min_vert: element.child("angle_extents/tan_min_vert")?.parse_text()?,
+                width: element.child("intrinsic_opencv/nx")?.parse_text()?,
+                height: element.child("intrinsic_opencv/ny")?.parse_text()?,
+            })
+        } else {
+            Err(Error::CameraCalibrationVersion(version.to_string()))
+        }
     }
 }
 

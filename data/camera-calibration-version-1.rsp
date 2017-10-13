@@ -1,0 +1,3843 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE project SYSTEM "./project.dtd">
+<project name="2.2.1_Test_InfraTec_VZ1000_Calibration" kind="ProjectX" fold="2.2.1_Test_InfraTec_VZ1000_Calibration.RiSCAN">
+  <app_caption>RiSCAN PRO</app_caption>
+  <app_version>203009900</app_version>
+  <calibrations name="CALIBRATIONS" kind="CALIBRATIONS" fold="CALIBRATIONS">
+    <camcalibs name="CAMERA" kind="CAMCALIBS">
+      <camcalib_opencv name="Infratec_VarioCAM_HD_15mm_11-16-2015_Preston" kind="CamCalib_OpenCVX" states="default">
+        <angle_extents>
+          <tan_max_horz>0.63943314950037261</tan_max_horz>
+          <tan_max_vert>0.44501091927557126</tan_max_vert>
+          <tan_min_horz>-0.70266639719600666</tan_min_horz>
+          <tan_min_vert>-0.49552505654963642</tan_min_vert>
+        </angle_extents>
+        <cameramodel>Infratec</cameramodel>
+        <cameraserialnumber/>
+        <internal_opencv>
+          <cx>529.97966053601216</cx>
+          <cy>400.777065061184</cy>
+          <fx>883.52306678261107</fx>
+          <fy>884.24003410597312</fy>
+          <k1>-0.4164950117338272</k1>
+          <k2>0.1101340143848572</k2>
+          <k3>-0.1163151291620893</k3>
+          <k4>0.014161121599297899</k4>
+          <p1>0.00072627018573699994</p1>
+          <p2>-0.000151520987108</p2>
+        </internal_opencv>
+        <intrinsic_opencv>
+          <dx>1.7E-005</dx>
+          <dy>1.7E-005</dy>
+          <nx>1024</nx>
+          <ny>768</ny>
+        </intrinsic_opencv>
+        <lensmodel/>
+        <lensserialnumber/>
+        <name>Infratec_VarioCAM_HD_15mm_11-16-2015_Preston</name>
+        <settings/>
+        <version>1</version>
+      </camcalib_opencv>
+    </camcalibs>
+    <mountcalibs name="MOUNTING" kind="MOUNTCALIBS">
+      <mountcalib name="Infratec_VarioCAM_HD_15mm_11-16-2015_Preston" kind="MountCalibX">
+        <adjusted>0</adjusted>
+        <matrix rows="4" cols="4"> -0.010877741999999997 -0.003724941 -0.999933898 0.18508641   0.019274697 0.999806486 -0.0039341460000000013 0.000460517   0.99975505 -0.019316217 -0.01080384 -0.092802787   0 0 0 1   </matrix>
+        <name>Infratec_VarioCAM_HD_15mm_11-16-2015_Preston</name>
+      </mountcalib>
+    </mountcalibs>
+    <reflcalibs name="REFLECTOR" kind="REFLCALIBS">
+      <reflcalib name="RIEGL Flat 5 cm" kind="ReflCalibX">
+        <name>RIEGL Flat 5 cm</name>
+        <refl_color>16777215</refl_color>
+        <refl_const>0</refl_const>
+        <refl_type>Disc</refl_type>
+        <v_disc_diameter>0.050000000745058061</v_disc_diameter>
+        <v_disc_width>0</v_disc_width>
+      </reflcalib>
+      <reflcalib name="RIEGL Cylinder 5 cm" kind="ReflCalibX">
+        <name>RIEGL Cylinder 5 cm</name>
+        <refl_color>16777215</refl_color>
+        <refl_const>0.02500000037252903</refl_const>
+        <refl_type>Cylinder</refl_type>
+        <v_cylinder_diameter>0.050000000745058061</v_cylinder_diameter>
+        <v_cylinder_height>0.050000000745058061</v_cylinder_height>
+      </reflcalib>
+      <reflcalib name="RIEGL Cylinder 10 cm" kind="ReflCalibX">
+        <name>RIEGL Cylinder 10 cm</name>
+        <refl_color>16777215</refl_color>
+        <refl_const>0.050000000745058061</refl_const>
+        <refl_type>Cylinder</refl_type>
+        <v_cylinder_diameter>0.10000000149011613</v_cylinder_diameter>
+        <v_cylinder_height>0.10000000149011613</v_cylinder_height>
+      </reflcalib>
+      <reflcalib name="GSE Flat 10 cm" kind="ReflCalibX">
+        <name>GSE Flat 10 cm</name>
+        <refl_color>12632256</refl_color>
+        <refl_const>0</refl_const>
+        <refl_type>Disc</refl_type>
+        <v_disc_diameter>0.10000000149011613</v_disc_diameter>
+        <v_disc_width>0</v_disc_width>
+      </reflcalib>
+    </reflcalibs>
+    <tiltmounts name="TILTMOUNTS" kind="TILTMOUNTS"/>
+  </calibrations>
+  <camera>Custom camera</camera>
+  <cameraserport>COM1</cameraserport>
+  <collections name="COLLECTIONS" kind="COLLECTIONS">
+    <animations name="ANIMATIONS" kind="ANIMATIONS"/>
+    <overlays name="OVERLAYS" kind="OVERLAYS">
+      <overlay name="Logo" kind="OverlayX" states="default">
+        <name>Logo</name>
+        <overlayitem name="" kind="OverlayItemX">
+          <alpha>65</alpha>
+          <horz_align>0</horz_align>
+          <horz_pos>0</horz_pos>
+          <horz_pos_relation>0</horz_pos_relation>
+          <source_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/OBJECTS/IMAGES/Logo"/>
+          <tex_filter_mode>1</tex_filter_mode>
+          <transparent>1</transparent>
+          <vert_align>0</vert_align>
+          <vert_pos>0</vert_pos>
+          <vert_pos_relation>0</vert_pos_relation>
+          <visible>1</visible>
+        </overlayitem>
+      </overlay>
+    </overlays>
+    <scanconfs name="CONFIGS" kind="SCANCONFS"/>
+    <values name="VALUES" kind="VALUES"/>
+    <viewports name="VIEWPORTS" kind="VIEWPORTS"/>
+  </collections>
+  <commandport>//10.0.0.1:20002</commandport>
+  <crs_type>1</crs_type>
+  <dataport>//10.0.0.1:20001</dataport>
+  <date_created>2015-11-20 08:45:54+085</date_created>
+  <date_modified>2016-08-25 15:21:06+815</date_modified>
+  <doc_version>20300</doc_version>
+  <geometry_objects name="OBJECTS" kind="GEOMETRYOBJECTS" fold="OBJECTS">
+    <cylinder_objects name="CYLINDERS" kind="CYLINDEROBJECTS"/>
+    <images name="IMAGES" kind="PROJECTIMAGES" fold="IMAGES">
+      <image name="Logo" kind="ProjectImageX">
+        <camcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/CAMERA/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+        <cop name="COP" kind="COP">
+          <freeze>0</freeze>
+          <matrix rows="4" cols="4"> 1 0 0 0   0 1 0 0   0 0 1 0   0 0 0 1   </matrix>
+        </cop>
+        <file>Logo.tif</file>
+        <name>Logo</name>
+        <text/>
+        <tpl_image name="TPL (IMAGE)" kind="TPL_IMAGE">
+          <active>1</active>
+        </tpl_image>
+      </image>
+    </images>
+    <orthophotos name="ORTHOPHOTOS" kind="ORTHOPHOTOS" fold="ORTHOPHOTOS"/>
+    <plane_objects name="PLANES" kind="PLANEOBJECTS"/>
+    <point_objects name="POINTS" kind="POINTOBJECTS"/>
+    <pointclouds name="POINTCLOUDS" kind="POINTCLOUDS" fold="POINTCLOUDS"/>
+    <polydata_objects name="POLYDATA" kind="POLYDATAOBJECTS" fold="POLYDATA"/>
+    <polyline_objects name="POLYLINES" kind="POLYLINEOBJECTS"/>
+    <section_objects name="SECTIONS" kind="SECTIONOBJECTS" fold="SECTIONS"/>
+    <sphere_objects name="SPHERES" kind="SPHEREOBJECTS"/>
+    <undistimages name="UNDISTORTED IMAGES" kind="PROJECTUNDISTIMAGES" fold="UNDISTIMAGES"/>
+  </geometry_objects>
+  <gps_port>\\.\COM1:115200</gps_port>
+  <gps_useinitscript>0</gps_useinitscript>
+  <gps_usequitscript>0</gps_usequitscript>
+  <gsm_database_file/>
+  <gsm_export_crs/>
+  <gsm_export_dtr/>
+  <gsm_import_crs/>
+  <gsm_import_dtr/>
+  <gsm_project_crs/>
+  <gsm_scanner_crs/>
+  <gsm_scanner_dtr/>
+  <instrument_phi_offset>0</instrument_phi_offset>
+  <instrument_range_offset>0</instrument_range_offset>
+  <instrument_theta_offset>0</instrument_theta_offset>
+  <mta_autocalc_enabled>0</mta_autocalc_enabled>
+  <mta_estmax_scanrange>1000</mta_estmax_scanrange>
+  <mta_manual_fixed_zone>1</mta_manual_fixed_zone>
+  <mta_manual_range_max>3000</mta_manual_range_max>
+  <mta_manual_range_min>0</mta_manual_range_min>
+  <name>2.2.1_Test_InfraTec_VZ1000_Calibration</name>
+  <overview_max_x>NAN</overview_max_x>
+  <overview_max_y>NAN</overview_max_y>
+  <overview_min_x>NAN</overview_min_x>
+  <overview_min_y>NAN</overview_min_y>
+  <pop name="POP" kind="POP">
+    <freeze>0</freeze>
+    <matrix rows="4" cols="4"> 0.99566497679815923 0.046111730526226816 -0.080777238659154112 -515632.66332186362   -0.093012117369304602 0.49361133154539053 -0.86469451217899213 -5519682.7927730317   0 0.86845930340912512 0.49576046466225683 3143447.4201939853   0 0 0 1   </matrix>
+  </pop>
+  <ppm_air_pressure>1000</ppm_air_pressure>
+  <ppm_air_temperature>12</ppm_air_temperature>
+  <ppm_moisture_pressure>8.4199999999997517</ppm_moisture_pressure>
+  <ppm_total_geometric_correction>0</ppm_total_geometric_correction>
+  <project_latitude>0.5187102610797655</project_latitude>
+  <project_longitude>-1.6639430809579571</project_longitude>
+  <scanpositions name="SCANS" kind="SCANS" fold="SCANS">
+    <scanposition name="SP01" kind="PositionX" fold="SP01">
+      <name>SP01</name>
+      <polydata_objects name="POLYDATA" kind="POLYDATAOBJECTS" fold="POLYDATA">
+        <polydata_object name="151120_150227_0.05m_100pts_0.128_4.096_pp" kind="PolyDataObjectX" fold="151120_150227_0.05m_100pts_0.128_4.096_pp">
+          <abserr_deci>0</abserr_deci>
+          <accerror_deci>0</accerror_deci>
+          <boundsmooth>0</boundsmooth>
+          <color>16</color>
+          <conv_smooth>0</conv_smooth>
+          <decimate>0</decimate>
+          <depth_fac>0</depth_fac>
+          <depth_thr>0</depth_thr>
+          <edgeangle_smooth>0</edgeangle_smooth>
+          <edgesmooth>0</edgesmooth>
+          <featangle_deci>0</featangle_deci>
+          <featangle_smooth>0</featangle_smooth>
+          <file>index.pvtp</file>
+          <fisheye>0</fisheye>
+          <itercount_smooth>0</itercount_smooth>
+          <keep_inf>0</keep_inf>
+          <modbound_deci>0</modbound_deci>
+          <name>151120_150227_0.05m_100pts_0.128_4.096_pp</name>
+          <noise>0</noise>
+          <nonmanifold_smooth>0</nonmanifold_smooth>
+          <passband_smooth>0</passband_smooth>
+          <preservetopt_deci>0</preservetopt_deci>
+          <presplit_deci>0</presplit_deci>
+          <redfact_deci>0</redfact_deci>
+          <relfact_smooth>0</relfact_smooth>
+          <ring_auto>0</ring_auto>
+          <ring_start>0</ring_start>
+          <ring_stop>0</ring_stop>
+          <ring_use>0</ring_use>
+          <smooth>0</smooth>
+          <smoothmode>0</smoothmode>
+          <splitangle_deci>0</splitangle_deci>
+          <splitting_deci>0</splitting_deci>
+          <text/>
+          <use_depth_fac>0</use_depth_fac>
+          <use_depth_thr>0</use_depth_thr>
+          <use_for_msa>1</use_for_msa>
+          <use_noise>0</use_noise>
+          <verbose_level>1</verbose_level>
+          <wedge_auto>0</wedge_auto>
+          <wedge_start>0</wedge_start>
+          <wedge_stop>0</wedge_stop>
+          <wedge_use>0</wedge_use>
+        </polydata_object>
+        <polydata_object name="151120_150404_0.05m_100pts_0.128_4.096_pp" kind="PolyDataObjectX" fold="151120_150404_0.05m_100pts_0.128_4.096_pp">
+          <abserr_deci>0</abserr_deci>
+          <accerror_deci>0</accerror_deci>
+          <boundsmooth>0</boundsmooth>
+          <color>16</color>
+          <conv_smooth>0</conv_smooth>
+          <decimate>0</decimate>
+          <depth_fac>0</depth_fac>
+          <depth_thr>0</depth_thr>
+          <edgeangle_smooth>0</edgeangle_smooth>
+          <edgesmooth>0</edgesmooth>
+          <featangle_deci>0</featangle_deci>
+          <featangle_smooth>0</featangle_smooth>
+          <file>index.pvtp</file>
+          <fisheye>0</fisheye>
+          <itercount_smooth>0</itercount_smooth>
+          <keep_inf>0</keep_inf>
+          <modbound_deci>0</modbound_deci>
+          <name>151120_150404_0.05m_100pts_0.128_4.096_pp</name>
+          <noise>0</noise>
+          <nonmanifold_smooth>0</nonmanifold_smooth>
+          <passband_smooth>0</passband_smooth>
+          <preservetopt_deci>0</preservetopt_deci>
+          <presplit_deci>0</presplit_deci>
+          <redfact_deci>0</redfact_deci>
+          <relfact_smooth>0</relfact_smooth>
+          <ring_auto>0</ring_auto>
+          <ring_start>0</ring_start>
+          <ring_stop>0</ring_stop>
+          <ring_use>0</ring_use>
+          <smooth>0</smooth>
+          <smoothmode>0</smoothmode>
+          <splitangle_deci>0</splitangle_deci>
+          <splitting_deci>0</splitting_deci>
+          <text/>
+          <use_depth_fac>0</use_depth_fac>
+          <use_depth_thr>0</use_depth_thr>
+          <use_for_msa>1</use_for_msa>
+          <use_noise>0</use_noise>
+          <verbose_level>1</verbose_level>
+          <wedge_auto>0</wedge_auto>
+          <wedge_start>0</wedge_start>
+          <wedge_stop>0</wedge_stop>
+          <wedge_use>0</wedge_use>
+        </polydata_object>
+      </polydata_objects>
+      <poseestimations name="POSEESTIMATIONS" kind="POSEESTIMATIONS" fold="POSEESTIMATIONS"/>
+      <position_accuracy>2.3598422620363482</position_accuracy>
+      <position_coordsys>2</position_coordsys>
+      <position_enabled>1</position_enabled>
+      <position_vector length="3"> -515634.85466817376 -5519672.4159478918 3143442.4306359168 </position_vector>
+      <ppm_air_pressure>1000</ppm_air_pressure>
+      <ppm_air_temperature>12</ppm_air_temperature>
+      <ppm_instrument>VZ-1000</ppm_instrument>
+      <ppm_moisture_pressure>8.4199999999987738</ppm_moisture_pressure>
+      <ppm_total_geometric_correction>0</ppm_total_geometric_correction>
+      <profilescans name="PROFILESCANS" kind="PROFILESCANS" fold="PROFILESCANS"/>
+      <rdb2pointclouds name="POINTCLOUDS" kind="RDB2Pointclouds" fold="POINTCLOUDS"/>
+      <registered>1</registered>
+      <scanposimages name="SCANPOSIMAGES" kind="SCANPOSIMAGES" fold="SCANPOSIMAGES">
+        <scanposimage name="SP01 - Image001" kind="ScanPosImageX">
+          <camcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/CAMERA/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <cop name="COP" kind="COP">
+            <freeze>0</freeze>
+            <matrix rows="4" cols="4"> -0.7489210250577728 -0.6626592625372521 4.587697183490551E-017 0   0.6626592625372521 -0.7489210250577728 -4.0592798581420019E-017 0   6.1257422745431002E-017 -7.2222372914521344E-035 1 0   0 0 0 1   </matrix>
+          </cop>
+          <file>SP01 - Image001.jpg</file>
+          <mountcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/MOUNTING/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <name>SP01 - Image001</name>
+          <phi>138.49700000000002</phi>
+          <raw_lambda>NAN</raw_lambda>
+          <raw_phi>NAN</raw_phi>
+          <text/>
+          <theta>90</theta>
+          <tpl_image name="TPL (IMAGE)" kind="TPL_IMAGE">
+            <active>1</active>
+            <tp_image name="tp020" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp020</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>705.56</u>
+              <v>727</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp019" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp019</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>435.22</u>
+              <v>741.58</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp018" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp018</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>287.48000000000003</u>
+              <v>739.5</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp017" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp017</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>156.7</u>
+              <v>731.27</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp016" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp016</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>49.45</u>
+              <v>719.89</v>
+              <view>1</view>
+            </tp_image>
+          </tpl_image>
+        </scanposimage>
+        <scanposimage name="SP01 - Image002" kind="ScanPosImageX">
+          <camcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/CAMERA/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <cop name="COP" kind="COP">
+            <freeze>0</freeze>
+            <matrix rows="4" cols="4"> -0.87879212748304947 -0.4772047743619248 5.3832540858585862E-017 0   0.4772047743619248 -0.87879212748304947 -2.9232334599226445E-017 0   6.1257422745431002E-017 -5.5220022624227776E-034 1 0   0 0 0 1   </matrix>
+          </cop>
+          <file>SP01 - Image002.jpg</file>
+          <mountcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/MOUNTING/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <name>SP01 - Image002</name>
+          <phi>151.497</phi>
+          <raw_lambda>NAN</raw_lambda>
+          <raw_phi>NAN</raw_phi>
+          <text/>
+          <theta>90</theta>
+          <tpl_image name="TPL (IMAGE)" kind="TPL_IMAGE">
+            <active>1</active>
+          </tpl_image>
+        </scanposimage>
+        <scanposimage name="SP01 - Image003" kind="ScanPosImageX">
+          <camcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/CAMERA/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <cop name="COP" kind="COP">
+            <freeze>0</freeze>
+            <matrix rows="4" cols="4"> -0.96361645931905472 -0.26728883128445203 5.9028660812962765E-017 0   0.26728883128445203 -0.96361645931905472 -1.6373424933123853E-017 0   6.1257422745431014E-017 2.132064633747432E-033 1 0   0 0 0 1   </matrix>
+          </cop>
+          <file>SP01 - Image003.jpg</file>
+          <mountcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/MOUNTING/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <name>SP01 - Image003</name>
+          <phi>164.497</phi>
+          <raw_lambda>NAN</raw_lambda>
+          <raw_phi>NAN</raw_phi>
+          <text/>
+          <theta>90</theta>
+          <tpl_image name="TPL (IMAGE)" kind="TPL_IMAGE">
+            <active>1</active>
+            <tp_image name="tp020" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp020</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>704.13</u>
+              <v>333.38</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp019" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp019</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>437.37</u>
+              <v>342.27</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp018" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp018</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>292</u>
+              <v>349.32</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp017" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp017</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>163.98</u>
+              <v>356.52</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp016" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp016</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>59.19</u>
+              <v>362.49</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp014" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp014</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>431.54</u>
+              <v>604.62</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp013" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp013</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>269.17</u>
+              <v>599.08</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp012" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp012</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>137.6</u>
+              <v>590.4</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp011" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp011</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>29.07</u>
+              <v>580.2</v>
+              <view>1</view>
+            </tp_image>
+          </tpl_image>
+        </scanposimage>
+        <scanposimage name="SP01 - Image004" kind="ScanPosImageX">
+          <camcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/CAMERA/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <cop name="COP" kind="COP">
+            <freeze>0</freeze>
+            <matrix rows="4" cols="4"> -0.99904593630660326 -0.04367169734807769 6.1198979262438528E-017 0   0.04367169734807769 -0.99904593630660326 -2.6752156264617133E-018 0   6.1257422745431002E-017 -1.709638983835935E-034 1 0   0 0 0 1   </matrix>
+          </cop>
+          <file>SP01 - Image004.jpg</file>
+          <mountcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/MOUNTING/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <name>SP01 - Image004</name>
+          <phi>177.497</phi>
+          <raw_lambda>NAN</raw_lambda>
+          <raw_phi>NAN</raw_phi>
+          <text/>
+          <theta>90</theta>
+          <tpl_image name="TPL (IMAGE)" kind="TPL_IMAGE">
+            <active>1</active>
+            <tp_image name="tp006" kind="TP_IMAGEX">
+              <active>0</active>
+              <linked_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TPL (SOCS)/tp006"/>
+              <name>tp006</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>122.09</u>
+              <v>653.18</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp007" kind="TP_IMAGEX">
+              <active>0</active>
+              <linked_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TPL (SOCS)/tp007"/>
+              <name>tp007</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>251.21</u>
+              <v>670.61</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp008" kind="TP_IMAGEX">
+              <active>0</active>
+              <linked_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TPL (SOCS)/tp008"/>
+              <name>tp008</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>407.03</u>
+              <v>685.06</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp009" kind="TP_IMAGEX">
+              <active>0</active>
+              <linked_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TPL (SOCS)/tp009"/>
+              <name>tp009</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>593.98</u>
+              <v>694.33</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp010" kind="TP_IMAGEX">
+              <active>0</active>
+              <linked_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TPL (SOCS)/tp010"/>
+              <name>tp010</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>712.93</u>
+              <v>702.35</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp011" kind="TP_IMAGEX">
+              <active>0</active>
+              <linked_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TPL (SOCS)/tp011"/>
+              <name>tp011</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>32.6</u>
+              <v>403.14</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp012" kind="TP_IMAGEX">
+              <active>0</active>
+              <linked_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TPL (SOCS)/tp012"/>
+              <name>tp012</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>140.32</u>
+              <v>403.8</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp013" kind="TP_IMAGEX">
+              <active>0</active>
+              <linked_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TPL (SOCS)/tp013"/>
+              <name>tp013</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>271.17</u>
+              <v>403.99</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp014" kind="TP_IMAGEX">
+              <active>0</active>
+              <linked_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TPL (SOCS)/tp014"/>
+              <name>tp014</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>432.57</u>
+              <v>403.96</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp016" kind="TP_IMAGEX">
+              <active>0</active>
+              <linked_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TPL (SOCS)/tp016"/>
+              <name>tp016</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>56.36</u>
+              <v>183.6</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp017" kind="TP_IMAGEX">
+              <active>0</active>
+              <linked_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TPL (SOCS)/tp017"/>
+              <name>tp017</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>162.1</u>
+              <v>168.88</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp018" kind="TP_IMAGEX">
+              <active>0</active>
+              <linked_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TPL (SOCS)/tp018"/>
+              <name>tp018</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>291.32</u>
+              <v>154.12</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp019" kind="TP_IMAGEX">
+              <active>0</active>
+              <linked_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TPL (SOCS)/tp019"/>
+              <name>tp019</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>437.82</u>
+              <v>142.62</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp020" kind="TP_IMAGEX">
+              <active>0</active>
+              <linked_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TPL (SOCS)/tp020"/>
+              <name>tp020</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>706.63</u>
+              <v>136.85</v>
+              <view>1</view>
+            </tp_image>
+          </tpl_image>
+        </scanposimage>
+        <scanposimage name="SP01 - Image005" kind="ScanPosImageX">
+          <camcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/CAMERA/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <cop name="COP" kind="COP">
+            <freeze>0</freeze>
+            <matrix rows="4" cols="4"> -0.98326444804592742 0.18218404213579667 6.0232245964502246E-017 0   -0.18218404213579667 -0.98326444804592742 1.1160124886583912E-017 0   6.1257422745431002E-017 6.9514033930226803E-034 1 0   0 0 0 1   </matrix>
+          </cop>
+          <file>SP01 - Image005.jpg</file>
+          <mountcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/MOUNTING/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <name>SP01 - Image005</name>
+          <phi>190.497</phi>
+          <raw_lambda>NAN</raw_lambda>
+          <raw_phi>NAN</raw_phi>
+          <text/>
+          <theta>90</theta>
+          <tpl_image name="TPL (IMAGE)" kind="TPL_IMAGE">
+            <active>1</active>
+          </tpl_image>
+        </scanposimage>
+        <scanposimage name="SP01 - Image006" kind="ScanPosImageX">
+          <camcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/CAMERA/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <cop name="COP" kind="COP">
+            <freeze>0</freeze>
+            <matrix rows="4" cols="4"> -0.91708095158045427 0.39870105122546221 5.6178015542746016E-017 0   -0.39870105122546221 -0.91708095158045427 2.4423398843965878E-017 0   6.1257422745431002E-017 8.5764067835994086E-035 1 0   0 0 0 1   </matrix>
+          </cop>
+          <file>SP01 - Image006.jpg</file>
+          <mountcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/MOUNTING/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <name>SP01 - Image006</name>
+          <phi>203.497</phi>
+          <raw_lambda>NAN</raw_lambda>
+          <raw_phi>NAN</raw_phi>
+          <text/>
+          <theta>90</theta>
+          <tpl_image name="TPL (IMAGE)" kind="TPL_IMAGE">
+            <active>1</active>
+            <tp_image name="tp001" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp001</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>28.28</u>
+              <v>447.34</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp002" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp002</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>133.16999999999998</u>
+              <v>458.49</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp003" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp003</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>265.44</u>
+              <v>471.05</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp004" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp004</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>416.83</u>
+              <v>484.4</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp005" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp005</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>632.35</u>
+              <v>499.85</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp006" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp006</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>126.63</u>
+              <v>282.51999999999997</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp007" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp007</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>254.7</u>
+              <v>282.58999999999997</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp008" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp008</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>409.22</u>
+              <v>285.38</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp009" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp009</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>594.63</u>
+              <v>293.71</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp010" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp010</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>712.02</u>
+              <v>308.5</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp011" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp011</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>24</u>
+              <v>52.5</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp012" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp012</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>133.91</u>
+              <v>33.78</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp013" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp013</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>267.95999999999997</u>
+              <v>17.45</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp014" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp014</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>433.01</u>
+              <v>6.81</v>
+              <view>1</view>
+            </tp_image>
+          </tpl_image>
+        </scanposimage>
+      </scanposimages>
+      <scanposundistimages name="UNDISTORTED IMAGES" kind="SCANPOSUNDISTIMAGES" fold="SCANPOSUNDISTIMAGES">
+        <scanposundistimage name="SP01 - Image003" kind="ScanPosUndistImageX">
+          <cop name="COP" kind="COP">
+            <freeze>0</freeze>
+            <matrix rows="4" cols="4"> -0.96361645931905472 -0.26728883128445203 5.9028660812962765E-017 0   0.26728883128445203 -0.96361645931905472 -1.6373424933123853E-017 0   6.1257422745431014E-017 2.132064633747432E-033 1 0   0 0 0 1   </matrix>
+          </cop>
+          <file>SP01 - Image003.jpg</file>
+          <mountcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/MOUNTING/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <name>SP01 - Image003</name>
+          <phi>164.497</phi>
+          <raw_lambda>NAN</raw_lambda>
+          <raw_phi>NAN</raw_phi>
+          <source_image_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/SCANPOSIMAGES/SP01 - Image003"/>
+          <text/>
+          <theta>90</theta>
+          <tpl_image name="TPL (IMAGE)" kind="TPL_IMAGE">
+            <active>1</active>
+          </tpl_image>
+        </scanposundistimage>
+        <scanposundistimage name="SP01 - Image001" kind="ScanPosUndistImageX">
+          <cop name="COP" kind="COP">
+            <freeze>0</freeze>
+            <matrix rows="4" cols="4"> -0.7489210250577728 -0.6626592625372521 4.587697183490551E-017 0   0.6626592625372521 -0.7489210250577728 -4.0592798581420019E-017 0   6.1257422745431002E-017 -7.2222372914521344E-035 1 0   0 0 0 1   </matrix>
+          </cop>
+          <file>SP01 - Image001.jpg</file>
+          <mountcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/MOUNTING/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <name>SP01 - Image001</name>
+          <phi>138.49700000000002</phi>
+          <raw_lambda>NAN</raw_lambda>
+          <raw_phi>NAN</raw_phi>
+          <source_image_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/SCANPOSIMAGES/SP01 - Image001"/>
+          <text/>
+          <theta>90</theta>
+          <tpl_image name="TPL (IMAGE)" kind="TPL_IMAGE">
+            <active>1</active>
+            <tp_image name="tp001" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp001</name>
+              <size>0</size>
+              <u>746</u>
+              <v>726</v>
+              <view>1</view>
+            </tp_image>
+          </tpl_image>
+        </scanposundistimage>
+      </scanposundistimages>
+      <scansequences name="SCANSEQUENCES" kind="SCANSEQUENCES" fold="SCANSEQUENCES"/>
+      <singlescans name="SINGLESCANS" kind="SINGLESCANS" fold="SINGLESCANS">
+        <scan name="151120_150227_old@20160315-120347-357" kind="ScanAcquiredX" date_deleted="2016-03-15 12:03:47+357" states="deleted">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>151120_150227_old@20160315-120347-357.rxp</file>
+          <frame_count>1</frame_count>
+          <geometryinfo>
+            <intmax>0.091599911451339725</intmax>
+            <intmin>0.00068665598519146445</intmin>
+            <maxcart length="3"> 378.68472290039066 365.97381591796877 190.30821228027344 </maxcart>
+            <maxpolar length="3"> 426.62612915039066 2.2712407112121581 6.2901668548583987 </maxpolar>
+            <mincart length="3"> -321.39749145507814 -425.26422119140627 -38.77893829345703 </mincart>
+            <minpolar length="3"> 1.4028040170669555 0.52359879016876218 0 </minpolar>
+            <reflmax>30.010000228881837</reflmax>
+            <reflmin>-27.370000839233398</reflmin>
+            <valid_cart>1</valid_cart>
+            <valid_int>1</valid_int>
+            <valid_refl>1</valid_refl>
+          </geometryinfo>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>450m (300kHz)</measurementprogram>
+          <measurementprogramid>3</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>151120_150227_old@20160315-120347-357</name>
+          <numtargets>0</numtargets>
+          <phi_count>901</phi_count>
+          <phi_delta>0.40000000596046445</phi_delta>
+          <phi_start>0</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>1014</theta_count>
+          <theta_delta>0.09875000268220896</theta_delta>
+          <theta_start>30</theta_start>
+          <time>0' 08"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="151120_150404@20160315-120349-059" kind="ScanAcquiredX" date_deleted="2016-03-15 12:03:49+059" states="deleted">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>151120_150404@20160315-120349-059.rxp</file>
+          <frame_count>1</frame_count>
+          <geometryinfo>
+            <intmax>0.091599911451339725</intmax>
+            <intmin>0.00064087891951203341</intmin>
+            <maxcart length="3"> -1.8507763147354125 304.9660949707031 145.99803161621094 </maxcart>
+            <maxpolar length="3"> 417.08425903320314 1.973321557044983 4.2024559974670413 </maxpolar>
+            <mincart length="3"> -413.01248168945312 -307.1314697265625 -51.188106536865235 </mincart>
+            <minpolar length="3"> 3.2041776180267334 0.87681847810745242 1.9854516983032227 </minpolar>
+            <reflmax>28.579999923706054</reflmax>
+            <reflmin>-27.780000686645507</reflmin>
+            <valid_cart>1</valid_cart>
+            <valid_int>1</valid_int>
+            <valid_refl>1</valid_refl>
+          </geometryinfo>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>450m (300kHz)</measurementprogram>
+          <measurementprogramid>3</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>151120_150404@20160315-120349-059</name>
+          <numtargets>0</numtargets>
+          <phi_count>5081</phi_count>
+          <phi_delta>0.02500000037252903</phi_delta>
+          <phi_start>113.75800323486328</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>2513</theta_count>
+          <theta_delta>0.02500000037252903</theta_delta>
+          <theta_start>50.237998962402336</theta_start>
+          <time>2' 48"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="151120_150227" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>151120_150227.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>450m (300kHz)</measurementprogram>
+          <measurementprogramid>3</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>151120_150227</name>
+          <numtargets>0</numtargets>
+          <phi_count>901</phi_count>
+          <phi_delta>0.40000000596046445</phi_delta>
+          <phi_start>0</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>1014</theta_count>
+          <theta_delta>0.09875000268220896</theta_delta>
+          <theta_start>30</theta_start>
+          <time/>
+          <type>3</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="151120_150404" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>151120_150404.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>450m (300kHz)</measurementprogram>
+          <measurementprogramid>3</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>151120_150404</name>
+          <numtargets>0</numtargets>
+          <phi_count>5081</phi_count>
+          <phi_delta>0.02500000037252904</phi_delta>
+          <phi_start>113.75800323486328</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>2513</theta_count>
+          <theta_delta>0.02500000037252904</theta_delta>
+          <theta_start>50.237998962402336</theta_start>
+          <time/>
+          <type>3</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+      </singlescans>
+      <sop name="SOP" kind="SOP">
+        <freeze>1</freeze>
+        <matrix rows="4" cols="4"> 0.99203538996098432 4.7632160018149184E-005 0.12595944901488946 -3.1470172510255578   0 0.99999992849951206 -0.00037815469172777965 0.68784358004359091   -0.12595945802105216 0.00037514283707374381 0.99203531902996992 -11.26939847569156   0 0 0 1   </matrix>
+      </sop>
+      <text/>
+      <tiepointscans name="TIEPOINTSCANS" kind="TIEPOINTSCANS" fold="TIEPOINTSCANS">
+        <scan name="tp020" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp020.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp020</name>
+          <numtargets>0</numtargets>
+          <phi_count>347</phi_count>
+          <phi_delta>0.0028840696904808282</phi_delta>
+          <phi_start>158.42898559570317</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>533</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>100.72626495361328</theta_start>
+          <time>0' 04"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp019" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp019.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp019</name>
+          <numtargets>0</numtargets>
+          <phi_count>350</phi_count>
+          <phi_delta>0.00284093851223588</phi_delta>
+          <phi_start>159.15640258789066</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>529</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>83.548957824707021</theta_start>
+          <time>0' 04"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp018" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp018.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp018</name>
+          <numtargets>0</numtargets>
+          <phi_count>337</phi_count>
+          <phi_delta>0.002751038409769535</phi_delta>
+          <phi_start>159.61276245117187</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>494</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>74.21260833740233</theta_start>
+          <time>0' 04"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp017" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp017.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp017</name>
+          <numtargets>0</numtargets>
+          <phi_count>300</phi_count>
+          <phi_delta>0.0026347725652158256</phi_delta>
+          <phi_start>160.04972839355469</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>421</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>65.918525695800781</theta_start>
+          <time>0' 04"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp016" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp016.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp016</name>
+          <numtargets>0</numtargets>
+          <phi_count>282</phi_count>
+          <phi_delta>0.0025167760904878378</phi_delta>
+          <phi_start>160.41119384765626</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>378</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>58.992275238037107</theta_start>
+          <time>0' 03"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp015" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp015.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp015</name>
+          <numtargets>0</numtargets>
+          <phi_count>323</phi_count>
+          <phi_delta>0.0030336824711412192</phi_delta>
+          <phi_start>176.06353759765626</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>522</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>101.49095153808594</theta_start>
+          <time>0' 04"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp014" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp014.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp014</name>
+          <numtargets>0</numtargets>
+          <phi_count>359</phi_count>
+          <phi_delta>0.0029807880055159328</phi_delta>
+          <phi_start>176.09791564941405</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>570</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>83.167694091796864</theta_start>
+          <time>0' 05"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp013" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp013.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp013</name>
+          <numtargets>0</numtargets>
+          <phi_count>349</phi_count>
+          <phi_delta>0.0028622290119528765</phi_delta>
+          <phi_start>176.17486572265626</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>533</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>72.793403625488282</theta_start>
+          <time>0' 04"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp011" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp011.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp011</name>
+          <numtargets>0</numtargets>
+          <phi_count>282</phi_count>
+          <phi_delta>0.002581689739599824</phi_delta>
+          <phi_start>176.35868835449219</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>387</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>57.205074310302726</theta_start>
+          <time>0' 03"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp012" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp012.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp012</name>
+          <numtargets>0</numtargets>
+          <phi_count>347</phi_count>
+          <phi_delta>0.0027223075740039347</phi_delta>
+          <phi_start>176.23681640624998</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>504</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>64.240104675292966</theta_start>
+          <time>0' 05"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp006" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp006.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp006</name>
+          <numtargets>0</numtargets>
+          <phi_count>318</phi_count>
+          <phi_delta>0.0027288282290101046</phi_delta>
+          <phi_start>193.79748535156246</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>463</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>63.406024932861325</theta_start>
+          <time>0' 04"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp007" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp007.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp007</name>
+          <numtargets>0</numtargets>
+          <phi_count>346</phi_count>
+          <phi_delta>0.0028699159156531088</phi_delta>
+          <phi_start>194.07504272460928</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>530</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>71.71558380126953</theta_start>
+          <time>0' 04"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp008" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp008.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp008</name>
+          <numtargets>0</numtargets>
+          <phi_count>338</phi_count>
+          <phi_delta>0.0029897463973611603</phi_delta>
+          <phi_start>194.4651184082032</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>539</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>81.685020446777344</theta_start>
+          <time>0' 05"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp009" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp009.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp009</name>
+          <numtargets>0</numtargets>
+          <phi_count>368</phi_count>
+          <phi_delta>0.0030561862513422963</phi_delta>
+          <phi_start>194.91130065917968</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>600</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>93.504928588867187</theta_start>
+          <time>0' 05"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp010" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp010.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp010</name>
+          <numtargets>0</numtargets>
+          <phi_count>351</phi_count>
+          <phi_delta>0.0030732159502804282</phi_delta>
+          <phi_start>195.76068115234368</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>575</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>101.13275146484376</theta_start>
+          <time>0' 05"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp001" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp001.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp001</name>
+          <numtargets>0</numtargets>
+          <phi_count>261</phi_count>
+          <phi_delta>0.002559257671236992</phi_delta>
+          <phi_start>205.60424804687501</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>356</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>56.9553337097168</theta_start>
+          <time>0' 03"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp002" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp002.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp002</name>
+          <numtargets>0</numtargets>
+          <phi_count>306</phi_count>
+          <phi_delta>0.0026906903367489578</phi_delta>
+          <phi_start>206.11302185058595</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>438</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>63.877864837646477</theta_start>
+          <time>0' 04"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp003" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp003.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp003</name>
+          <numtargets>0</numtargets>
+          <phi_count>341</phi_count>
+          <phi_delta>0.002825352130457759</phi_delta>
+          <phi_start>206.66131591796874</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>513</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>72.476303100585933</theta_start>
+          <time>0' 04"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp004" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp004.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp004</name>
+          <numtargets>0</numtargets>
+          <phi_count>370</phi_count>
+          <phi_delta>0.0029312686529010528</phi_delta>
+          <phi_start>207.3039855957032</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>577</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>82.188949584960922</theta_start>
+          <time>0' 05"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp005" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp005.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp005</name>
+          <numtargets>0</numtargets>
+          <phi_count>332</phi_count>
+          <phi_delta>0.0029873049352318048</phi_delta>
+          <phi_start>208.295150756836</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>528</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>96.049613952636723</theta_start>
+          <time>0' 04"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+      </tiepointscans>
+      <tiltmount_position>-1</tiltmount_position>
+      <tol_socs name="TOL (SOCS)" kind="TOL_SOCS" fold="TIEOBJECTS">
+        <active>1</active>
+      </tol_socs>
+      <tpl_socs name="TPL (SOCS)" kind="TPL_SOCS">
+        <active>1</active>
+        <tp_socs name="tp001" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050668329931795597 0.001799379475414753 0.001799379475414753 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.75651846782518272 0.3683355893585488 -0.54037829476333344 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TIEPOINTSCANS/tp001"/>
+          <intensity>0.058934755623340608</intensity>
+          <name>tp001</name>
+          <pixels>5597</pixels>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>24.134069442749024</reflectivity>
+          <refltype>0.082496635615825651</refltype>
+          <vector length="3"> -16.002730909121258 -7.7914503973701389 11.430690765380859 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp002" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050596846267580986 0.0018112369580194355 0.0018112369580194355 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.80614023625142861 0.40242298385473088 -0.43381293383432646 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TIEPOINTSCANS/tp002"/>
+          <intensity>0.062763594090938573</intensity>
+          <name>tp002</name>
+          <pixels>7018</pixels>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>26.057441711425782</reflectivity>
+          <refltype>0.089881047606468173</refltype>
+          <vector length="3"> -15.61863025906457 -7.7967775492178624 8.4049444198608384 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp003" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050529907457530496 0.00182300282176584 0.00182300282176584 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.85082294160128947 0.43611603395744166 -0.29309235228876269 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TIEPOINTSCANS/tp003"/>
+          <intensity>0.066141404211521152</intensity>
+          <name>tp003</name>
+          <pixels>8903</pixels>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>27.764089584350586</reflectivity>
+          <refltype>0.09411448240280151</refltype>
+          <vector length="3"> -15.216889085220077 -7.799895387560073 5.2419295310974118 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp004" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050490503199398515 0.0018302797107025981 0.0018302797107025981 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.8771289679657792 0.46329545628368531 -0.12649938237864611 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TIEPOINTSCANS/tp004"/>
+          <intensity>0.067608654499053952</intensity>
+          <name>tp004</name>
+          <pixels>10391</pixels>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>28.386402130126954</reflectivity>
+          <refltype>0.096628367900848397</refltype>
+          <vector length="3"> -14.814416371591674 -7.8249073218984563 2.1365325450897226 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp005" kind="TP_SOCSX">
+          <accuracy length="3"> 0.005047573707997799 0.0018330811290070416 0.0018330811290070416 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.87065592167265754 0.4784387461838896 0.11425686940540181 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TIEPOINTSCANS/tp005"/>
+          <intensity>0.067548237740993498</intensity>
+          <name>tp005</name>
+          <pixels>11046</pixels>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>28.181777954101562</reflectivity>
+          <refltype>0.09237916022539136</refltype>
+          <vector length="3"> -14.292000744835376 -7.8536708157714573 -1.8755505084991462 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp006" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050552394241094592 0.0018189719412475824 0.0018189719412475824 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.87002426226857293 0.22064335315100128 -0.44087900128528186 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TIEPOINTSCANS/tp006"/>
+          <intensity>0.063805088400840755</intensity>
+          <name>tp006</name>
+          <pixels>8193</pixels>
+          <referrer_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/SCANPOSIMAGES/SP01 - Image004/TPL (IMAGE)/tp006"/>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>26.584171295166016</reflectivity>
+          <refltype>0.089880496263504013</refltype>
+          <vector length="3"> -16.463945503548134 -4.175354505090448 8.342994689941408 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp007" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050488905981183053 0.0018305807607248426 0.0018305807607248426 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.92157072612769523 0.23951460776769002 -0.30551620155134445 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TIEPOINTSCANS/tp007"/>
+          <intensity>0.067504964768886566</intensity>
+          <name>tp007</name>
+          <pixels>10459</pixels>
+          <referrer_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/SCANPOSIMAGES/SP01 - Image004/TPL (IMAGE)/tp007"/>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>28.51369285583496</reflectivity>
+          <refltype>0.09428261220455168</refltype>
+          <vector length="3"> -16.081666475037571 -4.179598714624631 5.331343173980713 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp008" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050460696220397952 0.0018359798705205322 0.0018359798705205322 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.9571751418480256 0.25559249768527709 -0.13597140491740758 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TIEPOINTSCANS/tp008"/>
+          <intensity>0.069300904870033267</intensity>
+          <name>tp008</name>
+          <pixels>11779</pixels>
+          <referrer_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/SCANPOSIMAGES/SP01 - Image004/TPL (IMAGE)/tp008"/>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>29.323925018310547</reflectivity>
+          <refltype>0.093410059809684762</refltype>
+          <vector length="3"> -15.691556479085344 -4.1900856712319347 2.2290623188018794 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp009" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050479131750762464 0.001832433161325753 0.001832433161325753 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.961386107200208 0.26592493759205798 0.070856760080391309 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TIEPOINTSCANS/tp009"/>
+          <intensity>0.070844352245330816</intensity>
+          <name>tp009</name>
+          <pixels>10890</pixels>
+          <referrer_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/SCANPOSIMAGES/SP01 - Image004/TPL (IMAGE)/tp009"/>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>30.15760803222656</reflectivity>
+          <refltype>0.0986172556877136</refltype>
+          <vector length="3"> -15.257419378715693 -4.2202909340629491 -1.1245131492614733 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp010" kind="TP_SOCSX">
+          <accuracy length="3"> 0.005045834928750992 0.0018364366842433811 0.0018364366842433811 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.94002099996466317 0.27472492982187203 0.20220467986622374 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TIEPOINTSCANS/tp010"/>
+          <intensity>0.070617824792861939</intensity>
+          <name>tp010</name>
+          <pixels>11900</pixels>
+          <referrer_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/SCANPOSIMAGES/SP01 - Image004/TPL (IMAGE)/tp010"/>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>29.962852478027341</reflectivity>
+          <refltype>0.094045430421829197</refltype>
+          <vector length="3"> -14.800362822951683 -4.3254648717320877 -3.1836550235748275 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp011" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050670611672103405 0.0017990119522437453 0.0017990119522437453 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.84259203317858394 -0.048417412941515616 -0.53637153144814752 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TIEPOINTSCANS/tp011"/>
+          <intensity>0.05954168364405632</intensity>
+          <name>tp011</name>
+          <pixels>5559</pixels>
+          <referrer_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/SCANPOSIMAGES/SP01 - Image004/TPL (IMAGE)/tp011"/>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>24.422548294067382</reflectivity>
+          <refltype>0.083693839609622912</refltype>
+          <vector length="3"> -17.542814171725264 1.0080547478024957 11.167285919189451 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp012" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050576925277709958 0.0018146660877391696 0.0018146660877391696 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.90277650570801062 -0.05197389413397111 -0.42695818890165946 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TIEPOINTSCANS/tp012"/>
+          <intensity>0.064238831400871283</intensity>
+          <name>tp012</name>
+          <pixels>7511</pixels>
+          <referrer_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/SCANPOSIMAGES/SP01 - Image004/TPL (IMAGE)/tp012"/>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>26.891719818115235</reflectivity>
+          <refltype>0.089843101799488064</refltype>
+          <vector length="3"> -17.147686023126618 0.98721191956379763 8.1098089218139661 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp013" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050491471774876115 0.0018300970550626515 0.0018300970550626515 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.95615839619754381 -0.055617412033222118 -0.28752012948603805 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TIEPOINTSCANS/tp013"/>
+          <intensity>0.067034013569355008</intensity>
+          <name>tp013</name>
+          <pixels>10350</pixels>
+          <referrer_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/SCANPOSIMAGES/SP01 - Image004/TPL (IMAGE)/tp013"/>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>28.230035781860352</reflectivity>
+          <refltype>0.096205569803714752</refltype>
+          <vector length="3"> -16.753976878793098 0.97453716934929792 5.0379786491394042 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp014" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050459392368793485 0.001836233539506793 0.001836233539506793 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.99224709092586714 -0.058450851093692019 -0.10967774868028918 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TIEPOINTSCANS/tp014"/>
+          <intensity>0.069414459168910976</intensity>
+          <name>tp014</name>
+          <pixels>11846</pixels>
+          <referrer_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/SCANPOSIMAGES/SP01 - Image004/TPL (IMAGE)/tp014"/>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>29.424329757690432</reflectivity>
+          <refltype>0.098019056022167206</refltype>
+          <vector length="3"> -16.340604865879555 0.96258366944525517 1.8062040805816662 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp015" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050471993163228032 0.0018337987130507827 0.0018337987130507827 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.97650302233130522 -0.058947925049662643 0.20728480289245936 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TIEPOINTSCANS/tp015"/>
+          <intensity>0.070253446698188787</intensity>
+          <name>tp015</name>
+          <pixels>11222</pixels>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>29.834310531616211</reflectivity>
+          <refltype>0.090544715523719757</refltype>
+          <vector length="3"> -15.666594575896512 0.94573398723410637 -3.325588226318361 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp016" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050700618885457517 0.001794232288375497 0.001794232288375497 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.81221659820140992 -0.28336788057945878 -0.50990866031283968 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TIEPOINTSCANS/tp016"/>
+          <intensity>0.057599607855081555</intensity>
+          <name>tp016</name>
+          <pixels>5093</pixels>
+          <referrer_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/SCANPOSIMAGES/SP01 - Image004/TPL (IMAGE)/tp016"/>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>23.475769042968749</reflectivity>
+          <refltype>0.085243344306945792</refltype>
+          <vector length="3"> -17.718858069027091 6.1817955523763917 11.123879432678221 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp017" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050651333294808864 0.0018021396826952698 0.0018021396826952698 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.86287473121822221 -0.30647929296707309 -0.4018925742129152 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TIEPOINTSCANS/tp017"/>
+          <intensity>0.060589689761400218</intensity>
+          <name>tp017</name>
+          <pixels>5893</pixels>
+          <referrer_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/SCANPOSIMAGES/SP01 - Image004/TPL (IMAGE)/tp017"/>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>24.866615295410157</reflectivity>
+          <refltype>0.090165771543979661</refltype>
+          <vector length="3"> -17.329906296020742 6.1553058574641856 8.0715780258178714 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp018" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050596804358065126 0.0018112441757693888 0.0018112441757693888 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.90666292031630579 -0.32876741098510253 -0.26433754632602086 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TIEPOINTSCANS/tp018"/>
+          <intensity>0.064928457140922547</intensity>
+          <name>tp018</name>
+          <pixels>7019</pixels>
+          <referrer_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/SCANPOSIMAGES/SP01 - Image004/TPL (IMAGE)/tp018"/>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>27.237037658691405</reflectivity>
+          <refltype>0.093307852745056166</refltype>
+          <vector length="3"> -16.928673223218838 6.1385490882635136 4.9355540275573722 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp019" kind="TP_SOCSX">
+          <accuracy length="3"> 0.005052587948739529 0.0018237344920635222 0.0018237344920635222 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.93251858716157197 -0.34586556484139373 -0.10385612959825475 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TIEPOINTSCANS/tp019"/>
+          <intensity>0.066373974084854131</intensity>
+          <name>tp019</name>
+          <pixels>9040</pixels>
+          <referrer_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/SCANPOSIMAGES/SP01 - Image004/TPL (IMAGE)/tp019"/>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>27.865413665771485</reflectivity>
+          <refltype>0.096375405788421632</refltype>
+          <vector length="3"> -16.535030026111414 6.1327447491301606 1.8415335416793824 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp020" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050487415865063667 0.0018308617873117328 0.0018308617873117328 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.91531683724728794 -0.35261044008459642 0.19457894283546973 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/TIEPOINTSCANS/tp020"/>
+          <intensity>0.06764716655015945</intensity>
+          <name>tp020</name>
+          <pixels>10523</pixels>
+          <referrer_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP01/SCANPOSIMAGES/SP01 - Image004/TPL (IMAGE)/tp020"/>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>28.5596981048584</reflectivity>
+          <refltype>0.097328968346118912</refltype>
+          <vector length="3"> -15.851067509466611 6.1063576615871885 -3.3696353435516346 </vector>
+          <view>1</view>
+        </tp_socs>
+      </tpl_socs>
+    </scanposition>
+    <scanposition name="SP02" kind="PositionX" fold="SP02">
+      <name>SP02</name>
+      <polydata_objects name="POLYDATA" kind="POLYDATAOBJECTS" fold="POLYDATA">
+        <polydata_object name="151120_155528_0.05m_100pts_0.128_4.096_pp" kind="PolyDataObjectX" fold="151120_155528_0.05m_100pts_0.128_4.096_pp">
+          <abserr_deci>0</abserr_deci>
+          <accerror_deci>0</accerror_deci>
+          <boundsmooth>0</boundsmooth>
+          <color>16</color>
+          <conv_smooth>0</conv_smooth>
+          <decimate>0</decimate>
+          <depth_fac>0</depth_fac>
+          <depth_thr>0</depth_thr>
+          <edgeangle_smooth>0</edgeangle_smooth>
+          <edgesmooth>0</edgesmooth>
+          <featangle_deci>0</featangle_deci>
+          <featangle_smooth>0</featangle_smooth>
+          <file>index.pvtp</file>
+          <fisheye>0</fisheye>
+          <itercount_smooth>0</itercount_smooth>
+          <keep_inf>0</keep_inf>
+          <modbound_deci>0</modbound_deci>
+          <name>151120_155528_0.05m_100pts_0.128_4.096_pp</name>
+          <noise>0</noise>
+          <nonmanifold_smooth>0</nonmanifold_smooth>
+          <passband_smooth>0</passband_smooth>
+          <preservetopt_deci>0</preservetopt_deci>
+          <presplit_deci>0</presplit_deci>
+          <redfact_deci>0</redfact_deci>
+          <relfact_smooth>0</relfact_smooth>
+          <ring_auto>0</ring_auto>
+          <ring_start>0</ring_start>
+          <ring_stop>0</ring_stop>
+          <ring_use>0</ring_use>
+          <smooth>0</smooth>
+          <smoothmode>0</smoothmode>
+          <splitangle_deci>0</splitangle_deci>
+          <splitting_deci>0</splitting_deci>
+          <text/>
+          <use_depth_fac>0</use_depth_fac>
+          <use_depth_thr>0</use_depth_thr>
+          <use_for_msa>1</use_for_msa>
+          <use_noise>0</use_noise>
+          <verbose_level>1</verbose_level>
+          <wedge_auto>0</wedge_auto>
+          <wedge_start>0</wedge_start>
+          <wedge_stop>0</wedge_stop>
+          <wedge_use>0</wedge_use>
+        </polydata_object>
+        <polydata_object name="151120_155857_0.05m_100pts_0.128_4.096_pp" kind="PolyDataObjectX" fold="151120_155857_0.05m_100pts_0.128_4.096_pp">
+          <abserr_deci>0</abserr_deci>
+          <accerror_deci>0</accerror_deci>
+          <boundsmooth>0</boundsmooth>
+          <color>16</color>
+          <conv_smooth>0</conv_smooth>
+          <decimate>0</decimate>
+          <depth_fac>0</depth_fac>
+          <depth_thr>0</depth_thr>
+          <edgeangle_smooth>0</edgeangle_smooth>
+          <edgesmooth>0</edgesmooth>
+          <featangle_deci>0</featangle_deci>
+          <featangle_smooth>0</featangle_smooth>
+          <file>index.pvtp</file>
+          <fisheye>0</fisheye>
+          <itercount_smooth>0</itercount_smooth>
+          <keep_inf>0</keep_inf>
+          <modbound_deci>0</modbound_deci>
+          <name>151120_155857_0.05m_100pts_0.128_4.096_pp</name>
+          <noise>0</noise>
+          <nonmanifold_smooth>0</nonmanifold_smooth>
+          <passband_smooth>0</passband_smooth>
+          <preservetopt_deci>0</preservetopt_deci>
+          <presplit_deci>0</presplit_deci>
+          <redfact_deci>0</redfact_deci>
+          <relfact_smooth>0</relfact_smooth>
+          <ring_auto>0</ring_auto>
+          <ring_start>0</ring_start>
+          <ring_stop>0</ring_stop>
+          <ring_use>0</ring_use>
+          <smooth>0</smooth>
+          <smoothmode>0</smoothmode>
+          <splitangle_deci>0</splitangle_deci>
+          <splitting_deci>0</splitting_deci>
+          <text/>
+          <use_depth_fac>0</use_depth_fac>
+          <use_depth_thr>0</use_depth_thr>
+          <use_for_msa>1</use_for_msa>
+          <use_noise>0</use_noise>
+          <verbose_level>1</verbose_level>
+          <wedge_auto>0</wedge_auto>
+          <wedge_start>0</wedge_start>
+          <wedge_stop>0</wedge_stop>
+          <wedge_use>0</wedge_use>
+        </polydata_object>
+      </polydata_objects>
+      <poseestimations name="POSEESTIMATIONS" kind="POSEESTIMATIONS" fold="POSEESTIMATIONS"/>
+      <position_accuracy>2.4558961428283546</position_accuracy>
+      <position_coordsys>2</position_coordsys>
+      <position_enabled>1</position_enabled>
+      <position_vector length="3"> -515617.99861160896 -5519672.9953150406 3143448.8569802413 </position_vector>
+      <ppm_air_pressure>1000</ppm_air_pressure>
+      <ppm_air_temperature>12</ppm_air_temperature>
+      <ppm_instrument>VZ-1000</ppm_instrument>
+      <ppm_moisture_pressure>8.4199999999987738</ppm_moisture_pressure>
+      <ppm_total_geometric_correction>0</ppm_total_geometric_correction>
+      <profilescans name="PROFILESCANS" kind="PROFILESCANS" fold="PROFILESCANS"/>
+      <rdb2pointclouds name="POINTCLOUDS" kind="RDB2Pointclouds" fold="POINTCLOUDS"/>
+      <registered>1</registered>
+      <scanposimages name="SCANPOSIMAGES" kind="SCANPOSIMAGES" fold="SCANPOSIMAGES">
+        <scanposimage name="SP02 - Image001" kind="ScanPosImageX">
+          <camcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/CAMERA/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <cop name="COP" kind="COP">
+            <freeze>0</freeze>
+            <matrix rows="4" cols="4"> -0.81744660556384512 -0.57600438110499386 5.0074672288842067E-017 0   0.57600438110499386 -0.81744660556384512 -3.528454387656896E-017 0   6.1257422745431002E-017 -2.211810170507216E-033 1 0   0 0 0 1   </matrix>
+          </cop>
+          <file>SP02 - Image001.jpg</file>
+          <mountcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/MOUNTING/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <name>SP02 - Image001</name>
+          <phi>144.83</phi>
+          <raw_lambda>NAN</raw_lambda>
+          <raw_phi>NAN</raw_phi>
+          <text/>
+          <theta>90</theta>
+          <tpl_image name="TPL (IMAGE)" kind="TPL_IMAGE">
+            <active>1</active>
+            <tp_image name="tp016" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp016</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>36.64</u>
+              <v>701.32</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp017" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp017</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>139.16999999999998</u>
+              <v>716.07</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp018" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp018</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>259.41000000000003</u>
+              <v>728.4</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp019" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp019</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>392.45</u>
+              <v>736.02</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp020" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp020</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>632.55</u>
+              <v>735.65</v>
+              <view>1</view>
+            </tp_image>
+          </tpl_image>
+        </scanposimage>
+        <scanposimage name="SP02 - Image002" kind="ScanPosImageX">
+          <camcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/CAMERA/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <cop name="COP" kind="COP">
+            <freeze>0</freeze>
+            <matrix rows="4" cols="4"> -0.93039837674728026 -0.36654994277182208 5.6993806686070925E-017 0   0.36654994277182208 -0.93039837674728026 -2.2453904801687046E-017 0   6.1257422745431002E-017 3.2199141257724096E-034 1 0   0 0 0 1   </matrix>
+          </cop>
+          <file>SP02 - Image002.jpg</file>
+          <mountcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/MOUNTING/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <name>SP02 - Image002</name>
+          <phi>158.497</phi>
+          <raw_lambda>NAN</raw_lambda>
+          <raw_phi>NAN</raw_phi>
+          <text/>
+          <theta>90</theta>
+          <tpl_image name="TPL (IMAGE)" kind="TPL_IMAGE">
+            <active>1</active>
+          </tpl_image>
+        </scanposimage>
+        <scanposimage name="SP02 - Image003" kind="ScanPosImageX">
+          <camcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/CAMERA/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <cop name="COP" kind="COP">
+            <freeze>0</freeze>
+            <matrix rows="4" cols="4"> -0.99066237230220838 -0.13633805083160309 6.068542373810793E-017 0   0.13633805083160309 -0.99066237230220838 -8.3517176160795725E-018 0   6.1257422745431002E-017 -1.1104189835607656E-033 1 0   0 0 0 1   </matrix>
+          </cop>
+          <file>SP02 - Image003.jpg</file>
+          <mountcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/MOUNTING/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <name>SP02 - Image003</name>
+          <phi>172.164</phi>
+          <raw_lambda>NAN</raw_lambda>
+          <raw_phi>NAN</raw_phi>
+          <text/>
+          <theta>90</theta>
+          <tpl_image name="TPL (IMAGE)" kind="TPL_IMAGE">
+            <active>1</active>
+            <tp_image name="tp001" kind="TP_IMAGEX">
+              <active>1</active>
+              <linked_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TPL (SOCS)/tp001"/>
+              <name>tp001</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>188.8</u>
+              <v>664.94</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp002" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp002</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>267.68</u>
+              <v>672.21</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp003" kind="TP_IMAGEX">
+              <active>1</active>
+              <linked_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TPL (SOCS)/tp003"/>
+              <name>tp003</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>356.44</u>
+              <v>678.49</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp004" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp004</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>448.22</u>
+              <v>682.89</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp005" kind="TP_IMAGEX">
+              <active>1</active>
+              <linked_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TPL (SOCS)/tp005"/>
+              <name>tp005</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>570.76</u>
+              <v>684.88</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp006" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp006</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>240.69</u>
+              <v>595.69</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp007" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp007</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>331.51</u>
+              <v>600.55</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp008" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp008</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>430.98</u>
+              <v>604.21</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp009" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp009</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>542.97</u>
+              <v>606.13</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp010" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp010</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>612.42</u>
+              <v>613.09</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp011" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp011</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>108.73</u>
+              <v>469.22</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp012" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp012</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>200.83</u>
+              <v>472.52</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp013" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp013</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>304.59</u>
+              <v>474.96</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp014" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp014</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>423.12</u>
+              <v>476.87</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp015" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp015</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>621.54</u>
+              <v>477.66</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp016" kind="TP_IMAGEX">
+              <active>1</active>
+              <linked_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TPL (SOCS)/tp016"/>
+              <name>tp016</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>45.57</u>
+              <v>329.78</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp017" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp017</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>145.64</u>
+              <v>325.67</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp018" kind="TP_IMAGEX">
+              <active>1</active>
+              <linked_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TPL (SOCS)/tp018"/>
+              <name>tp018</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>264.18</u>
+              <v>321.7</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp019" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp019</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>395.08</u>
+              <v>318.39</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp020" kind="TP_IMAGEX">
+              <active>1</active>
+              <linked_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TPL (SOCS)/tp020"/>
+              <name>tp020</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>632.19</u>
+              <v>317.68</v>
+              <view>1</view>
+            </tp_image>
+          </tpl_image>
+        </scanposimage>
+        <scanposimage name="SP02 - Image004" kind="ScanPosImageX">
+          <camcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/CAMERA/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <cop name="COP" kind="COP">
+            <freeze>0</freeze>
+            <matrix rows="4" cols="4"> -0.99482765950164019 0.10157720162757504 6.0940578496939661E-017 0   -0.10157720162757504 -0.99482765950164019 6.2223575813982451E-018 0   6.1257422745431002E-017 -5.089420341320176E-034 1 0   0 0 0 1   </matrix>
+          </cop>
+          <file>SP02 - Image004.jpg</file>
+          <mountcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/MOUNTING/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <name>SP02 - Image004</name>
+          <phi>185.83</phi>
+          <raw_lambda>NAN</raw_lambda>
+          <raw_phi>NAN</raw_phi>
+          <text/>
+          <theta>90</theta>
+          <tpl_image name="TPL (IMAGE)" kind="TPL_IMAGE">
+            <active>1</active>
+            <tp_image name="tp001" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp001</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>192.77</u>
+              <v>466.32</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp002" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp002</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>270.48000000000003</u>
+              <v>469.08</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp003" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp003</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>358.13</u>
+              <v>471.87</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp004" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp004</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>449.2</u>
+              <v>473.78</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp005" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp005</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>570.94000000000006</u>
+              <v>476.03</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp006" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp006</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>243.13</u>
+              <v>393.06</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp007" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp007</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>332.89</u>
+              <v>393.44</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp008" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp008</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>432.03</u>
+              <v>394.04</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp009" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp009</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>543.09</u>
+              <v>395.45</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp010" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp010</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>612.52</u>
+              <v>403.14</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp011" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp011</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>108.59</u>
+              <v>276.37</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp012" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp012</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>201.08</u>
+              <v>271.99</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp013" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp013</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>304.84</u>
+              <v>268.44</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp014" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp014</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>423.78</u>
+              <v>266.08</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp015" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp015</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>622.54</u>
+              <v>267.3</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp016" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp016</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>41.58</u>
+              <v>143.75999999999998</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp017" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp017</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>142.75999999999998</u>
+              <v>130.80000000000002</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp018" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp018</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>262.86</u>
+              <v>118.72</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp019" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp019</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>395.04</u>
+              <v>110.44</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp020" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp020</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>634.26</u>
+              <v>109.52</v>
+              <view>1</view>
+            </tp_image>
+          </tpl_image>
+        </scanposimage>
+        <scanposimage name="SP02 - Image005" kind="ScanPosImageX">
+          <camcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/CAMERA/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <cop name="COP" kind="COP">
+            <freeze>0</freeze>
+            <matrix rows="4" cols="4"> -0.94265896788629594 0.33375750218316211 5.774485890058249E-017 0   -0.33375750218316211 -0.94265896788629594 2.0445124405693078E-017 0   6.1257422745430976E-017 2.6632000012229744E-034 1 0   0 0 0 1   </matrix>
+          </cop>
+          <file>SP02 - Image005.jpg</file>
+          <mountcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/MOUNTING/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <name>SP02 - Image005</name>
+          <phi>199.497</phi>
+          <raw_lambda>NAN</raw_lambda>
+          <raw_phi>NAN</raw_phi>
+          <text/>
+          <theta>90</theta>
+          <tpl_image name="TPL (IMAGE)" kind="TPL_IMAGE">
+            <active>1</active>
+          </tpl_image>
+        </scanposimage>
+        <scanposimage name="SP02 - Image006" kind="ScanPosImageX">
+          <camcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/CAMERA/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <cop name="COP" kind="COP">
+            <freeze>0</freeze>
+            <matrix rows="4" cols="4"> -0.83710819238573504 0.54703736091850899 5.1279090424636557E-017 0   -0.54703736091850899 -0.83710819238573504 3.3510098875330016E-017 0   6.1257422745431002E-017 -7.9745536759783974E-034 1 0   0 0 0 1   </matrix>
+          </cop>
+          <file>SP02 - Image006.jpg</file>
+          <mountcalib_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/MOUNTING/Infratec_VarioCAM_HD_15mm_11-16-2015_Preston"/>
+          <name>SP02 - Image006</name>
+          <phi>213.164</phi>
+          <raw_lambda>NAN</raw_lambda>
+          <raw_phi>NAN</raw_phi>
+          <text/>
+          <theta>90</theta>
+          <tpl_image name="TPL (IMAGE)" kind="TPL_IMAGE">
+            <active>1</active>
+            <tp_image name="tp001" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp001</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>189.64</u>
+              <v>70.05</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp002" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp002</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>268.83999999999997</u>
+              <v>62.93</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp003" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp003</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>358.3</u>
+              <v>57.73</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp004" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp004</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>450.48</u>
+              <v>55.22</v>
+              <view>1</view>
+            </tp_image>
+            <tp_image name="tp005" kind="TP_IMAGEX">
+              <active>1</active>
+              <name>tp005</name>
+              <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+              <size>0</size>
+              <u>573.33000000000006</u>
+              <v>57.02</v>
+              <view>1</view>
+            </tp_image>
+          </tpl_image>
+        </scanposimage>
+      </scanposimages>
+      <scanposundistimages name="UNDISTORTED IMAGES" kind="SCANPOSUNDISTIMAGES" fold="SCANPOSUNDISTIMAGES"/>
+      <scansequences name="SCANSEQUENCES" kind="SCANSEQUENCES" fold="SCANSEQUENCES"/>
+      <singlescans name="SINGLESCANS" kind="SINGLESCANS" fold="SINGLESCANS">
+        <scan name="151120_155528@20160315-120606-559" kind="ScanAcquiredX" date_deleted="2016-03-15 12:06:06+559" states="deleted">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>151120_155528@20160315-120606-559.rxp</file>
+          <frame_count>1</frame_count>
+          <geometryinfo>
+            <intmax>0</intmax>
+            <intmin>1</intmin>
+            <maxcart length="3"> 339.6314697265625 322.10400390624998 154.37588500976563 </maxcart>
+            <maxpolar length="3"> 0 2.2712407112121581 6.2901668548583987 </maxpolar>
+            <mincart length="3"> -290.13449096679686 -403.83154296875002 -27.081192016601562 </mincart>
+            <minpolar length="3"> INF 0.52359879016876218 0 </minpolar>
+            <reflmax>-INF</reflmax>
+            <reflmin>INF</reflmin>
+            <valid_cart>1</valid_cart>
+            <valid_int>0</valid_int>
+            <valid_refl>0</valid_refl>
+          </geometryinfo>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>450m (300kHz)</measurementprogram>
+          <measurementprogramid>3</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>151120_155528@20160315-120606-559</name>
+          <numtargets>0</numtargets>
+          <phi_count>901</phi_count>
+          <phi_delta>0.40000000596046445</phi_delta>
+          <phi_start>0</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>1014</theta_count>
+          <theta_delta>0.09875000268220896</theta_delta>
+          <theta_start>30</theta_start>
+          <time>0' 08"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="151120_155857@20160315-120607-961" kind="ScanAcquiredX" date_deleted="2016-03-15 12:06:07+961" states="deleted">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>151120_155857@20160315-120607-961.rxp</file>
+          <frame_count>1</frame_count>
+          <geometryinfo>
+            <intmax>0.091508351266384128</intmax>
+            <intmin>0.00064087891951203341</intmin>
+            <maxcart length="3"> 103.18860626220702 426.84457397460934 191.68202209472656 </maxcart>
+            <maxpolar length="3"> 426.88613891601562 1.7844945192337037 3.5260539054870605 </maxpolar>
+            <mincart length="3"> -369.34472656249997 -115.83545684814454 -13.221796035766602 </mincart>
+            <minpolar length="3"> 4.8380560874938963 0.82849037647247309 1.2318185567855835 </minpolar>
+            <reflmax>31.75</reflmax>
+            <reflmin>-20.299999237060547</reflmin>
+            <valid_cart>1</valid_cart>
+            <valid_int>1</valid_int>
+            <valid_refl>1</valid_refl>
+          </geometryinfo>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>450m (300kHz)</measurementprogram>
+          <measurementprogramid>3</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>151120_155857@20160315-120607-961</name>
+          <numtargets>0</numtargets>
+          <phi_count>5258</phi_count>
+          <phi_delta>0.02500000037252903</phi_delta>
+          <phi_start>70.578002929687501</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>2191</theta_count>
+          <theta_delta>0.02500000037252903</theta_delta>
+          <theta_start>47.469001770019533</theta_start>
+          <time>2' 53"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="151120_150227@20160315-120752-025" kind="ScanAcquiredX" date_deleted="2016-03-15 12:07:52+025" states="deleted">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>151120_150227@20160315-120752-025.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>450m (300kHz)</measurementprogram>
+          <measurementprogramid>3</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>151120_150227@20160315-120752-025</name>
+          <numtargets>0</numtargets>
+          <phi_count>901</phi_count>
+          <phi_delta>0.40000000596046445</phi_delta>
+          <phi_start>0</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>1014</theta_count>
+          <theta_delta>0.09875000268220896</theta_delta>
+          <theta_start>30</theta_start>
+          <time/>
+          <type>3</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="151120_150404@20160315-120809-397" kind="ScanAcquiredX" date_deleted="2016-03-15 12:08:09+397" states="deleted">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>151120_150404@20160315-120809-397.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>450m (300kHz)</measurementprogram>
+          <measurementprogramid>3</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>151120_150404@20160315-120809-397</name>
+          <numtargets>0</numtargets>
+          <phi_count>5081</phi_count>
+          <phi_delta>0.02500000037252904</phi_delta>
+          <phi_start>113.75800323486328</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>2513</theta_count>
+          <theta_delta>0.02500000037252904</theta_delta>
+          <theta_start>50.237998962402336</theta_start>
+          <time/>
+          <type>3</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="151120_155528" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>151120_155528.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>450m (300kHz)</measurementprogram>
+          <measurementprogramid>3</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>151120_155528</name>
+          <numtargets>0</numtargets>
+          <phi_count>901</phi_count>
+          <phi_delta>0.40000000596046445</phi_delta>
+          <phi_start>0</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>1014</theta_count>
+          <theta_delta>0.09875000268220896</theta_delta>
+          <theta_start>30</theta_start>
+          <time/>
+          <type>3</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="151120_155857" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>151120_155857.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>450m (300kHz)</measurementprogram>
+          <measurementprogramid>3</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>151120_155857</name>
+          <numtargets>0</numtargets>
+          <phi_count>5258</phi_count>
+          <phi_delta>0.02500000037252904</phi_delta>
+          <phi_start>70.578002929687501</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>2191</theta_count>
+          <theta_delta>0.02500000037252904</theta_delta>
+          <theta_start>47.469001770019533</theta_start>
+          <time/>
+          <type>3</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+      </singlescans>
+      <sop name="SOP" kind="SOP">
+        <freeze>1</freeze>
+        <matrix rows="4" cols="4"> 0.59591195956621696 -0.80256842884295232 0.02780024227423288 -4.1432000664553402   0.80160391436290573 0.59655893092202752 0.039352336845918656 19.102985111618208   -0.048167425964217299 -0.0011657451360990346 0.99883859562707072 -11.250861777271677   0 0 0 1   </matrix>
+      </sop>
+      <text/>
+      <tiepointscans name="TIEPOINTSCANS" kind="TIEPOINTSCANS" fold="TIEPOINTSCANS">
+        <scan name="tp004" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp004.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp004</name>
+          <numtargets>0</numtargets>
+          <phi_count>229</phi_count>
+          <phi_delta>0.0021846592426300048</phi_delta>
+          <phi_start>189.22782897949216</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>267</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>84.843086242675776</theta_start>
+          <time>0' 03"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp003" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp003.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp003</name>
+          <numtargets>0</numtargets>
+          <phi_count>253</phi_count>
+          <phi_delta>0.0021693767048418522</phi_delta>
+          <phi_start>189.12892150878902</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>292</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>78.924179077148454</theta_start>
+          <time>0' 03"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp002" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp002.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp002</name>
+          <numtargets>0</numtargets>
+          <phi_count>235</phi_count>
+          <phi_delta>0.0021462796721607446</phi_delta>
+          <phi_start>189.11157226562496</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>269</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>73.251655578613286</theta_start>
+          <time>0' 03"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp001" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp001.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp001</name>
+          <numtargets>0</numtargets>
+          <phi_count>238</phi_count>
+          <phi_delta>0.002119687851518393</phi_delta>
+          <phi_start>189.07182312011718</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>269</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>68.128829956054656</theta_start>
+          <time>0' 03"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp010" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp010.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp010</name>
+          <numtargets>0</numtargets>
+          <phi_count>251</phi_count>
+          <phi_delta>0.002279755193740129</phi_delta>
+          <phi_start>184.5794677734376</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>305</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>95.300735473632794</theta_start>
+          <time>0' 03"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp009" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp009.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp009</name>
+          <numtargets>0</numtargets>
+          <phi_count>231</phi_count>
+          <phi_delta>0.0022799819707870483</phi_delta>
+          <phi_start>184.1194152832032</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>281</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>90.841163635253901</theta_start>
+          <time>0' 03"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp008" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp008.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp008</name>
+          <numtargets>0</numtargets>
+          <phi_count>216</phi_count>
+          <phi_delta>0.0022694950457662342</phi_delta>
+          <phi_start>184.06979370117187</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>261</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>83.688217163085952</theta_start>
+          <time>0' 03"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp006" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp006.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp006</name>
+          <numtargets>0</numtargets>
+          <phi_count>256</phi_count>
+          <phi_delta>0.0022165663540363312</phi_delta>
+          <phi_start>183.99107360839843</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>303</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>71.353225708007808</theta_start>
+          <time>0' 03"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp007" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp007.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp007</name>
+          <numtargets>0</numtargets>
+          <phi_count>245</phi_count>
+          <phi_delta>0.0022471002303063869</phi_delta>
+          <phi_start>184.01774597167968</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>293</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>77.239166259765581</theta_start>
+          <time>0' 03"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp011" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp011.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp011</name>
+          <numtargets>0</numtargets>
+          <phi_count>304</phi_count>
+          <phi_delta>0.0022889818064868451</phi_delta>
+          <phi_start>175.67462158203126</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>371</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>62.408641815185549</theta_start>
+          <time>0' 04"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp012" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp012.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp012</name>
+          <numtargets>0</numtargets>
+          <phi_count>274</phi_count>
+          <phi_delta>0.0023447310086339712</phi_delta>
+          <phi_start>175.71163940429683</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>342</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>68.531585693359373</theta_start>
+          <time>0' 03"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp013" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp013.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp013</name>
+          <numtargets>0</numtargets>
+          <phi_count>282</phi_count>
+          <phi_delta>0.0023941833060234784</phi_delta>
+          <phi_start>175.68635559082032</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>360</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>75.274208068847642</theta_start>
+          <time>0' 03"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp015" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp015.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp015</name>
+          <numtargets>0</numtargets>
+          <phi_count>283</phi_count>
+          <phi_delta>0.0024462894070893526</phi_delta>
+          <phi_start>175.68063354492189</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>369</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>95.758071899414067</theta_start>
+          <time>0' 04"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp014" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp014.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp014</name>
+          <numtargets>0</numtargets>
+          <phi_count>275</phi_count>
+          <phi_delta>0.002431553322821856</phi_delta>
+          <phi_start>175.68244934082032</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>357</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>82.972290039062502</theta_start>
+          <time>0' 03"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp016" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp016.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp016</name>
+          <numtargets>0</numtargets>
+          <phi_count>269</phi_count>
+          <phi_delta>0.0024183888453990221</phi_delta>
+          <phi_start>165.66831970214845</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>346</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>58.133026123046886</theta_start>
+          <time>0' 03"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp017" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp017.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp017</name>
+          <numtargets>0</numtargets>
+          <phi_count>296</phi_count>
+          <phi_delta>0.0025053352583199728</phi_delta>
+          <phi_start>165.55984497070317</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>396</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>64.754783630371098</theta_start>
+          <time>0' 04"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp018" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp018.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp018</name>
+          <numtargets>0</numtargets>
+          <phi_count>325</phi_count>
+          <phi_delta>0.0025871933903545146</phi_delta>
+          <phi_start>165.43411254882813</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>448</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>72.482070922851533</theta_start>
+          <time>0' 04"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp019" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp019.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp019</name>
+          <numtargets>0</numtargets>
+          <phi_count>311</phi_count>
+          <phi_delta>0.0026482772082090378</phi_delta>
+          <phi_start>165.33177185058595</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>439</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>80.974037170410112</theta_start>
+          <time>0' 04"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp020" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp020.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp020</name>
+          <numtargets>0</numtargets>
+          <phi_count>312</phi_count>
+          <phi_delta>0.0026749388780444861</phi_delta>
+          <phi_start>165.2201995849609</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>445</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>96.231452941894541</theta_start>
+          <time>0' 04"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+        <scan name="tp005" kind="ScanAcquiredX">
+          <beamfocus>0</beamfocus>
+          <blurlimit>1</blurlimit>
+          <commandport/>
+          <dataport/>
+          <file>tp005.rxp</file>
+          <frame_count>1</frame_count>
+          <instrument>VZ-1000</instrument>
+          <laser_clock>0</laser_clock>
+          <laserattenuated>0</laserattenuated>
+          <measurementprogram>REFLECTOR</measurementprogram>
+          <measurementprogramid>4</measurementprogramid>
+          <motion>0</motion>
+          <mta_autocalc_enabled>-1</mta_autocalc_enabled>
+          <mta_estmax_scanrange>-1</mta_estmax_scanrange>
+          <mta_manual_fixed_zone>-1</mta_manual_fixed_zone>
+          <mta_manual_range_max>3000</mta_manual_range_max>
+          <mta_manual_range_min>0</mta_manual_range_min>
+          <name>tp005</name>
+          <numtargets>0</numtargets>
+          <phi_count>246</phi_count>
+          <phi_delta>0.0021917286794632682</phi_delta>
+          <phi_start>189.30499267578125</phi_start>
+          <serialnumber>S9998518</serialnumber>
+          <settings/>
+          <text/>
+          <theta_count>287</theta_count>
+          <theta_delta>0.0018749999580904838</theta_delta>
+          <theta_start>92.631515502929677</theta_start>
+          <time>0' 03"</time>
+          <type>1</type>
+          <wideninglensactivated>0</wideninglensactivated>
+        </scan>
+      </tiepointscans>
+      <tiltmount_position>-1</tiltmount_position>
+      <tol_socs name="TOL (SOCS)" kind="TOL_SOCS" fold="TIEOBJECTS">
+        <active>1</active>
+      </tol_socs>
+      <tpl_socs name="TPL (SOCS)" kind="TPL_SOCS">
+        <active>1</active>
+        <tp_socs name="tp001" kind="TP_SOCSX">
+          <accuracy length="3"> 0.005116028245538473 0.0017308969981968403 0.0017308969981968403 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.91740624699055872 0.15044547545659184 -0.36841815495078093 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TIEPOINTSCANS/tp001"/>
+          <intensity>0.043171692639589312</intensity>
+          <name>tp001</name>
+          <pixels>1857</pixels>
+          <referrer_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/SCANPOSIMAGES/SP02 - Image003/TPL (IMAGE)/tp001"/>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>17.003597259521485</reflectivity>
+          <refltype>0.086941443383693696</refltype>
+          <vector length="3"> -29.661176901556429 -4.8641358309228365 11.911534309387208 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp002" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0051140496507287027 0.001733330078423023 0.001733330078423023 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.94603991519447181 0.15591830760248368 -0.28407386400936973 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TIEPOINTSCANS/tp002"/>
+          <intensity>0.046842139214277267</intensity>
+          <name>tp002</name>
+          <pixels>1922</pixels>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>19.133005142211914</reflectivity>
+          <refltype>0.08500268310308457</refltype>
+          <vector length="3"> -29.521051684280762 -4.8654086446528282 8.8644876480102502 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp003" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0051027708686888218 0.0017476197099313139 0.0017476197099313139 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.96908649069427738 0.16047617395893002 -0.18740002973679965 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TIEPOINTSCANS/tp003"/>
+          <intensity>0.049150217324495315</intensity>
+          <name>tp003</name>
+          <pixels>2367</pixels>
+          <referrer_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/SCANPOSIMAGES/SP02 - Image003/TPL (IMAGE)/tp003"/>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>20.422298431396483</reflectivity>
+          <refltype>0.088838011026382451</refltype>
+          <vector length="3"> -29.369541404096915 -4.8634567321246739 5.6794238090515117 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp004" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0051040085963904858 0.0017460144590586426 0.0017460144590586426 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.9827234929319264 0.16402368219723603 -0.085736620636309952 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TIEPOINTSCANS/tp004"/>
+          <intensity>0.046941205859184262</intensity>
+          <name>tp004</name>
+          <pixels>2311</pixels>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>18.829149246215821</reflectivity>
+          <refltype>0.086405508220195776</refltype>
+          <vector length="3"> -29.229795363764589 -4.8786655226089363 2.5501210689544704 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp005" kind="TP_SOCSX">
+          <accuracy length="3"> 0.005106095224618912 0.0017433299217373133 0.0017433299217373133 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.98481788128849677 0.16604906981450253 0.050610741035620595 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TIEPOINTSCANS/tp005"/>
+          <intensity>0.047337159514427187</intensity>
+          <name>tp005</name>
+          <pixels>2221</pixels>
+          <referrer_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/SCANPOSIMAGES/SP02 - Image003/TPL (IMAGE)/tp005"/>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>19.026533126831056</reflectivity>
+          <refltype>0.086727090179920192</refltype>
+          <vector length="3"> -29.046100392573523 -4.8974327014117261 -1.492707133293152 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp006" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0051009329035878182 0.0017500217072665693 0.0017500217072665693 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.94642532167976243 0.07064796126981385 -0.31509994613102874 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TIEPOINTSCANS/tp006"/>
+          <intensity>0.050022616982460019</intensity>
+          <name>tp006</name>
+          <pixels>2454</pixels>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>20.57115936279297</reflectivity>
+          <refltype>0.085929989814758272</refltype>
+          <vector length="3"> -27.122756784911136 -2.0246390643164384 9.0301675796508813 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp007" kind="TP_SOCSX">
+          <accuracy length="3"> 0.005103010684251785 0.001747308182530105 0.001747308182530105 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.9735890362283712 0.072940687610161024 -0.21634242447302902 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TIEPOINTSCANS/tp007"/>
+          <intensity>0.051561433821916582</intensity>
+          <name>tp007</name>
+          <pixels>2356</pixels>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>21.325843811035155</reflectivity>
+          <refltype>0.08941434323787689</refltype>
+          <vector length="3"> -26.980970417743088 -2.0213971227653088 5.9954748153686528 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp008" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0051009124144911763 0.001750048715621233 0.001750048715621233 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.991534139402 0.074732358568208051 -0.10618439142909392 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TIEPOINTSCANS/tp008"/>
+          <intensity>0.051195271313190458</intensity>
+          <name>tp008</name>
+          <pixels>2455</pixels>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>20.912841796875002</reflectivity>
+          <refltype>0.088522389531135578</refltype>
+          <vector length="3"> -26.834291605361661 -2.0225102440514752 2.8737113475799533 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp009" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050917780026793478 0.0017623245948925613 0.0017623245948925613 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.99690747004255219 0.076283644564754317 0.018875956804257478 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TIEPOINTSCANS/tp009"/>
+          <intensity>0.053253106772899629</intensity>
+          <name>tp009</name>
+          <pixels>2968</pixels>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>22.183374404907226</reflectivity>
+          <refltype>0.09065337479114528</refltype>
+          <vector length="3"> -26.692371599837478 -2.0425048624670352 -0.50540703535080224 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp010" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050909239798784256 0.001763502601534128 0.001763502601534128 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.99168871689689254 0.084365884952594496 0.097138489979823347 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TIEPOINTSCANS/tp010"/>
+          <intensity>0.053678564727306368</intensity>
+          <name>tp010</name>
+          <pixels>3024</pixels>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>22.464248657226563</reflectivity>
+          <refltype>0.09067157655954359</refltype>
+          <vector length="3"> -26.560789151280915 -2.2596041869570374 -2.6016983985900858 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp011" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050921044312417504 0.0017618756974115968 0.0017618756974115968 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.88690409318750502 -0.061650557334492787 -0.45782129512244806 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TIEPOINTSCANS/tp011"/>
+          <intensity>0.046899802982807162</intensity>
+          <name>tp011</name>
+          <pixels>2947</pixels>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>17.94688606262207</reflectivity>
+          <refltype>0.084663756191730509</refltype>
+          <vector length="3"> -23.535150516453229 1.6359776720889322 12.14888191223145 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp012" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050902846269309523 0.0017643888713791968 0.0017643888713791968 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.93045063770632346 -0.064662667667936563 -0.36066653601625248 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TIEPOINTSCANS/tp012"/>
+          <intensity>0.050740662962198259</intensity>
+          <name>tp012</name>
+          <pixels>3067</pixels>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>20.057092666625978</reflectivity>
+          <refltype>0.087374299764633152</refltype>
+          <vector length="3"> -23.397859620828346 1.6260587299810992 9.0696105957031232 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp013" kind="TP_SOCSX">
+          <accuracy length="3"> 0.005082077346742153 0.0017760505434125664 0.0017760505434125664 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.96634450818651661 -0.067202309401589018 -0.24831862819541488 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TIEPOINTSCANS/tp013"/>
+          <intensity>0.051617905497550963</intensity>
+          <name>tp013</name>
+          <pixels>3711</pixels>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>20.293451309204102</reflectivity>
+          <refltype>0.090534500777721421</refltype>
+          <vector length="3"> -23.255928110993203 1.6172814824876544 5.9760055541992166 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp014" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050792652182281018 0.0017801797948777677 0.0017801797948777677 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.99076697934087744 -0.069042151379048486 -0.11667893546268714 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TIEPOINTSCANS/tp014"/>
+          <intensity>0.053861986845731738</intensity>
+          <name>tp014</name>
+          <pixels>3979</pixels>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>21.520267486572266</reflectivity>
+          <refltype>0.087576270103454592</refltype>
+          <vector length="3"> -23.106054323843469 1.6101580686190838 2.721113920211792 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp015" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050969822332262995 0.0017552592325955629 0.0017552592325955629 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.99192692640438592 -0.069279661849635584 0.10621346961637141 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TIEPOINTSCANS/tp015"/>
+          <intensity>0.054943539202213286</intensity>
+          <name>tp015</name>
+          <pixels>2658</pixels>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>22.140064239501952</reflectivity>
+          <refltype>0.081061765551567091</refltype>
+          <vector length="3"> -22.850723397872224 1.5959729234729347 -2.4468078613281251 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp016" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050755841657519341 0.0017856970662251117 0.0017856970662251117 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.82690823553825011 -0.20639931035898678 -0.52308899308086445 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TIEPOINTSCANS/tp016"/>
+          <intensity>0.05402589589357376</intensity>
+          <name>tp016</name>
+          <pixels>4376</pixels>
+          <referrer_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/SCANPOSIMAGES/SP02 - Image003/TPL (IMAGE)/tp016"/>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>21.710594177246093</reflectivity>
+          <refltype>0.086318962275981901</refltype>
+          <vector length="3"> -19.49435565377136 4.865864379219721 12.331819534301755 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp017" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050725550390779974 0.0017903386615216733 0.0017903386615216733 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.88002374878607974 -0.22061847822456608 -0.42057780331155283 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TIEPOINTSCANS/tp017"/>
+          <intensity>0.056223474442958829</intensity>
+          <name>tp017</name>
+          <pixels>4749</pixels>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>22.637718200683594</reflectivity>
+          <refltype>0.08900130540132521</refltype>
+          <vector length="3"> -19.365306412636208 4.854807707892592 9.2549982070922893 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp018" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050693107768893242 0.0017954191425815226 0.0017954191425815226 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.92679269403476083 -0.23371566208008195 -0.29399369309945914 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TIEPOINTSCANS/tp018"/>
+          <intensity>0.059876311570405965</intensity>
+          <name>tp018</name>
+          <pixels>5204</pixels>
+          <referrer_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/SCANPOSIMAGES/SP02 - Image003/TPL (IMAGE)/tp018"/>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>24.615381240844726</reflectivity>
+          <refltype>0.089963935315608973</refltype>
+          <vector length="3"> -19.22528865893441 4.8481716026052704 6.098573684692384 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp019" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050661801360547546 0.0018004354787990451 0.0018004354787990451 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.95825730850272282 -0.24351918061186518 -0.14980433697074035 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TIEPOINTSCANS/tp019"/>
+          <intensity>0.060794759541749952</intensity>
+          <name>tp019</name>
+          <pixels>5708</pixels>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>24.943241119384765</reflectivity>
+          <refltype>0.091829851269721984</refltype>
+          <vector length="3"> -19.07599980535561 4.8477308126329286 2.9821505546569843 </vector>
+          <view>1</view>
+        </tp_socs>
+        <tp_socs name="tp020" kind="TP_SOCSX">
+          <accuracy length="3"> 0.0050613740459084512 0.0018083734903484582 0.0018083734903484582 </accuracy>
+          <active>1</active>
+          <direction length="3"> 0.96224311364125043 -0.24629093046958118 0.11588342339790966 </direction>
+          <finescan_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/TIEPOINTSCANS/tp020"/>
+          <intensity>0.061154030263423923</intensity>
+          <name>tp020</name>
+          <pixels>6637</pixels>
+          <referrer_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/SCANS/SP02/SCANPOSIMAGES/SP02 - Image003/TPL (IMAGE)/tp020"/>
+          <refl_ref noderef="/2.2.1_Test_InfraTec_VZ1000_Calibration/CALIBRATIONS/REFLECTOR/GSE Flat 10 cm"/>
+          <reflectivity>25.067199707031251</reflectivity>
+          <refltype>0.091451145708560947</refltype>
+          <vector length="3"> -18.829841651394768 4.819591852054528 -2.2676873207092282 </vector>
+          <view>1</view>
+        </tp_socs>
+      </tpl_socs>
+    </scanposition>
+  </scanpositions>
+  <snapshot_ip_addr>192.168.0.116</snapshot_ip_addr>
+  <snapshot_ip_port>20003</snapshot_ip_port>
+  <snapshot_ip_timeout>15000</snapshot_ip_timeout>
+  <snapshot_mode>local</snapshot_mode>
+  <text/>
+  <timesyncepoch>2015-11-20T08:45:54.085</timesyncepoch>
+  <tol_prcs name="TOL (PRCS)" kind="TOL_PRCS" fold="TIEOBJECTS">
+    <active>1</active>
+  </tol_prcs>
+  <tpl_glcs name="TPL (GLCS)" kind="TPL_GLCS">
+    <active>1</active>
+  </tpl_glcs>
+  <tpl_prcs name="TPL (PRCS)" kind="TPL_PRCS">
+    <active>1</active>
+  </tpl_prcs>
+  <views name="VIEWS" kind="VIEWS" fold="VIEWS"/>
+</project>
