@@ -15,7 +15,7 @@ fn main() {
                 .about("Show info about the project")
                 .version(crate_version!())
                 .arg(Arg::with_name("PROJECT").index(1).required(true).help(
-                    "path to the project",
+                    "Path to the project",
                 ))
                 .arg(Arg::with_name("compact").long("compact").short("c").help(
                     "Prints compact JSON",

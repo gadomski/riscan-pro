@@ -1,10 +1,43 @@
-//! RiSCAN Pro.
+//! Crack open RiSCAN Pro xml files.
 //!
 //! [RiSCAN Pro](http://www.riegl.com/products/software-packages/riscan-pro/) is software developed
 //! by [Riegl](http://riegl.com/) for [terrestrial LiDAR
-//! scanning](https://en.wikipedia.org/wiki/Lidar#Terrestrial_lidar). This library can extract and
-//! use the information and data stored in RiSCAN Pro projects (directories with a `.RiSCAN`
-//! extension).
+//! scanning](https://en.wikipedia.org/wiki/Lidar#Terrestrial_lidar). RiSCAN Pro stores most
+//! project metadata, e.g. calibration and transformation matrices, in a xml file inside of the
+//! RiSCAN Pro project directory. This is a Rust library for reading these xml files and extracting
+//! the good bits.
+//!
+//! **This project is not created by Riegl and no support from them is provided or implied.
+//! Please do not contact Riegl about this software.**
+//!
+//! This library is not complete, as there's lots of project components that aren't supported. This
+//! was developed for a specific purpose (colorizing points and transforming them) and so far
+//! hasn't been developed much beyond that.
+//!
+//! # Examples
+//!
+//! Projects can be opened from the directory or the rsp file themselves:
+//!
+//! ```
+//! use riscan_pro::Project;
+//! let project1 = Project::from_path("data/project.RiSCAN").unwrap();
+//! let project2 = Project::from_path("data/project.RiSCAN/project.rsp").unwrap();
+//! assert_eq!(project1, project2);
+//! ```
+//!
+//! Everything available to you is a public attribute of the project. For example, to transform a
+//! point in the project's coordinate system (PRCS) to the global coordinate system (GLCS), use the
+//! `pop` attribute of the project. Points are typed so they can't be compared directly, but they
+//! can be dereferenced into their underlying `nalgebra::Point3<f64>`.
+//!
+//! ```
+//! use riscan_pro::{Point, Project};
+//! let project = Project::from_path("data/project.RiSCAN").unwrap();
+//! let prcs = Point::prcs(1., 2., 3.);
+//! let glcs = prcs.to_glcs(project.pop);
+//! // assert!(prcs != glcs) <-- compile error
+//! assert!(*prcs != *glcs);
+//! ```
 
 #![deny(missing_docs, missing_debug_implementations, missing_copy_implementations, trivial_casts,
         trivial_numeric_casts, unsafe_code, unstable_features, unused_import_braces,

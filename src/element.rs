@@ -87,7 +87,11 @@ pub trait Extension {
     ///
     /// let file = File::open("data/project.RiSCAN/project.rsp").unwrap();
     /// let element = Element::parse(file).unwrap();
-    /// let logo = element.child("collections/overlays/overlay/overlayitem/source_ref").unwrap().noderef().unwrap();
+    /// let logo = element
+    ///     .child("collections/overlays/overlay/overlayitem/source_ref")
+    ///     .unwrap()
+    ///     .noderef()
+    ///     .unwrap();
     /// assert_eq!("Logo", logo);
     /// # }
     /// ```

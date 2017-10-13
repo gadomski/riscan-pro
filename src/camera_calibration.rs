@@ -34,7 +34,8 @@ impl CameraCalibration {
     ///
     /// ```
     /// use riscan_pro::CameraCalibration;
-    /// let camera_calibrations = CameraCalibration::from_project_path("data/project.RiSCAN").unwrap();
+    /// let camera_calibrations = CameraCalibration::from_project_path("data/project.RiSCAN")
+    ///     .unwrap();
     /// assert_eq!(1, camera_calibrations.len());
     /// ```
     pub fn from_project_path<P: AsRef<Path>>(path: P) -> Result<Vec<CameraCalibration>> {
