@@ -10,12 +10,8 @@ license = "MIT"
 
 [dependencies]
 clap = "2.26"
-irb = { git = "https://github.com/gadomski/irb-rs" }
-las = { git = "https://github.com/gadomski/las-rs" }
 nalgebra = { version = "0.13", features = ["serde-serialize"] }
-palette = "0.2"
 quick-error = "1.2"
-scanifc = { git = "https://github.com/gadomski/rivlib-rs", optional = true }
 serde = "1.0"
 serde_derive = "1.0"
 serde_json = "1.0"
@@ -27,4 +23,3 @@ approx = "0.1"
 [[bin]]
 name = "riscan-pro"
 doc = false
-test = false

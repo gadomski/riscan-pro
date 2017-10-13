@@ -14,7 +14,6 @@
 #[cfg(test)]
 #[macro_use]
 extern crate approx;
-extern crate irb;
 extern crate nalgebra;
 #[macro_use]
 extern crate quick_error;
@@ -23,7 +22,6 @@ extern crate serde_derive;
 extern crate xmltree;
 
 mod camera_calibration;
-mod colorizer;
 pub mod element;
 mod mount_calibration;
 mod point;
@@ -32,7 +30,6 @@ pub mod scan_position;
 mod utils;
 
 pub use camera_calibration::CameraCalibration;
-pub use colorizer::Colorizer;
 pub use mount_calibration::MountCalibration;
 pub use point::{Cmcs, Glcs, Point, Socs};
 pub use project::Project;
@@ -51,13 +48,6 @@ quick_error! {
         Io(err: std::io::Error) {
             description(err.description())
             display("IO error: {}", err)
-            from()
-            cause(err)
-        }
-        /// Wrapper around `irb::Error`.
-        Irb(err: irb::Error) {
-            description(err.description())
-            display("Irb error: {}", err)
             from()
             cause(err)
         }
