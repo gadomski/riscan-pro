@@ -31,7 +31,7 @@ mod utils;
 
 pub use camera_calibration::CameraCalibration;
 pub use mount_calibration::MountCalibration;
-pub use point::{Cmcs, Glcs, Point, Socs};
+pub use point::{Cmcs, Glcs, Point, Prcs, Socs};
 pub use project::Project;
 pub use scan_position::ScanPosition;
 
