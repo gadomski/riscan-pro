@@ -60,7 +60,7 @@ impl Image {
     ///
     /// ```
     /// use riscan_pro::Project;
-    /// let project = Project::from_path("data/Project.RiSCAN").unwrap();
+    /// let project = Project::from_path("data/project.RiSCAN").unwrap();
     /// let mut image = project.scan_positions
     ///     .get("SP01")
     ///     .unwrap()
@@ -87,7 +87,7 @@ impl Image {
     ///
     /// ```
     /// use riscan_pro::Project;
-    /// let project = Project::from_path("data/Project.RiSCAN").unwrap();
+    /// let project = Project::from_path("data/project.RiSCAN").unwrap();
     /// let mut image = project.scan_positions
     ///     .get("SP01")
     ///     .unwrap()
