@@ -41,13 +41,7 @@ impl CameraCalibration {
     pub fn from_project_path<P: AsRef<Path>>(path: P) -> Result<Vec<CameraCalibration>> {
         use Project;
         let project = Project::from_path(path)?;
-        Ok(
-            project
-                .camera_calibrations
-                .values()
-                .map(|c| c.clone())
-                .collect(),
-        )
+        Ok(project.camera_calibrations.values().cloned().collect())
     }
 
     /// Converts a point in the camera's coordinate system to pixel values.

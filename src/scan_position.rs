@@ -49,7 +49,7 @@ impl ScanPosition {
             .file_stem()
             .map(|file_stem| file_stem.to_string_lossy())
             .and_then(|file_stem| self.images.get(file_stem.as_ref()))
-            .ok_or(Error::ImageFromPath(path.as_ref().to_path_buf()))
+            .ok_or_else(|| Error::ImageFromPath(path.as_ref().to_path_buf()))
     }
 }
 
@@ -76,9 +76,9 @@ impl Image {
         project
             .camera_calibrations
             .get(&self.camera_calibration_name)
-            .ok_or(Error::MissingCameraCalibration(
-                self.camera_calibration_name.clone(),
-            ))
+            .ok_or_else(|| {
+                Error::MissingCameraCalibration(self.camera_calibration_name.clone())
+            })
     }
 
     /// Finds and returns this image's mount calibration.
@@ -103,8 +103,8 @@ impl Image {
         project
             .mount_calibrations
             .get(&self.mount_calibration_name)
-            .ok_or(Error::MissingMountCalibration(
-                self.mount_calibration_name.clone(),
-            ))
+            .ok_or_else(|| {
+                Error::MissingMountCalibration(self.mount_calibration_name.clone())
+            })
     }
 }

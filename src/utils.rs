@@ -12,7 +12,7 @@ pub fn parse_projective3(s: &str) -> Result<Projective3<f64>> {
         Err(Error::ParseProjective3(s.to_string()))
     } else {
         nalgebra::try_convert(Matrix4::from_iterator(numbers).transpose())
-            .ok_or(Error::ParseProjective3(s.to_string()))
+            .ok_or_else(|| Error::ParseProjective3(s.to_string()))
     }
 }
 

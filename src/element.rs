@@ -133,10 +133,9 @@ impl Extension for Element {
 
     fn children(&self, path: &str) -> Result<&Vec<Element>> {
         let mut iter = path.split('/').rev();
-        let last = iter.next().ok_or(Error::MissingChild(
-            self.name.clone(),
-            String::new(),
-        ))?;
+        let last = iter.next().ok_or_else(|| {
+            Error::MissingChild(self.name.clone(), String::new())
+        })?;
         let element = burrow(self, iter.rev())?;
         if element.children.iter().all(|child| child.name == last) {
             Ok(&element.children)
@@ -146,11 +145,9 @@ impl Extension for Element {
     }
 
     fn as_str(&self) -> Result<&str> {
-        self.text.as_ref().map(|s| s.as_str()).ok_or(
-            Error::NoElementText(
-                self.clone(),
-            ),
-        )
+        self.text.as_ref().map(|s| s.as_str()).ok_or_else(|| {
+            Error::NoElementText(self.clone())
+        })
     }
 
     fn noderef(&self) -> Result<&str> {

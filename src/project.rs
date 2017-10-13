@@ -70,7 +70,7 @@ impl Project {
                     self.scan_positions.get(name)
                 })
             })
-            .ok_or(Error::ScanPositionFromPath(path.as_ref().to_path_buf()))
+            .ok_or_else(|| Error::ScanPositionFromPath(path.as_ref().to_path_buf()))
     }
 
     fn from_read<R: Read>(read: R) -> Result<Project> {
