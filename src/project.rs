@@ -3,7 +3,6 @@ use element::Extension;
 use nalgebra::Projective3;
 use scan_position::Image;
 use std::collections::HashMap;
-use std::io::Read;
 use std::path::{Path, PathBuf};
 use xmltree::Element;
 
@@ -20,6 +19,8 @@ use xmltree::Element;
 /// ```
 #[derive(Clone, Debug, Serialize, PartialEq)]
 pub struct Project {
+    /// The path to the project rsp file.
+    pub path: PathBuf,
     /// The camera calibrations, by name.
     pub camera_calibrations: HashMap<String, CameraCalibration>,
     /// The camera mount calibrations, by name.
@@ -45,36 +46,8 @@ impl Project {
         use std::fs::File;
 
         let path = rsp_path(path)?;
-        let file = File::open(path)?;
-        Project::from_read(file)
-    }
-
-    /// Returns a scan position, as determined by the path.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use riscan_pro::Project;
-    /// let project = Project::from_path("data/project.RiSCAN").unwrap();
-    /// let scan_position1 = project.scan_positions.get("SP01").unwrap();
-    /// let path = "data/project.RiSCAN/SCANS/SP01/SCANPOSIMAGES/SP01 - Image001.csv";
-    /// let scan_position2 = project.scan_position_from_path(path).unwrap();
-    /// assert_eq!(scan_position1, scan_position2);
-    /// ```
-    pub fn scan_position_from_path<P: AsRef<Path>>(&self, path: P) -> Result<&ScanPosition> {
-        path.as_ref()
-            .file_stem()
-            .map(|file_stem| file_stem.to_string_lossy())
-            .and_then(|file_stem| {
-                file_stem.split(" - ").next().and_then(|name| {
-                    self.scan_positions.get(name)
-                })
-            })
-            .ok_or_else(|| Error::ScanPositionFromPath(path.as_ref().to_path_buf()))
-    }
-
-    fn from_read<R: Read>(read: R) -> Result<Project> {
-        let xml = Element::parse(read)?;
+        let file = File::open(&path)?;
+        let xml = Element::parse(file)?;
 
         let camera_calibrations = xml.children("calibrations/camcalibs/camcalib_opencv")?
             .iter()
@@ -102,8 +75,33 @@ impl Project {
             camera_calibrations: camera_calibrations,
             mount_calibrations: mount_calibrations,
             scan_positions: scan_positions,
+            path: path.to_path_buf(),
             pop: utils::parse_projective3(xml.child("pop/matrix")?.as_str()?)?,
         })
+    }
+
+    /// Returns a scan position, as determined by the path.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use riscan_pro::Project;
+    /// let project = Project::from_path("data/project.RiSCAN").unwrap();
+    /// let scan_position1 = project.scan_positions.get("SP01").unwrap();
+    /// let path = "data/project.RiSCAN/SCANS/SP01/SCANPOSIMAGES/SP01 - Image001.csv";
+    /// let scan_position2 = project.scan_position_from_path(path).unwrap();
+    /// assert_eq!(scan_position1, scan_position2);
+    /// ```
+    pub fn scan_position_from_path<P: AsRef<Path>>(&self, path: P) -> Result<&ScanPosition> {
+        path.as_ref()
+            .file_stem()
+            .map(|file_stem| file_stem.to_string_lossy())
+            .and_then(|file_stem| {
+                file_stem.split(" - ").next().and_then(|name| {
+                    self.scan_positions.get(name)
+                })
+            })
+            .ok_or_else(|| Error::ScanPositionFromPath(path.as_ref().to_path_buf()))
     }
 }
 
