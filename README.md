@@ -1,6 +1,6 @@
 # riscan-pro
 
-Crack open RiSCAN Pro xml files.
+Crack open RiSCAN Pro xml project files.
 
 [![Build Status](https://secure.travis-ci.org/gadomski/riscan-pro.svg?branch=master)](https://travis-ci.org/gadomski/riscan-pro)
 [![riscan-pro](https://docs.rs/riscan-pro/badge.svg)](https://docs.rs/riscan-pro)

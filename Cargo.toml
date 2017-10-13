@@ -1,12 +1,17 @@
 [package]
 name = "riscan-pro"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Pete Gadomski <pete.gadomski@gmail.com>"]
-description = "Query RiSCAN Pro projects"
+description = "Crack open RiSCAN PRO xml project files."
+documentation = "https://docs.rs/riscan-pro"
 repository = "https://github.com/gadomski/riscan-pro"
 readme = "README.md"
 keywords = ["lidar", "riegl", "riscan"]
+categories = ["science"]
 license = "MIT"
+
+[badges]
+travis-ci = { repository = "https://github.com/gadomski/riscan-pro" }
 
 [dependencies]
 clap = "2.26"
