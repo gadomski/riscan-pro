@@ -1,7 +1,7 @@
 use {CameraCalibration, Error, MountCalibration, Result, ScanPosition, utils};
 use element::Extension;
 use nalgebra::Projective3;
-use scan_position::Image;
+use scan_position::{Image, Scan};
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 use xmltree::Element;
@@ -154,8 +154,27 @@ impl ScanPosition {
                     let image = Image::from_element(scanposimage)?;
                     Ok((image.name.clone(), image))
                 })
-                .collect::<Result<HashMap<_, _>>>()?,
+                .collect::<Result<_>>()?,
+            scans: element
+                .children("singlescans/scan")?
+                .iter()
+                .map(|scan| {
+                    let scan = Scan::from_element(scan)?;
+                    Ok((scan.name.clone(), scan))
+                })
+                .collect::<Result<_>>()?,
             sop: utils::parse_projective3(element.child("sop/matrix")?.as_str()?)?,
+        })
+    }
+}
+
+impl Scan {
+    fn from_element(element: &Element) -> Result<Scan> {
+        Ok(Scan {
+            name: element.child("name")?.as_str()?.to_string(),
+            file: element.child("file")?.as_str()?.to_string(),
+            theta_count: element.child("theta_count")?.parse_text()?,
+            phi_count: element.child("phi_count")?.parse_text()?,
         })
     }
 }

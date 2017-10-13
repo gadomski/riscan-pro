@@ -3,7 +3,7 @@
 use {CameraCalibration, Error, MountCalibration, Project, Result};
 use nalgebra::Projective3;
 use std::collections::HashMap;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 /// A scan position
 #[derive(Clone, Debug, Serialize, PartialEq)]
@@ -14,6 +14,21 @@ pub struct ScanPosition {
     pub images: HashMap<String, Image>,
     /// The scanner's own position.
     pub sop: Projective3<f64>,
+    /// The scans taken at this position.
+    pub scans: HashMap<String, Scan>,
+}
+
+/// A scan.
+#[derive(Clone, Debug, Serialize, PartialEq)]
+pub struct Scan {
+    /// The name of the scan.
+    pub name: String,
+    /// The file name of the scan.
+    pub file: String,
+    /// The number of measurements in the phi direction.
+    pub phi_count: usize,
+    /// The number of measurements in the theta direction.
+    pub theta_count: usize,
 }
 
 /// A scan position image.
@@ -50,6 +65,39 @@ impl ScanPosition {
             .map(|file_stem| file_stem.to_string_lossy())
             .and_then(|file_stem| self.images.get(file_stem.as_ref()))
             .ok_or_else(|| Error::ImageFromPath(path.as_ref().to_path_buf()))
+    }
+
+    /// Returns a vector of all paths to rxps in the singlescan directory.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use riscan_pro::Project;
+    /// let project = Project::from_path("data/project.RiSCAN").unwrap();
+    /// let scan_position = project
+    ///     .scan_positions
+    ///     .get("SP01")
+    ///     .unwrap();
+    /// let paths = scan_position.singlescan_rxp_paths(&project);
+    /// assert_eq!(4, paths.len());
+    /// ```
+    pub fn singlescan_rxp_paths(&self, project: &Project) -> Vec<PathBuf> {
+        let mut path = project
+            .path
+            .parent()
+            .expect("Project path should always have a parent")
+            .to_path_buf();
+        path.push("SCANS");
+        path.push(&self.name);
+        path.push("SINGLESCANS");
+        self.scans
+            .values()
+            .map(|scan| {
+                let mut path = path.clone();
+                path.push(&scan.file);
+                path
+            })
+            .collect()
     }
 }
 
@@ -107,4 +155,18 @@ impl Image {
                 Error::MissingMountCalibration(self.mount_calibration_name.clone())
             })
     }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn scan_position_singlescan_rxp_paths() {
+        let project = Project::from_path("data/project.RiSCAN").unwrap();
+        let scan_position = project.scan_positions.get("SP01").unwrap();
+        let paths = scan_position.singlescan_rxp_paths(&project);
+        assert_eq!(4, paths.len());
+    }
+
 }
