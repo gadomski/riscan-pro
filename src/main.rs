@@ -16,6 +16,9 @@ fn main() {
                 .version(crate_version!())
                 .arg(Arg::with_name("PROJECT").index(1).required(true).help(
                     "path to the project",
+                ))
+                .arg(Arg::with_name("compact").long("compact").short("c").help(
+                    "Prints compact JSON",
                 )),
         )
         .get_matches();
@@ -23,9 +26,11 @@ fn main() {
     if let Some(matches) = matches.subcommand_matches("info") {
         let path = matches.value_of("PROJECT").unwrap();
         let project = Project::from_path(path).expect("Unable to create project");
-        println!(
-            "{}",
+        let json = if matches.is_present("compact") {
+            serde_json::to_string(&project).expect("Unable to serialize project")
+        } else {
             serde_json::to_string_pretty(&project).expect("Unable to serialize project")
-        );
+        };
+        println!("{}", json);
     }
 }
