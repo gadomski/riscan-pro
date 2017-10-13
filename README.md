@@ -1,7 +1,16 @@
 # riscan-pro
 
-[RiSCAN PRO](http://www.riegl.com/products/software-packages/riscan-pro/) is [Terrestrial Laser Scanning (TLS)](https://en.wikipedia.org/wiki/Lidar#Terrestrial_Lidar) software made by [Riegl](http://riegl.com/).
-This crate provides a library and an executable for inspecting and doing work with RiSCAN Pro projects.
+Crack open RiSCAN Pro xml files.
 
-**Riegl did not make this software, and cannot provide any support for it.**
-**Please do not contact Riegl with questions about this software.**
+[![Build Status](https://secure.travis-ci.org/gadomski/riscan-pro.svg?branch=master)](https://travis-ci.org/gadomski/riscan-pro)
+[![riscan-pro](https://docs.rs/riscan-pro/badge.svg)](https://docs.rs/riscan-pro)
+
+[RiSCAN Pro](http://www.riegl.com/products/software-packages/riscan-pro/) is software developed by [Riegl](http://riegl.com/) for [terrestrial LiDAR scanning](https://en.wikipedia.org/wiki/Lidar#Terrestrial_lidar).
+RiSCAN Pro stores most project metadata, e.g. calibration and transformation matrices, in a xml file inside of the RiSCAN Pro project directory.
+This is a Rust library for reading these xml files and extracting the good bits.
+
+**This project is not created by Riegl and no support from them is provided or implied.
+Please do not contact Riegl about this software.**
+
+This library is not complete, as there's lots of project components that aren't supported.
+This was developed for a specific purpose (colorizing points and transforming them) and so far hasn't been developed much beyond that.
