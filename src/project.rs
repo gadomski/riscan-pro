@@ -75,7 +75,7 @@ impl Project {
             camera_calibrations: camera_calibrations,
             mount_calibrations: mount_calibrations,
             scan_positions: scan_positions,
-            path: path.to_path_buf(),
+            path: path.canonicalize()?,
             pop: utils::parse_projective3(xml.child("pop/matrix")?.as_str()?)?,
         })
     }
