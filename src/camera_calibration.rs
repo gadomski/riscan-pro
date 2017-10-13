@@ -1,8 +1,9 @@
-use {Cmcs, Point};
+use {Cmcs, Point, Result};
+use std::path::Path;
 
 /// A camera calibration.
 ///
-/// These are opencv camera definitions, as specififed by Riegl.
+/// Only opencv camera calibrations are supported at this time.
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[allow(missing_docs)]
 pub struct CameraCalibration {
@@ -27,31 +28,60 @@ pub struct CameraCalibration {
 }
 
 impl CameraCalibration {
-    /// Converts a point in the camera's coordinate system to pixel values.
-    ///
-    /// If the incoming point is outside of the angle extents, or the resultant pixel is outside of
-    /// the image bounds, returns None.
+    /// Retrieves all camera calibrations from a project.
     ///
     /// # Examples
     ///
     /// ```
+    /// use riscan_pro::CameraCalibration;
+    /// let camera_calibrations = CameraCalibration::from_project_path("data/project.RiSCAN").unwrap();
+    /// assert_eq!(1, camera_calibrations.len());
+    /// ```
+    pub fn from_project_path<P: AsRef<Path>>(path: P) -> Result<Vec<CameraCalibration>> {
+        use Project;
+        let project = Project::from_path(path)?;
+        Ok(
+            project
+                .camera_calibrations
+                .values()
+                .map(|c| c.clone())
+                .collect(),
+        )
+    }
+
+    /// Converts a point in the camera's coordinate system to pixel values.
+    ///
+    /// The pixel values are floats, in case someone later wants to do more than a direct lookup.
+    ///
+    /// Returns None if:
+    ///
+    /// - The point is behind the camera (negative z).
+    /// - The point is ouside the angle extents, as defined by `tan_{min|max}_{vert|horz}`.
+    /// - The calculated pixel values are outside of the width/height of the image.
+    ///
+    /// These maths are taken from the `project.dtd` file in every RiSCAN Pro project.
+    ///
+    /// # Examples
+    ///
     /// ```
     /// use riscan_pro::{CameraCalibration, Point};
-    /// let camera_calibration = CameraCalibration::from_path("data/camera.cam").unwrap();
-    /// let cmcs = Point::cmcs(10., -5., 2.);
-    /// let (u, v) = camera_calibration.cmcs_to_ics(cmcs);
+    /// let camera_calibration = CameraCalibration::from_project_path("data/southpole.rsp")
+    ///     .unwrap()
+    ///     .pop()
+    ///     .unwrap();
+    /// let cmcs = Point::cmcs(1.312, -0.641, 3.019);
+    /// let (u, v) = camera_calibration.cmcs_to_ics(&cmcs).unwrap();
     /// ```
     pub fn cmcs_to_ics(&self, point: &Point<Cmcs>) -> Option<(f64, f64)> {
         use nalgebra::Matrix3;
         use std::ops::Deref;
 
-        // Point is behind the camera.
-        if point.z < 0. {
+        if point.is_behind_camera() {
             return None;
         }
 
-        let tan_horz = point.y / point.z;
-        let tan_vert = point.x / point.z;
+        let tan_horz = point.tan_horz();
+        let tan_vert = point.tan_vert();
         if tan_horz < self.tan_min_horz || tan_horz > self.tan_max_horz ||
             tan_vert < self.tan_min_vert || tan_vert > self.tan_max_vert
         {
@@ -72,27 +102,44 @@ impl CameraCalibration {
         let v = v + y * self.fy * r_term + 2. * self.fy * x * y * self.p2 +
             self.p1 * self.fy * (r.powi(2) + 2. * y.powi(2));
 
-        if u < 0. || u.trunc() as usize > self.width || v < 0. || v.trunc() as usize > self.height {
-            None
-        } else {
+        if self.is_valid_pixel(u, v) {
             Some((u, v))
+        } else {
+            None
         }
+    }
+
+    /// Returns true if this is a valid pixel value.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use riscan_pro::CameraCalibration;
+    /// let camera_calibration = CameraCalibration::from_project_path("data/project.RiSCAN")
+    ///     .unwrap()
+    ///     .pop()
+    ///     .unwrap();
+    /// // The camera calibration is 1024x768
+    /// assert!(camera_calibration.is_valid_pixel(0., 0.));
+    /// assert!(!camera_calibration.is_valid_pixel(1024., 0.));
+    /// assert!(!camera_calibration.is_valid_pixel(0., 768.));
+    /// ```
+    pub fn is_valid_pixel<T: Into<f64>>(&self, u: T, v: T) -> bool {
+        let u = u.into();
+        let v = v.into();
+        u >= 0. && v >= 0. && u < self.width as f64 && v < self.height as f64
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use Project;
 
     #[test]
     fn cmcs_to_ics() {
-        let project = Project::from_path("data/southpole.rsp").unwrap();
-        let camera_calibration = project
-            .camera_calibrations
-            .get(
-                "Result calibration (Infratec_VarioCAM_HD_15mm_11-16-2015_Preston)_1024x768",
-            )
+        let camera_calibration = CameraCalibration::from_project_path("data/southpole.rsp")
+            .unwrap()
+            .pop()
             .unwrap();
         let cmcs = Point::cmcs(1.312, -0.641, 3.019);
         let (u, v) = camera_calibration.cmcs_to_ics(&cmcs).unwrap();
@@ -108,9 +155,17 @@ mod tests {
     }
 
     #[test]
-    fn only_accept_version_2() {
-        Project::from_path("data/project.RiSCAN").unwrap();
-        assert!(Project::from_path("data/camera-calibration-version-0.rsp").is_err());
-        assert!(Project::from_path("data/camera-calibration-version-1.rsp").is_err());
+    fn is_valid_pixel() {
+        let camera_calibration = CameraCalibration::from_project_path("data/southpole.rsp")
+            .unwrap()
+            .pop()
+            .unwrap();
+        assert!(camera_calibration.is_valid_pixel(0, 0));
+        assert!(!camera_calibration.is_valid_pixel(-1, 0));
+        assert!(!camera_calibration.is_valid_pixel(0, -1));
+        assert!(!camera_calibration.is_valid_pixel(1024, 0));
+        assert!(!camera_calibration.is_valid_pixel(0, 768));
+        assert!(camera_calibration.is_valid_pixel(1023.9, 0.));
+        assert!(camera_calibration.is_valid_pixel(0., 767.9));
     }
 }

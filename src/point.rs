@@ -73,6 +73,49 @@ impl Point<Cmcs> {
             point: Point3::new(x.into(), y.into(), z.into()),
         }
     }
+
+    /// Is this point behind the camera?
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use riscan_pro::Point;
+    /// assert!(!Point::cmcs(1., 2., 3.).is_behind_camera());
+    /// assert!(Point::cmcs(1., 2., -3.).is_behind_camera());
+    /// ```
+    pub fn is_behind_camera(&self) -> bool {
+        self.z <= 0.
+    }
+
+    /// Returns the horizontal tangent of this point.
+    ///
+    /// The horizontal tangent is the tangent of the angle of the point, as projected to the yz
+    /// plane, to the z axis, i.e. `y / z`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use riscan_pro::Point;
+    /// assert_eq!(2., Point::cmcs(3., 2., 1.).tan_horz());
+    /// ```
+    pub fn tan_horz(&self) -> f64 {
+        self.y / self.z
+    }
+
+    /// Returns the vertical tangent of this point.
+    ///
+    /// The vertical tangent is the tangent of the angle of the point, as projected to the xz
+    /// plane, to the z axis, i.e. `x / z`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use riscan_pro::Point;
+    /// assert_eq!(3., Point::cmcs(3., 2., 1.).tan_vert());
+    /// ```
+    pub fn tan_vert(&self) -> f64 {
+        self.x / self.z
+    }
 }
 
 impl<C: CoordinateReferenceSystem> From<Point3<f64>> for Point<C> {
@@ -94,3 +137,14 @@ impl<C: CoordinateReferenceSystem> Deref for Point<C> {
 impl CoordinateReferenceSystem for Glcs {}
 impl CoordinateReferenceSystem for Socs {}
 impl CoordinateReferenceSystem for Cmcs {}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn cmcs_is_behind_camera() {
+        assert!(!Point::cmcs(1., 1., 1.).is_behind_camera());
+        assert!(Point::cmcs(1., 1., -1.).is_behind_camera());
+    }
+}

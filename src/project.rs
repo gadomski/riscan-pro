@@ -233,4 +233,11 @@ mod tests {
             .unwrap();
         assert_eq!(scan_position1, scan_position2);
     }
+
+    #[test]
+    fn only_accept_version_2_camera_calibrations() {
+        Project::from_path("data/project.RiSCAN").unwrap();
+        assert!(Project::from_path("data/camera-calibration-version-0.rsp").is_err());
+        assert!(Project::from_path("data/camera-calibration-version-1.rsp").is_err());
+    }
 }
