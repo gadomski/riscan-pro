@@ -11,7 +11,7 @@ categories = ["science"]
 license = "MIT"
 
 [badges]
-travis-ci = { repository = "https://github.com/gadomski/riscan-pro" }
+travis-ci = { repository = "gadomski/riscan-pro" }
 
 [dependencies]
 clap = "2.26"
