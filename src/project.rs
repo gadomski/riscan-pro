@@ -97,9 +97,15 @@ impl Project {
             .file_stem()
             .map(|file_stem| file_stem.to_string_lossy())
             .and_then(|file_stem| {
-                file_stem.split(" - ").next().and_then(|name| {
-                    self.scan_positions.get(name)
-                })
+                file_stem
+                    .split(" - ")
+                    .next()
+                    .and_then(|name| self.scan_positions.get(name))
+                    .or_else(|| {
+                        self.scan_positions.values().find(|scan_position| {
+                            scan_position.images.get(file_stem.as_ref()).is_some()
+                        })
+                    })
             })
             .ok_or_else(|| Error::ScanPositionFromPath(path.as_ref().to_path_buf()))
     }
@@ -243,6 +249,18 @@ mod tests {
     fn scan_position_from_path() {
         let project = Project::from_path("data/project.RiSCAN").unwrap();
         let scan_position1 = project.scan_positions.get("SP01").unwrap();
+        let scan_position2 = project
+            .scan_position_from_path(
+                "data/project.RiSCAN/SCANS/SP01/SCANPOSIMAGES/SP01 - Image001.csv",
+            )
+            .unwrap();
+        assert_eq!(scan_position1, scan_position2);
+    }
+
+    #[test]
+    fn scan_position_from_path_scan_position_name_change() {
+        let project = Project::from_path("data/scan-position-name-change.rsp").unwrap();
+        let scan_position1 = project.scan_positions.get("SP01-with-a-twist").unwrap();
         let scan_position2 = project
             .scan_position_from_path(
                 "data/project.RiSCAN/SCANS/SP01/SCANPOSIMAGES/SP01 - Image001.csv",
