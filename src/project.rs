@@ -94,17 +94,26 @@ impl Project {
     /// ```
     pub fn scan_position_from_path<P: AsRef<Path>>(&self, path: P) -> Result<&ScanPosition> {
         path.as_ref()
-            .file_stem()
-            .map(|file_stem| file_stem.to_string_lossy())
-            .and_then(|file_stem| {
-                file_stem
-                    .split(" - ")
-                    .next()
-                    .and_then(|name| self.scan_positions.get(name))
-                    .or_else(|| {
-                        self.scan_positions.values().find(|scan_position| {
-                            scan_position.images.get(file_stem.as_ref()).is_some()
-                        })
+            .parent()
+            .and_then(|parent| parent.file_name())
+            .map(|file_name| file_name.to_string_lossy())
+            .and_then(|directory_name| {
+                self.scan_positions.get(directory_name.as_ref())
+            })
+            .or_else(|| {
+                path.as_ref()
+                    .file_stem()
+                    .map(|file_stem| file_stem.to_string_lossy())
+                    .and_then(|file_stem| {
+                        file_stem
+                            .split(" - ")
+                            .next()
+                            .and_then(|name| self.scan_positions.get(name))
+                            .or_else(|| {
+                                self.scan_positions.values().find(|scan_position| {
+                                    scan_position.images.get(file_stem.as_ref()).is_some()
+                                })
+                            })
                     })
             })
             .ok_or_else(|| Error::ScanPositionFromPath(path.as_ref().to_path_buf()))
@@ -267,6 +276,15 @@ mod tests {
             )
             .unwrap();
         assert_eq!(scan_position1, scan_position2);
+    }
+
+    #[test]
+    fn scan_position_from_directory() {
+        let project = Project::from_path("data/project.RiSCAN").unwrap();
+        let scan_position = project
+            .scan_position_from_path("foo/bar/SP01/underfile.txt")
+            .unwrap();
+        assert_eq!(project.scan_positions["SP01"], *scan_position);
     }
 
     #[test]

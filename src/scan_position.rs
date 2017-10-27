@@ -168,5 +168,4 @@ mod tests {
         let paths = scan_position.singlescan_rxp_paths(&project);
         assert_eq!(4, paths.len());
     }
-
 }
