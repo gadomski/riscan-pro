@@ -99,6 +99,25 @@ impl ScanPosition {
             })
             .collect()
     }
+
+    /// Returns a vector of all of the images.
+    ///
+    /// The vector is sorted by name.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use riscan_pro::Project;
+    /// let project = Project::from_path("data/project.RiSCAN").unwrap();
+    /// let scan_position = &project.scan_positions["SP01"];
+    /// let images = scan_position.images();
+    /// assert_eq!(6, images.len());
+    /// ```
+    pub fn images(&self) -> Vec<&Image> {
+        let mut images: Vec<_> = self.images.values().collect();
+        images.sort_by_key(|i| &i.name);
+        images
+    }
 }
 
 impl Image {
