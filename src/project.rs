@@ -2,7 +2,7 @@ use {CameraCalibration, Error, MountCalibration, Result, ScanPosition, utils};
 use element::Extension;
 use nalgebra::Projective3;
 use scan_position::{Image, Scan};
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 use xmltree::Element;
 
@@ -22,11 +22,11 @@ pub struct Project {
     /// The path to the project rsp file.
     pub path: PathBuf,
     /// The camera calibrations, by name.
-    pub camera_calibrations: HashMap<String, CameraCalibration>,
+    pub camera_calibrations: BTreeMap<String, CameraCalibration>,
     /// The camera mount calibrations, by name.
-    pub mount_calibrations: HashMap<String, MountCalibration>,
+    pub mount_calibrations: BTreeMap<String, MountCalibration>,
     /// The scan positions, by name.
-    pub scan_positions: HashMap<String, ScanPosition>,
+    pub scan_positions: BTreeMap<String, ScanPosition>,
     /// The project's own position.
     pub pop: Projective3<f64>,
 }
@@ -55,21 +55,21 @@ impl Project {
                 let camera_calibration = CameraCalibration::from_element(camcalib_opencv)?;
                 Ok((camera_calibration.name.clone(), camera_calibration))
             })
-            .collect::<Result<HashMap<_, _>>>()?;
+            .collect::<Result<BTreeMap<_, _>>>()?;
         let mount_calibrations = xml.children("calibrations/mountcalibs/mountcalib")?
             .iter()
             .map(|mountcalib| {
                 let mount_calibration = MountCalibration::from_element(mountcalib)?;
                 Ok((mount_calibration.name.clone(), mount_calibration))
             })
-            .collect::<Result<HashMap<_, _>>>()?;
+            .collect::<Result<BTreeMap<_, _>>>()?;
         let scan_positions = xml.children("scanpositions/scanposition")?
             .iter()
             .map(|scanposition| {
                 let scan_position = ScanPosition::from_element(scanposition)?;
                 Ok((scan_position.name.clone(), scan_position))
             })
-            .collect::<Result<HashMap<_, _>>>()?;
+            .collect::<Result<BTreeMap<_, _>>>()?;
 
         Ok(Project {
             camera_calibrations: camera_calibrations,

@@ -2,7 +2,7 @@
 
 use {CameraCalibration, Error, MountCalibration, Project, Result};
 use nalgebra::Projective3;
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 
 /// A scan position
@@ -11,11 +11,11 @@ pub struct ScanPosition {
     /// The name of the scan position.
     pub name: String,
     /// The scan position images.
-    pub images: HashMap<String, Image>,
+    pub images: BTreeMap<String, Image>,
     /// The scanner's own position.
     pub sop: Projective3<f64>,
     /// The scans taken at this position.
-    pub scans: HashMap<String, Scan>,
+    pub scans: BTreeMap<String, Scan>,
 }
 
 /// A scan.
