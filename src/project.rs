@@ -179,6 +179,7 @@ impl ScanPosition {
                 })
                 .collect::<Result<_>>()?,
             sop: utils::parse_projective3(element.child("sop/matrix")?.as_str()?)?,
+            is_frozen: element.child("sop/freeze")?.as_str()? == "1",
         })
     }
 }

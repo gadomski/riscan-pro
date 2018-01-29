@@ -16,6 +16,8 @@ pub struct ScanPosition {
     pub sop: Projective3<f64>,
     /// The scans taken at this position.
     pub scans: BTreeMap<String, Scan>,
+    /// The scan position SOP matrix is frozen.
+    pub is_frozen: bool,
 }
 
 /// A scan.
