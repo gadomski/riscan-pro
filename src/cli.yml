@@ -1,0 +1,15 @@
+name: RiSCAN Pro
+author: Pete Gadomski <pete@gadom.ski>
+about: Extract information from a RiSCAN Pro project.
+subcommands:
+    - json:
+        about: Display the project structure as json.
+        args:
+            - PROJECT:
+                index: 1
+                required: true
+                help: The path to the project.
+            - compact:
+                long: compact
+                short: c
+                help: Print compact JSON (as opposed to pretty JSON).
