@@ -1,15 +1,34 @@
 name: RiSCAN Pro
 author: Pete Gadomski <pete@gadom.ski>
 about: Extract information from a RiSCAN Pro project.
+args:
+    - PROJECT:
+        index: 1
+        required: true
+        help: The path to the project.
 subcommands:
     - json:
         about: Display the project structure as json.
         args:
-            - PROJECT:
-                index: 1
-                required: true
-                help: The path to the project.
             - compact:
                 long: compact
                 short: c
                 help: Print compact JSON (as opposed to pretty JSON).
+    - sop:
+        about: Save all the SOP matrices to files, named by scan position.
+        args:
+            - PATH:
+                index: 1
+                required: true
+                help: The directory in which to save the matrix files.
+            - frozen:
+                long: frozen
+                short: f
+                help: Only save frozen matrices.
+    - pop:
+        about: Save the POP matrix to a file.
+        args:
+            - PATH:
+                index: 1
+                required: true
+                help: The path to the POP file.

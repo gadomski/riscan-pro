@@ -1,6 +1,11 @@
+//! Utility functions.
+
 use Result;
 use nalgebra::Projective3;
+use std;
+use std::io::Write;
 
+/// Parse a projective3 matrix from whitespace-delimited text.
 pub fn parse_projective3(s: &str) -> Result<Projective3<f64>> {
     use nalgebra::{self, Matrix4};
     use Error;
@@ -14,6 +19,20 @@ pub fn parse_projective3(s: &str) -> Result<Projective3<f64>> {
         nalgebra::try_convert(Matrix4::from_iterator(numbers).transpose())
             .ok_or_else(|| Error::ParseProjective3(s.to_string()))
     }
+}
+
+/// Writes a projective3 to a `Write`.
+pub fn write_projective3<W: Write>(mut write: W, matrix: &Projective3<f64>) -> std::io::Result<()> {
+    for row in 0..4 {
+        for col in 0..4 {
+            write!(write, "{}", matrix[(row, col)])?;
+            if col < 3 {
+                write!(write, " ")?;
+            }
+        }
+        writeln!(write, "")?;
+    }
+    Ok(())
 }
 
 #[cfg(test)]

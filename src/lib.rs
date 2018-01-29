@@ -60,7 +60,7 @@ mod mount_calibration;
 mod point;
 mod project;
 pub mod scan_position;
-mod utils;
+pub mod utils;
 
 pub use camera_calibration::CameraCalibration;
 pub use mount_calibration::MountCalibration;
