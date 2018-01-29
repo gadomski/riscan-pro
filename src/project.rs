@@ -25,6 +25,8 @@ pub struct Project {
     pub camera_calibrations: BTreeMap<String, CameraCalibration>,
     /// The camera mount calibrations, by name.
     pub mount_calibrations: BTreeMap<String, MountCalibration>,
+    /// The project's name.
+    pub name: String,
     /// The scan positions, by name.
     pub scan_positions: BTreeMap<String, ScanPosition>,
     /// The project's own position.
@@ -74,6 +76,7 @@ impl Project {
         Ok(Project {
             camera_calibrations: camera_calibrations,
             mount_calibrations: mount_calibrations,
+            name: xml.child("name")?.as_str()?.to_string(),
             scan_positions: scan_positions,
             path: path.canonicalize()?,
             pop: utils::parse_projective3(xml.child("pop/matrix")?.as_str()?)?,
